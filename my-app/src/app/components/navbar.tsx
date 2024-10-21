@@ -525,10 +525,11 @@ export default function Navbar({
             Get Started
           </button>
           {session ? (
-            <button 
-            className=" hidden md:flex text-white px-4 py-2 rounded-md hover:bg-transparent  hover:border-black transition-colors"
+            <Link 
+            href = "/ai/chat"
+            className=" hidden md:flex px-4 py-2 rounded-md hover:bg-transparent bg-white text-black hover:border-black transition-colors"
 
-            onClick={() => signOut()}>Sign out</button>
+            onClick={() => signOut()}>Go to app</Link>
           ) : (
             <button
             className=" hidden md:flex text-white px-4 py-2 rounded-md hover:bg-transparent  hover:border-black transition-colors"

@@ -3,5 +3,5 @@
   "/ai/chat/page": "app/ai/chat/page.js",
   "/ai/chat/[userId]/[conversationId]/page": "app/ai/chat/[userId]/[conversationId]/page.js",
   "/ai/profile/page": "app/ai/profile/page.js",
-  "/icon.svg/route": "app/icon.svg/route.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }

@@ -5,8 +5,8 @@ import { db } from "./db";
 
 
 export const authOptions: NextAuthOptions = {
-  
-  secret: process.env.NEXTAUTH_SECRET, // Ensure this environment variable is set in your production environment
+
+  secret: process.env.NEXTAUTH_SECRET as string, // Ensure this environment variable is set in your production environment
 
   providers: [
     GoogleProvider({
