@@ -520,19 +520,18 @@ export default function Navbar({
 
           <button
             onClick={() => scrollToSection("pricingSection")}
-            className=" hidden md:flex text-white px-4 py-2 rounded-md hover:bg-transparent  hover:border-black transition-colors"
+            className=" hidden md:flex text-white px-4 py-2 rounded-md   hover:border-white transition-colors"
           >
             Get Started
           </button>
           {session ? (
             <Link 
             href = "/ai/chat"
-            className=" hidden md:flex px-4 py-2 rounded-md hover:bg-transparent bg-white text-black hover:border-black transition-colors"
-
-            onClick={() => signOut()}>Go to app</Link>
+            className=" hidden md:flex px-4 py-2 rounded-md  bg-white text-black hover:border-black transition-colors"
+         >Go to app</Link>
           ) : (
             <button
-            className=" hidden md:flex text-white px-4 py-2 rounded-md hover:bg-transparent  hover:border-black transition-colors"
+            className=" hidden md:flex text-white px-4 py-2 rounded-md   hover:border-white transition-colors"
 
             onClick={() => signIn("google")}>Sign in </button>
           )}
