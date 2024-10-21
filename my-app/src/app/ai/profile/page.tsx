@@ -13,6 +13,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { Session } from "next-auth";
 
 
+
 //Utilis and helper functions
 import { isClient } from "@/utilis/isClient";
 import { useSessionStorage } from "@/hooks/useSessionStorage";
@@ -357,15 +358,20 @@ export default function Profile() {
 
 
 
-  //Fetch Message for this converations
-  const messagesRefCounter = useRef(0);
-  useEffect(() => {}, [messagesRefCounter]);
 
 
 
   if (!conversations) {
     return <p>No conversation found.</p>;
   }
+  
+
+  const handleSignOut = () => {
+    signOut();
+    router.push("/");
+  };
+
+
 
 
 ;
@@ -429,7 +435,7 @@ export default function Profile() {
                 <button 
             className=" mt-4 hidden md:flex text-white px-4 py-2 rounded-md   hover:border-white transition-colors"
 
-            onClick={() => signOut()}>Sign Out </button>
+            onClick={handleSignOut}>Sign Out </button>
               </div>
 
             </div>

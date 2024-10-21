@@ -1,6 +1,6 @@
 {
-  "/ai/chat/page": "app/ai/chat/page.js",
   "/page": "app/page.js",
-  "/ai/profile/page": "app/ai/profile/page.js",
-  "/ai/chat/[userId]/[conversationId]/page": "app/ai/chat/[userId]/[conversationId]/page.js"
+  "/ai/chat/page": "app/ai/chat/page.js",
+  "/ai/chat/[userId]/[conversationId]/page": "app/ai/chat/[userId]/[conversationId]/page.js",
+  "/ai/profile/page": "app/ai/profile/page.js"
 }
