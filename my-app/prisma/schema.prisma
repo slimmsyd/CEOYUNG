@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id              String              @id @default(uuid()) @db.Uuid
+  email           String              @unique
+  name            String?
+  image           String?
+  username        String?             @unique
+  password        String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  emailVerified   Boolean?
+  birthday        DateTime?
+  zodiacSign      String?
+  paymentIntentId String?             @unique
+  progressId      String?             @unique
+  messages        Messages[]
+  conversations   UserConversations[]
+  accounts        Account[]
+  progress        UserProgress?
+}
+
+model Account {
+  id                 String  @id @default(uuid()) @db.Uuid
+  type               String?
+  userId             String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "idx_account_user_id")
+}
+
+model Conversation {
+  id           String              @id @default(uuid()) @db.Uuid
+  title        String?             @db.VarChar(255)
+  firstConvo   Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  messages     Messages[]
+  participants UserConversations[]
+}
+
+model Messages {
+  id             String       @id @default(uuid()) @db.Uuid
+  title          String       @db.VarChar(255)
+  userContent    String?
+  botResponse    String?
+  published      Boolean      @default(false)
+  firstConvo     Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now()) @updatedAt
+  authorId       String       @db.Uuid
+  conversationId String
+  imageUrl       String?
+  author         User?        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([authorId], map: "idx_messages_author_id")
+  @@index([conversationId], map: "idx_messages_conversation_id")
+}
+
+model UserConversations {
+  userId         String       @db.Uuid
+  conversationId String       @db.Uuid
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, conversationId])
+  @@index([userId], map: "idx_user_conversations_user_id")
+  @@index([conversationId], map: "idx_user_conversations_conversation_id")
+}
+
+model UserProgress {
+  id              Int      @id @default(autoincrement())
+  currentQuestion Int
+  responses       Json     @default("[]")
+  userId          String   @unique @db.Uuid
+  onComplete      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
