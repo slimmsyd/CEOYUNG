@@ -1,7 +1,6 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import React, {
   useState,
   useEffect,
@@ -10,8 +9,9 @@ import React, {
   useId,
   FormEvent,
 } from "react";
-import { useSession, getSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react"
 import { Session } from "next-auth";
+
 
 //Utilis and helper functions
 import { isClient } from "@/utilis/isClient";
@@ -34,6 +34,8 @@ import axios from "axios";
 // import { useSessionGate } from "@/app/profile/_middlewhere";
 // import LoadingComponent from "@/app/components/helper/Loading";
 export default function Profile() {
+
+
 
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
@@ -68,11 +70,8 @@ export default function Profile() {
   }, []);
 
   const { data: session, status } = useSession();
-  const [messagesIsLoading, setMessagesIsLoading] = useState<null | boolean>(
-    null
-  );
 
-  const [isReponseLoading, setResponseLoading] = useState<boolean>(false);
+
 
   //Set the conversation
   const [currentConversationId, setCurrentConversationId] = useState<
@@ -85,13 +84,6 @@ export default function Profile() {
     session as any
   );
 
-  //Creating a new Conversation.
-  const { createConversation, newTitle, setNewTitle, isCreateLoading, error } =
-    useCreateConversation(
-      session as Session,
-      setConversations as any,
-      setCurrentConversationId
-    );
 
   useEffect(() => {
     checkSession(status, {
@@ -179,33 +171,7 @@ export default function Profile() {
     setEditedTitle(event.target.value);
   };
 
-  async function getConversation(conversationId: any) {
-    try {
-      const response = await fetch(`/api/${conversationId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch conversation");
-      }
 
-      const updatedConversation = await response.json();
-      // console.log(
-      //   "Logging the converations before errorw",
-      //   updatedConversation
-      // );
-      // Update local state
-      setConversations((prevConversations) => {
-        return prevConversations.map((convo) =>
-          convo === conversationId
-            ? { ...convo, title: updatedConversation.title }
-            : convo
-        );
-      });
-
-      updateLocalStorage(updatedConversation, conversationId);
-    } catch (error) {
-      console.error("Error fetching conversation:", error);
-      throw error; // Re-throw to handle it in the UI layer
-    }
-  }
 
   async function deleteConversation(conversationId: string | number) {
     const currentConversations = conversations;
@@ -271,34 +237,7 @@ export default function Profile() {
     }
   }
 
-  function updateLocalStorage(
-    updatedConversation: any,
-    conversationId: number
-  ) {
-    const cachedConversations = sessionStorage.getItem("conversations");
 
-    if (cachedConversations) {
-      try {
-        // Parse the cached conversations
-        const parsedConversations = JSON.parse(cachedConversations);
-
-        // Ensure that parsedConversations is an array
-        if (Array.isArray(parsedConversations)) {
-          const updatedCache = parsedConversations.map((convo) =>
-            convo.conversationId === conversationId
-              ? { ...convo, title: updatedConversation.title }
-              : convo
-          );
-
-          sessionStorage.setItem("conversations", JSON.stringify(updatedCache));
-        } else {
-          console.error("Parsed cached conversations is not an array");
-        }
-      } catch (e) {
-        console.error("Error parsing cached conversations:", e);
-      }
-    }
-  }
 
   const handleSubmitTitle = async (event: any) => {
     event.preventDefault(); // Prevent form submission
@@ -377,7 +316,6 @@ export default function Profile() {
   const chatDashBoardRef = useRef<HTMLDivElement>(null);
    
 
-  const [selectedFile, setselectedFile] = useState(null);
  
   
 
@@ -429,12 +367,8 @@ export default function Profile() {
     return <p>No conversation found.</p>;
   }
 
-  const [chatContainerShown, setChatContainerShown] = useState<boolean>(false);
 
-
-  useEffect(() => {
-    console.log("Responses", selectedFile);
-  }, [selectedFile]);
+;
 
   //Function takes you to the bottom of the div by clicking the floating button.
 
@@ -491,8 +425,15 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
+                
+                <button 
+            className=" mt-4 hidden md:flex text-white px-4 py-2 rounded-md   hover:border-white transition-colors"
+
+            onClick={() => signOut()}>Sign Out </button>
               </div>
+
             </div>
+
          
             {/* <div className = "flex flex-col gap-[15px]">
             <div className="border border-gray-700 rounded-lg p-4">

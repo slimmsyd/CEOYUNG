@@ -779,6 +779,9 @@ video {
 .mt-\[50px\]{
   margin-top: 50px;
 }
+.mt-4{
+  margin-top: 1rem;
+}
 .inline-block{
   display: inline-block;
 }
