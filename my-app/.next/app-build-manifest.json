@@ -17,16 +17,15 @@
       "static/css/app/ai/chat/page.css",
       "static/chunks/app/ai/chat/page.js"
     ],
-    "/ai/chat/[userId]/[conversationId]/page": [
+    "/ai/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/ai/chat/[userId]/[conversationId]/page.css",
-      "static/chunks/app/ai/chat/[userId]/[conversationId]/page.js"
+      "static/chunks/app/ai/page.js"
     ],
-    "/ai/profile/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/ai/profile/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

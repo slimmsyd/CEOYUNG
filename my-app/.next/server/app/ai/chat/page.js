@@ -12,7 +12,7 @@ exports.id = "app/ai/chat/page";
 exports.ids = ["app/ai/chat/page"];
 exports.modules = {
 
-/***/ "./action-async-storage.external?9022":
+/***/ "./action-async-storage.external":
 /*!****************************************************************************!*\
   !*** external "next/dist/client/components/action-async-storage.external" ***!
   \****************************************************************************/
@@ -23,7 +23,7 @@ module.exports = require("next/dist/client/components/action-async-storage.exter
 
 /***/ }),
 
-/***/ "./action-async-storage.external?8dda":
+/***/ "../../client/components/action-async-storage.external":
 /*!*******************************************************************************!*\
   !*** external "next/dist/client/components/action-async-storage.external.js" ***!
   \*******************************************************************************/
@@ -34,7 +34,7 @@ module.exports = require("next/dist/client/components/action-async-storage.exter
 
 /***/ }),
 
-/***/ "./request-async-storage.external?93d0":
+/***/ "./request-async-storage.external":
 /*!*****************************************************************************!*\
   !*** external "next/dist/client/components/request-async-storage.external" ***!
   \*****************************************************************************/
@@ -45,7 +45,7 @@ module.exports = require("next/dist/client/components/request-async-storage.exte
 
 /***/ }),
 
-/***/ "./request-async-storage.external?3d59":
+/***/ "../../client/components/request-async-storage.external":
 /*!********************************************************************************!*\
   !*** external "next/dist/client/components/request-async-storage.external.js" ***!
   \********************************************************************************/
@@ -56,7 +56,7 @@ module.exports = require("next/dist/client/components/request-async-storage.exte
 
 /***/ }),
 
-/***/ "./static-generation-async-storage.external?d822":
+/***/ "./static-generation-async-storage.external":
 /*!***************************************************************************************!*\
   !*** external "next/dist/client/components/static-generation-async-storage.external" ***!
   \***************************************************************************************/
@@ -67,7 +67,7 @@ module.exports = require("next/dist/client/components/static-generation-async-st
 
 /***/ }),
 
-/***/ "./static-generation-async-storage.external?16bc":
+/***/ "../../client/components/static-generation-async-storage.external":
 /*!******************************************************************************************!*\
   !*** external "next/dist/client/components/static-generation-async-storage.external.js" ***!
   \******************************************************************************************/
@@ -588,7 +588,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"d46ef1bb5506\");\nif (false) {}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXBwL2dsb2JhbHMuY3NzIiwibWFwcGluZ3MiOiI7Ozs7QUFBQSxpRUFBZSxjQUFjO0FBQzdCLElBQUksS0FBVSxFQUFFLEVBQXVCIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vbXktYXBwLy4vc3JjL2FwcC9nbG9iYWxzLmNzcz8xZDc4Il0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IFwiZDQ2ZWYxYmI1NTA2XCJcbmlmIChtb2R1bGUuaG90KSB7IG1vZHVsZS5ob3QuYWNjZXB0KCkgfVxuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(ssr)/./src/app/globals.css\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"31264500ff1a\");\nif (false) {}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9zcmMvYXBwL2dsb2JhbHMuY3NzIiwibWFwcGluZ3MiOiI7Ozs7QUFBQSxpRUFBZSxjQUFjO0FBQzdCLElBQUksS0FBVSxFQUFFLEVBQXVCIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vbXktYXBwLy4vc3JjL2FwcC9nbG9iYWxzLmNzcz8xZDc4Il0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IFwiMzEyNjQ1MDBmZjFhXCJcbmlmIChtb2R1bGUuaG90KSB7IG1vZHVsZS5ob3QuYWNjZXB0KCkgfVxuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(ssr)/./src/app/globals.css\n");
 
 /***/ }),
 
@@ -671,7 +671,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@walletconnect","vendor-chunks/@swc","vendor-chunks/viem","vendor-chunks/@web3modal","vendor-chunks/pino-pretty","vendor-chunks/tr46","vendor-chunks/@wagmi","vendor-chunks/@stablelib","vendor-chunks/ws","vendor-chunks/@opentelemetry","vendor-chunks/bignumber.js","vendor-chunks/qrcode","vendor-chunks/pngjs","vendor-chunks/@tanstack","vendor-chunks/pino","vendor-chunks/lodash.isequal","vendor-chunks/node-fetch","vendor-chunks/next-auth","vendor-chunks/whatwg-url","vendor-chunks/abitype","vendor-chunks/multiformats","vendor-chunks/valtio","vendor-chunks/event-target-shim","vendor-chunks/@babel","vendor-chunks/fast-redact","vendor-chunks/safe-stable-stringify","vendor-chunks/unstorage","vendor-chunks/thread-stream","vendor-chunks/fast-copy","vendor-chunks/query-string","vendor-chunks/@lit-labs","vendor-chunks/sonic-boom","vendor-chunks/dayjs","vendor-chunks/eventemitter3","vendor-chunks/detect-browser","vendor-chunks/dateformat","vendor-chunks/idb-keyval","vendor-chunks/node-gyp-build","vendor-chunks/fast-safe-stringify","vendor-chunks/wagmi","vendor-chunks/pino-std-serializers","vendor-chunks/dijkstrajs","vendor-chunks/webidl-conversions","vendor-chunks/uint8arrays","vendor-chunks/split2","vendor-chunks/secure-json-parse","vendor-chunks/abort-controller","vendor-chunks/end-of-stream","vendor-chunks/quick-format-unescaped","vendor-chunks/proxy-compare","vendor-chunks/mipd","vendor-chunks/decode-uri-component","vendor-chunks/pump","vendor-chunks/destr","vendor-chunks/utf-8-validate","vendor-chunks/process-warning","vendor-chunks/encode-utf8","vendor-chunks/atomic-sleep","vendor-chunks/bufferutil","vendor-chunks/on-exit-leak-free","vendor-chunks/unfetch","vendor-chunks/once","vendor-chunks/wrappy","vendor-chunks/split-on-first","vendor-chunks/filter-obj","vendor-chunks/isomorphic-unfetch","vendor-chunks/strict-uri-encode","vendor-chunks/process","vendor-chunks/debug","vendor-chunks/ms","vendor-chunks/supports-color","vendor-chunks/has-flag","vendor-chunks/react-loader-spinner","vendor-chunks/mime-db","vendor-chunks/axios","vendor-chunks/styled-components","vendor-chunks/stylis","vendor-chunks/follow-redirects","vendor-chunks/form-data","vendor-chunks/asynckit","vendor-chunks/@emotion","vendor-chunks/combined-stream","vendor-chunks/mime-types","vendor-chunks/proxy-from-env","vendor-chunks/delayed-stream","vendor-chunks/shallowequal"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fai%2Fchat%2Fpage&page=%2Fai%2Fchat%2Fpage&appPaths=%2Fai%2Fchat%2Fpage&pagePath=private-next-app-dir%2Fai%2Fchat%2Fpage.tsx&appDir=%2FUsers%2Fsydneysanders%2FDesktop%2FCodeProjects%2FHustuleCode%2FHustleCode%2Fmy-app%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fsydneysanders%2FDesktop%2FCodeProjects%2FHustuleCode%2FHustleCode%2Fmy-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/@walletconnect","vendor-chunks/@swc","vendor-chunks/viem","vendor-chunks/@opentelemetry","vendor-chunks/@web3modal","vendor-chunks/next-auth","vendor-chunks/@babel","vendor-chunks/pino-pretty","vendor-chunks/tr46","vendor-chunks/@wagmi","vendor-chunks/@stablelib","vendor-chunks/ws","vendor-chunks/bignumber.js","vendor-chunks/qrcode","vendor-chunks/pngjs","vendor-chunks/@tanstack","vendor-chunks/pino","vendor-chunks/lodash.isequal","vendor-chunks/node-fetch","vendor-chunks/whatwg-url","vendor-chunks/abitype","vendor-chunks/multiformats","vendor-chunks/valtio","vendor-chunks/event-target-shim","vendor-chunks/fast-redact","vendor-chunks/safe-stable-stringify","vendor-chunks/unstorage","vendor-chunks/thread-stream","vendor-chunks/fast-copy","vendor-chunks/query-string","vendor-chunks/@lit-labs","vendor-chunks/sonic-boom","vendor-chunks/dayjs","vendor-chunks/eventemitter3","vendor-chunks/detect-browser","vendor-chunks/dateformat","vendor-chunks/idb-keyval","vendor-chunks/node-gyp-build","vendor-chunks/fast-safe-stringify","vendor-chunks/wagmi","vendor-chunks/pino-std-serializers","vendor-chunks/dijkstrajs","vendor-chunks/webidl-conversions","vendor-chunks/uint8arrays","vendor-chunks/split2","vendor-chunks/secure-json-parse","vendor-chunks/abort-controller","vendor-chunks/end-of-stream","vendor-chunks/quick-format-unescaped","vendor-chunks/proxy-compare","vendor-chunks/mipd","vendor-chunks/decode-uri-component","vendor-chunks/pump","vendor-chunks/destr","vendor-chunks/utf-8-validate","vendor-chunks/process-warning","vendor-chunks/encode-utf8","vendor-chunks/atomic-sleep","vendor-chunks/bufferutil","vendor-chunks/on-exit-leak-free","vendor-chunks/unfetch","vendor-chunks/once","vendor-chunks/wrappy","vendor-chunks/split-on-first","vendor-chunks/filter-obj","vendor-chunks/isomorphic-unfetch","vendor-chunks/strict-uri-encode","vendor-chunks/process","vendor-chunks/debug","vendor-chunks/ms","vendor-chunks/supports-color","vendor-chunks/has-flag","vendor-chunks/axios","vendor-chunks/asynckit","vendor-chunks/stylis","vendor-chunks/@emotion","vendor-chunks/styled-components","vendor-chunks/mime-db","vendor-chunks/form-data","vendor-chunks/follow-redirects","vendor-chunks/shallowequal","vendor-chunks/react-loader-spinner","vendor-chunks/proxy-from-env","vendor-chunks/mime-types","vendor-chunks/delayed-stream","vendor-chunks/combined-stream"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fai%2Fchat%2Fpage&page=%2Fai%2Fchat%2Fpage&appPaths=%2Fai%2Fchat%2Fpage&pagePath=private-next-app-dir%2Fai%2Fchat%2Fpage.tsx&appDir=%2FUsers%2Fsydneysanders%2FDesktop%2FCodeProjects%2FHustuleCode%2FHustleCode%2Fmy-app%2Fsrc%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fsydneysanders%2FDesktop%2FCodeProjects%2FHustuleCode%2FHustleCode%2Fmy-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
 module.exports = __webpack_exports__;
 
 })();

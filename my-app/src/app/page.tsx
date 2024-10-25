@@ -233,21 +233,16 @@ export default function Home() {
   }, [setupMarquee]);
 
   return (
-    <div className="overflow-hidden relative ">
+    <div className="bg-[url('https://jutsu.ai/images/BgGrid.svg')] bg-contain bg-center bg-no-repeat customBG  ">
       <main className="px-[4rem]">
         <Navbar
           handleConnect={handleConnect}
           scrollToSection={scrollToSection}
         />
 
-        <div className="flex items-center justify-between w-full text-[14px]  border-b border-white border-opacity-50   p-1 mx-auto">
-          <div className="flex items-center w-full justify-between w0 h-[70px] text-[14px] text-white">
-            <p>YUNG CEO</p>
-            <p>SOCIETY</p>
-          </div>
-        </div>
+   
 
-        <section className="header py-[2rem] text-white flex flex-col">
+        <section className="header py-[2rem] text-white flex flex-col pt-40">
           <div className="flex flex-col md:w-[60%] w-full gap-[10px]">
             <h1 className="md:text-[78px] text-[48px] font-bold ">
               Take Control Of Your Future.

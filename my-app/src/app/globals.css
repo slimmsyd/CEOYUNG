@@ -1310,3 +1310,10 @@ display: flex;
 }
 
 /* Signup redirect page  */
+
+
+.customBG {
+background-color: hsl(222.2 84% 4.9%);
+background-repeat: no-repeat !important;
+
+}
