@@ -548,6 +548,8 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       await handleUploadFile(e); // Call handleUploadFile directly
       console.log("Remove command", message);
       setMessage("");
+      setMessagesIsLoading(false);
+      setselectedFile(null)
       return
     }
 
@@ -700,11 +702,16 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
         },
       };
       const response = await axios.post(
-        "http://127.0.0.1:5000/process_image",
+        "http://10.0.0.152:8888/process_image",
         data,
         config
       );
       const body = response.data;
+
+      if(response.status === 200) {
+        setMessagesIsLoading(false);
+      }
+
 
       console.log("Logging the response", response.data);
       setResponses((prevResponses) =>
@@ -713,7 +720,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
             // Set imageUrl directly instead of an array
             const newImageUrl = response.data.image_url.startsWith('http')
               ? response.data.image_url // Use the existing URL if it already has the protocol
-              : `http://127.0.0.1:5000${response.data.image_url}`; // Prepend the base URL if not
+              : `http://10.0.0.152:8888${response.data.image_url}`; // Prepend the base URL if not
             return {
               ...resp,
               imageUrl: newImageUrl, // Set the new URL directly
@@ -721,7 +728,10 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
           }
           return resp;
         })
+
       );
+      setMessagesIsLoading(false);
+      setSelectedFile(null);
       console.log("Logging the responses", responses);
 
       const updatedConversationId = sessionStorage.getItem(
@@ -749,10 +759,12 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
         setisFileUploaded(true); // flag to show the uploaded file
         setisUploading(false);
         setuploadedFile(selectedFile); // set the uploaded file to show the name
+        setMessagesIsLoading(false);
       }
     } catch (error) {
       console.error(error);
       setisUploading(false);
+      setMessagesIsLoading(false);
     }
   };
 

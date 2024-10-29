@@ -1,8 +1,8 @@
 {
   "/ai/chat/page": "app/ai/chat/page.js",
   "/ai/chat/[userId]/[conversationId]/page": "app/ai/chat/[userId]/[conversationId]/page.js",
-  "/icon.svg/route": "app/icon.svg/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/api/userConversations/route": "app/api/userConversations/route.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
   "/api/storedMessages/route": "app/api/storedMessages/route.js"
 }
