@@ -3,6 +3,9 @@ import styles from "../../../../styles/chat.module.css"
 
 
 export const formatResponse = (response: string): string => {
+  // Guard clause to handle null/undefined responses
+  if (!response) return '';
+
   // Replace **text** with <strong>text</strong>
   let formattedResponse = response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
@@ -63,6 +66,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ response, shouldAnimate = tru
   }, [response, shouldAnimate]);
 
   useEffect(() => {
+    if(response.response === null) {
+      return;
+    }
     if (isTyping && displayedMessage.length < response.response.length) {
       const timer = setTimeout(() => {
         setDisplayedMessage(response.response.slice(0, displayedMessage.length + 1));

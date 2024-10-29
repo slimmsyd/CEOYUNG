@@ -9,10 +9,8 @@ import React, {
   useId,
   FormEvent,
 } from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 import { Session } from "next-auth";
-
-
 
 //Utilis and helper functions
 import { isClient } from "@/utilis/isClient";
@@ -29,15 +27,13 @@ import useConversations from "@/hooks/useConversations";
 import { ChatContainer } from "../chat/ChatContainer";
 
 import axios from "axios";
+import ChatHeader from "@/app/components/ChatHeader";
 
 // import FloatingScrollButton from "@/app/components/ScrollToBottomButton";
 // import OpenChatContainer from "@/app/components/helper/openChatContainerComponent";
 // import { useSessionGate } from "@/app/profile/_middlewhere";
 // import LoadingComponent from "@/app/components/helper/Loading";
 export default function Profile() {
-
-
-
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   //Should wrap these in a bigger function since being used multiple times?
@@ -45,7 +41,6 @@ export default function Profile() {
   const [sessionStatus, setSessionStatus] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const [showGuidelines, setShowGuidelines] = useState(true);
-
 
   //List of  PDF imagse
 
@@ -72,8 +67,6 @@ export default function Profile() {
 
   const { data: session, status } = useSession();
 
-
-
   //Set the conversation
   const [currentConversationId, setCurrentConversationId] = useState<
     number | string | null
@@ -84,7 +77,6 @@ export default function Profile() {
   const { conversations, isLoading, setConversations } = useConversations(
     session as any
   );
-
 
   useEffect(() => {
     checkSession(status, {
@@ -172,11 +164,8 @@ export default function Profile() {
     setEditedTitle(event.target.value);
   };
 
-
-
   async function deleteConversation(conversationId: string | number) {
     const currentConversations = conversations;
-
 
     console.log("Conversation ID", conversationId);
 
@@ -216,8 +205,6 @@ export default function Profile() {
         JSON.stringify(updatedConversations)
       ); // Update local storage
 
-  
-
       if (response.ok) {
         // Update the conversations state
         const updatedConversations = conversations.filter(
@@ -238,12 +225,9 @@ export default function Profile() {
     }
   }
 
-
-
   const handleSubmitTitle = async (event: any) => {
     event.preventDefault(); // Prevent form submission
     let titleChange: string = "";
-
 
     console.log("Event Key", event.key);
     if (event.key === "Enter") {
@@ -315,13 +299,6 @@ export default function Profile() {
   };
 
   const chatDashBoardRef = useRef<HTMLDivElement>(null);
-   
-
- 
-  
-
-
-
 
   const handleConversationClick = (convoId: string) => {
     const targetPath = `/ai/chat/${session?.user.id}/${convoId}`;
@@ -356,27 +333,31 @@ export default function Profile() {
 
   useEffect(() => {}, [isLoading]);
 
-
-
-
-
-
   if (!conversations) {
     return <p>No conversation found.</p>;
   }
-  
 
   const handleSignOut = () => {
     signOut();
     router.push("/");
   };
 
-
-
-
-;
-
   //Function takes you to the bottom of the div by clicking the floating button.
+
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+        // TODO: Add API call to save image to backend
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="chatDashboard text-white">
@@ -404,60 +385,93 @@ export default function Profile() {
 
       {/* Chat Container Componet  */}
 
+
+
       <div
         ref={chatDashBoardRef}
         className="chatDashboardWrapper w-full text-left"
       >
-     
+
+        <ChatHeader />
 
         <div className={`chatDashBoardContainer `}>
-
-          <div className="flex flex-col gap-[15px] space-y-4 my-[5rem]" >
-
-            <div className = "flex flex-col gap-[15px]">
-              <h2>Account</h2>
-            <div className="border border-gray-700 rounded-lg p-4">
-
-              <div className = "flex flex-col gap-[15px]">  
-                <p>Profile</p>
-                  <div className = "flex flex-col gap-[20px] text-sm">  
-                    <div className = "flex flex-col gap-[5px]">
-                      <p>Name</p>
-                      <p className = "text-gray-400">{userName}</p>
+          <div className="flex flex-col gap-[15px] space-y-4 my-[5rem]">
+            <div className="flex flex-col gap-[15px]">
+              <h3>Account</h3>
+              <div className="border border-gray-700 rounded-lg p-4">
+                <div className="flex flex-col gap-[15px]">
+                  <div className="flex flex-row gap-[15px]">
+                    <div className="relative group">
+                      <div 
+                        className="w-[60px] h-[60px] rounded-full bg-transparent border border-gray-700"
+                        style={{
+                          backgroundImage: profileImage ? `url(${profileImage})` : 'none',
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      ></div>
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                      />
+                      <div 
+                        className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <div className="w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center bg-gray-800">
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="12" 
+                            height="12" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                          >
+                            <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
+                          </svg>
+                        </div>
+                      </div>
                     </div>
-                    <div className = "flex flex-col gap-[5px]">
+                    <div className="flex flex-col gap-[5px]">
+                      <p>Name</p>
+                      <p className="text-gray-400">{userName}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-[20px] text-sm">
+                    <div className="flex flex-col gap-[5px]">
                       <p>Email</p>
-                      <p className = "text-gray-400">@{email}</p>
+                      <p className="text-gray-400">@{email}</p>
                     </div>
                   </div>
                 </div>
-                
-                <button 
-            className=" mt-4 hidden md:flex text-white px-4 py-2 rounded-md   hover:border-white transition-colors"
 
-            onClick={handleSignOut}>Sign Out </button>
+                <button
+                  className="mt-4 hidden md:flex text-white px-4 py-2 rounded-md hover:border-white hover:bg-[#363737] transition-colors bg-[#232525]"
+                  onClick={handleSignOut}
+                >
+                  Sign Out{" "}
+                </button>
               </div>
-
             </div>
 
-         
             {/* <div className = "flex flex-col gap-[15px]">
             <div className="border border-gray-700 rounded-lg p-4">
               </div>
             </div> */}
-           
+
             {/* <div className = "flex flex-col gap-[15px]">
             <div className="border border-gray-700 rounded-lg p-4">
               </div>
 
               
             </div> */}
-
-
-            
           </div>
-       
-
         </div>
       </div>
     </div>

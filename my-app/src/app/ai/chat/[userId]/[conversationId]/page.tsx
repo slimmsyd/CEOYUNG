@@ -32,6 +32,7 @@ import useConversations from "@/hooks/useConversations";
 import { ChatContainer } from "../../ChatContainer";
 import { ChatMessagesContainer } from "../../ChatMessage";
 import { Guidelines } from "../../components/Guidelines";
+import ChatHeader from "@/app/components/ChatHeader";
 
 import axios from "axios";
 
@@ -40,8 +41,8 @@ import axios from "axios";
 // import { useSessionGate } from "@/app/profile/_middlewhere";
 // import LoadingComponent from "@/app/components/helper/Loading";
 export default function ConversationPage() {
-  const chatBotUrl = " http://10.0.0.152:8888/chat";
-  const generatePdfUrl = " http://10.0.0.152:8888/generate_pdf";
+  const chatBotUrl = " http://192.168.1.79:8888/chat";
+  const generatePdfUrl = " http://192.168.1.79:8888/generate_pdf";
 
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
@@ -749,7 +750,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
           userId: session?.user.id, // Ensure you have the current user's ID
           conversationId: updatedConversationId,
           userContent: message, // User's message
-          imageUrl: `http://127.0.0.1:5000${response.data.image_url}`, // Image URL from the bot
+          imageUrl: response.data.image_url, // Image URL from the bot
         }),
       });
 
@@ -1110,19 +1111,11 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
 
       <div
         ref={chatDashBoardRef}
-        className="chatDashboardWrapper w-full text-left"
+        className="chatDashboardWrapper relative w-full text-left"
       >
-        {/* <OpenChatContainer
-          chatContainerToggle={chatContainerToggle}
-          chatContainerShown={chatContainerShown}
-        /> */}
-        {/* Guidelines Hader */}
 
-        {/* <Header
-          showGuidelines={showGuidelines}
-          setShowGuidelines={setShowGuidelines}
-          handleMobileChatBtnClick={handleMobileChatBtnClick}
-        /> */}
+        <ChatHeader />
+
 
         <div className={`chatDashBoardContainer `}>
           {/* Dashboard Component  */}

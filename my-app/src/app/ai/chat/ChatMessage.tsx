@@ -59,12 +59,12 @@ export const ChatMessagesContainer: FC<ChatMessageProps> = ({ responses }) => {
                   >
                     {response.question}
                   </p>
-                  {response.response ? (
+                  {(response.response || response.imageUrl) ? (
                     <ChatMessage
                       response={response as any}
                       shouldAnimate={response.id === lastMessageId}
                     />
-                  ) : <LoadingComponent  />}
+                  ) : <LoadingComponent />}
                   {response.imageUrl && (
                     <div className={styles.image_container}>
                       {Array.isArray(response.imageUrl) ? (

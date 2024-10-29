@@ -2,7 +2,6 @@
 
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
-
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
@@ -33,7 +32,7 @@ import { ChatContainer } from "./ChatContainer";
 import { ChatMessagesContainer } from "./ChatMessage";
 import { Guidelines } from "./components/Guidelines";
 import axios from "axios";
-
+import ChatHeader from "../../components/ChatHeader";
 
 import { Dashboard } from "./Dashboard";
 const ChatDashboard: React.FC = () => {
@@ -53,8 +52,13 @@ const ChatDashboard: React.FC = () => {
     setShowGuidelines(false);
  };
 
- const chatBotUrl = " http://10.0.0.152:8888/chat";
+ const chatBotUrl = " http://192.168.1.79:8888/chat";
+ const generatePdfUrl = " http://192.168.1.79:8888/generate_pdf";
 
+ const [logoImage, setLogoImage] = useState<string | null>(null);
+ 
+ //List of Backround PDF imagse
+ const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
 
 
 
@@ -262,9 +266,8 @@ const ChatDashboard: React.FC = () => {
       }
   
       setMessagesIsLoading(true);
-      console.log("Messages is loading", messagesIsLoading);
   
-      const command = message.trim().split(" ")[0].toLowerCase().replace("/", "");
+      const command = message.trim().split(" ")[0].toLowerCase();
   
       console.log("Command", command);
   
@@ -279,6 +282,7 @@ const ChatDashboard: React.FC = () => {
           },
         ]);
         setMessage(""); // Clear the message input
+        setMessagesIsLoading(false);
         return; // Exit the function after ha
       }
   
@@ -302,19 +306,44 @@ const ChatDashboard: React.FC = () => {
         } else {
           console.log("Invalid index for PDF selection");
         }
+        setMessagesIsLoading(false);
+        return;
+      };
+  
+      if(command === "$generatepdf") {
+        console.log("Generating PDF", message);
+        handleGeneratePdf(command, message, e);
+        setMessagesIsLoading(false);
         return;
       }
   
       if (command === "$pdf") {
   
-     
-        uploadImage(selectedPdfImage as string);
+        console.log("Selected PDF image", selectedPdfImage);
   
+        uploadImage(selectedPdfImage as string, message as string);
+        setMessagesIsLoading(false);
         return
       }
   
+      if(command === "$help") {
+        const commandList = Object.keys(specialCommands).join(", "); // Create a list of commands
+        setResponses((prevResponses) => [
+          ...prevResponses,
+          {
+            question: message,
+            response: `Here are your available commands: $${commandList}`, // Update response to show commands
+            id: Date.now().toString(),
+          },
+        ]);
+        setMessagesIsLoading(false);
+        return;
+      }
   
-      async function uploadImage(imagePath: string) {
+  
+  
+  
+      async function uploadImage(imagePath: string, message: string) {
         // Fetch the image as a Blob
         const response = await fetch(imagePath);
         const blob = await response.blob(); // Convert the response to a Blob
@@ -322,11 +351,12 @@ const ChatDashboard: React.FC = () => {
       
         const formData = new FormData();
         formData.append('file', file); // Change 'files' to 'file'
-        
-        console.log("Logging the image file", file);
+        formData.append('message', message); // Add the message to the form data
+  
         fetch('http://127.0.0.1:5000/upload', {
           method: 'POST',
           body: formData,
+    
         })
         .then(response => {
           if (response.ok) {
@@ -363,6 +393,8 @@ const ChatDashboard: React.FC = () => {
         await handleUploadFile(e); // Call handleUploadFile directly
         console.log("Remove command", message);
         setMessage("");
+        setMessagesIsLoading(false);
+        setselectedFile(null)
         return
       }
   
@@ -383,7 +415,7 @@ const ChatDashboard: React.FC = () => {
   
       if (command in specialCommands) {
         // Handle special command
-        await handleSpecialCommand(command, message);
+        await handleSpecialCommand(command, message, e);
       } else {
         // Regular chat flow
         if (isClient()) {
@@ -421,8 +453,7 @@ const ChatDashboard: React.FC = () => {
               method: "POST",
               headers: {
                 "Content-type": "application/json",
-                'Origin': 'http://localhost:3000'  // Adjust if your frontend runs on a different port
-              },
+            },
               mode: 'cors',
               body: JSON.stringify({
                 userId: session?.user.id,
@@ -458,7 +489,7 @@ const ChatDashboard: React.FC = () => {
                 imageUrl: "",
               }),
             });
-            setMessagesIsLoading(false);
+  
             //Add the conversations arrawy or update
           } catch (error) {
             console.error("Error handling submission:", error);
@@ -466,6 +497,8 @@ const ChatDashboard: React.FC = () => {
         }
       }
     };
+
+    
 
 
   const [, setfileURL] = useState("");
@@ -485,92 +518,102 @@ const ChatDashboard: React.FC = () => {
     setselectedFile(selectedFileList);
   };
       // Upload file to server
-  const handleUploadFile = async (e) => {
-    e.preventDefault();
-
-    setisUploading(true);
-    const data = new FormData();
-    console.log("THe upload input", uploadInput.files);
-
-    // Append the file to the request body
-    for (let i = 0; i < uploadInput.files.length; i++) {
-      data.append("file", uploadInput.files[i], uploadInput.files[i].name);
-    }
-
-    const newResponse = {
-      question: message,
-      response: "",
-      id: "temp",
-    };
-
-    setResponses((responses) => [...responses, newResponse]);
-
-    setMessage("");
-
-    console.log("LOggin he data", data);
-    try {
-      const config = {
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          setuploadProgress(Math.round((loaded / total) * 100));
-        },
-      };
-      const response = await axios.post(
-        "http://127.0.0.1:5000/process_image",
-        data,
-        config
-      );
-      const body = response.data;
-
-      console.log("Logging the response", response.data);
-      setResponses((prevResponses) =>
-        prevResponses.map((resp) => {
-          if (resp.question === message) {
-            // Set imageUrl directly instead of an array
-            const newImageUrl = response.data.image_url.startsWith('http')
-              ? response.data.image_url // Use the existing URL if it already has the protocol
-              : `http://127.0.0.1:5000${response.data.image_url}`; // Prepend the base URL if not
-            return {
-              ...resp,
-              imageUrl: newImageUrl, // Set the new URL directly
-            };
+      const handleUploadFile = async (e) => {
+        e.preventDefault();
+    
+        setisUploading(true);
+        const data = new FormData();
+        console.log("THe upload input", uploadInput.files);
+    
+        // Append the file to the request body
+        for (let i = 0; i < uploadInput.files.length; i++) {
+          data.append("file", uploadInput.files[i], uploadInput.files[i].name);
+        }
+    
+        const newResponse = {
+          question: message,
+          response: "",
+          id: "temp",
+        };
+    
+        setResponses((responses) => [...responses, newResponse]);
+    
+        setMessage("");
+    
+        console.log("LOggin he data", data);
+        try {
+          const config = {
+            onUploadProgress: (progressEvent) => {
+              const { loaded, total } = progressEvent;
+              setuploadProgress(Math.round((loaded / total) * 100));
+            },
+          };
+          const response = await axios.post(
+            "http://10.0.0.152:8888/process_image",
+            data,
+            config
+          );
+          const body = response.data;
+    
+          if(response.status === 200) {
+            setMessagesIsLoading(false);
           }
-          return resp;
-        })
-      );
-      console.log("Logging the responses", responses);
-
-      const updatedConversationId = sessionStorage.getItem(
-        "currentConversationId"
-      );
-
-      console.log("Logging the response data", response.data.responses);
-
-      await fetch("/api/messages", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: session?.user.id, // Ensure you have the current user's ID
-          conversationId: updatedConversationId,
-          userContent: message, // User's message
-          imageUrl: `http://127.0.0.1:5000${response.data.image_url}`, // Image URL from the bot
-        }),
-      });
-
-      console.log("Returning the body", body);
-      setfileURL(`${chatBotUrl}/${body.filename}`);
-      if (response.status === 200) {
-        setisFileUploaded(true); // flag to show the uploaded file
-        setisUploading(false);
-        setuploadedFile(selectedFile); // set the uploaded file to show the name
-      }
-    } catch (error) {
-      console.error(error);
-      setisUploading(false);
-    }
-  };
+    
+    
+          console.log("Logging the response", response.data);
+          setResponses((prevResponses) =>
+            prevResponses.map((resp) => {
+              if (resp.question === message) {
+                // Set imageUrl directly instead of an array
+                const newImageUrl = response.data.image_url.startsWith('http')
+                  ? response.data.image_url // Use the existing URL if it already has the protocol
+                  : response.data.image_url; // Prepend the base URL if not
+                return {
+                  ...resp,
+                  imageUrl: newImageUrl, // Set the new URL directly
+                };
+              }
+              return resp;
+            })
+    
+          );
+          setMessagesIsLoading(false);
+          setSelectedFile(null);
+          console.log("Logging the responses", responses);
+    
+          const updatedConversationId = sessionStorage.getItem(
+            "currentConversationId"
+          );
+    
+          console.log("Logging the response data", response.data.responses);
+    
+          await fetch("/api/messages", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: session?.user.id, // Ensure you have the current user's ID
+              conversationId: updatedConversationId,
+              userContent: message, // User's message
+              imageUrl: response.data.image_url, // Image URL from the bot
+            }),
+          });
+    
+          console.log("Returning the body", body);
+          setfileURL(`${chatBotUrl}/${body.filename}`);
+          if (response.status === 200) {
+            setisFileUploaded(true); // flag to show the uploaded file
+            setisUploading(false);
+            setuploadedFile(selectedFile); // set the uploaded file to show the name
+            setMessagesIsLoading(false);
+          }
+        } catch (error) {
+          console.error(error);
+          setisUploading(false);
+          setMessagesIsLoading(false);
+        }
+      };
   const handleSpecialCommand = async (command: string, fullMessage: string) => {
     const baseUrl = 'http://127.0.0.1:5000'; // Adjust this to your API base URL
     const commandEndpoint = `${baseUrl}${specialCommands[command as keyof typeof specialCommands]}`;
@@ -990,6 +1033,8 @@ const ChatDashboard: React.FC = () => {
           className="chatDashboardWrapper w-full text-left"
         >
        
+       <ChatHeader />
+
 
           <div className="chatDashBoardContainer">
             {/* Dashboard Component  */}

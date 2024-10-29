@@ -3,6 +3,7 @@ import React, { FC, RefObject } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Conversation } from "../../../../types";
+
 // import { isClient } from "@/utilis/isClient";
 
 interface ChatContainerProps {
@@ -161,12 +162,17 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
   // Add placeholder conversations
 
+  // Add hover state
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
       ref={chatContainerRef}
-      className={`chatContainer flex flex-col flex-1 ${
+      className={`chatContainer flex flex-col flex-1 hover:min-w-[200px] ${
         chatContainerShown ? "none" : ""
       }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex flex-col gap-[22px]  h-full">
         {" "}
@@ -175,31 +181,27 @@ export const ChatContainer: FC<ChatContainerProps> = ({
         </Link>
         <div className="flex flex-col gap-[13px] items-start justify-start h-[150px]">
           <div className="flex flex-row gap-[13px] items-center justify-start">
-            <div
-              style={{
-                height: "25px",
-                width: "25px",
-                border: "0.5px solid #D3D3D3",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "50%",
-              }}
-            >
+            <div>
               <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
+                role="img"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="white"
+                stroke-width="1.8"
+                stroke="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-2/3 w-2/3 text-gray-400"
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12.5001 3.44354C12.1907 3.26491 11.8095 3.26491 11.5001 3.44354L5.24667 7.05396L12.0147 10.861L18.9699 7.17886L12.5001 3.44354ZM19.6604 9.07629L13.0002 12.6023V20.2681L19.1604 16.7115C19.4698 16.5329 19.6604 16.2027 19.6604 15.8455V9.07629ZM11.0002 20.2682V12.585L4.33984 8.83857V15.8455C4.33984 16.2027 4.53044 16.5329 4.83984 16.7115L11.0002 20.2682ZM10.5001 1.71149C11.4283 1.1756 12.5719 1.1756 13.5001 1.71149L20.1604 5.55679C21.0886 6.09269 21.6604 7.08307 21.6604 8.15487V15.8455C21.6604 16.9173 21.0886 17.9076 20.1604 18.4435L13.5001 22.2888C12.5719 22.8247 11.4283 22.8247 10.5001 22.2888L3.83984 18.4435C2.91164 17.9076 2.33984 16.9173 2.33984 15.8455V8.15487C2.33984 7.08307 2.91164 6.09269 3.83984 5.55679L10.5001 1.71149Z"
-                  fill="currentColor"
-                ></path>
+                <g>
+                  <title></title>
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17.315 5.49313C16.5616 4.83562 15.4384 4.83562 14.685 5.49313L6.02743 13.0485C5.37462 13.6183 5 14.4424 5 15.3089L5 23.6727C5 25.8819 6.79086 27.6727 9 27.6727L23 27.6727C25.2091 27.6727 27 25.8819 27 23.6727V15.3089C27 14.4424 26.6254 13.6183 25.9726 13.0485L17.315 5.49313ZM14.4472 21.7783C13.9532 21.5313 13.3525 21.7315 13.1055 22.2255C12.8586 22.7195 13.0588 23.3201 13.5528 23.5671C15.0933 24.3374 16.9067 24.3374 18.4472 23.5671C18.9412 23.3201 19.1414 22.7195 18.8944 22.2255C18.6474 21.7315 18.0468 21.5313 17.5528 21.7783C16.5753 22.267 15.4247 22.267 14.4472 21.7783Z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
               </svg>
             </div>
 
@@ -222,30 +224,24 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
           <div className="flex flex-row gap-[13px]">
             <div
-              style={{
-                height: "25px",
-                width: "25px",
-                border: "0.5px solid #D3D3D3",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "50%",
-              }}
+            
             >
               <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                role="img"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
                 fill="none"
+                stroke-width="2"
+                stroke="white"
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-2/3 w-2/3 text-gray-400"
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12.5001 3.44354C12.1907 3.26491 11.8095 3.26491 11.5001 3.44354L5.24667 7.05396L12.0147 10.861L18.9699 7.17886L12.5001 3.44354ZM19.6604 9.07629L13.0002 12.6023V20.2681L19.1604 16.7115C19.4698 16.5329 19.6604 16.2027 19.6604 15.8455V9.07629ZM11.0002 20.2682V12.585L4.33984 8.83857V15.8455C4.33984 16.2027 4.53044 16.5329 4.83984 16.7115L11.0002 20.2682ZM10.5001 1.71149C11.4283 1.1756 12.5719 1.1756 13.5001 1.71149L20.1604 5.55679C21.0886 6.09269 21.6604 7.08307 21.6604 8.15487V15.8455C21.6604 16.9173 21.0886 17.9076 20.1604 18.4435L13.5001 22.2888C12.5719 22.8247 11.4283 22.8247 10.5001 22.2888L3.83984 18.4435C2.91164 17.9076 2.33984 16.9173 2.33984 15.8455V8.15487C2.33984 7.08307 2.91164 6.09269 3.83984 5.55679L10.5001 1.71149Z"
-                  fill="currentColor"
-                ></path>
+                <g>
+                  <title></title>
+                  <path d="M8.5 25.5C9.5 24.5 9.83333 22.3333 9.5 21.5C9.42273 21.4734 8.84545 21.2538 8.76817 21.2262C7.66999 20.8332 7 19.7542 7 18.5879V9.87424C7 8.72745 7.64925 7.6677 8.73365 7.2946C12.2079 6.09927 18.2029 5.11688 24.2305 7.27337C25.3287 7.66627 26 8.74577 26 9.91214V18.6258C26 19.7726 25.3496 20.8328 24.2652 21.2058C21.9099 22.016 18.3965 22.7282 14.5 22.4312C13.5 24.4312 11 25.5 8.5 25.5Z"></path>
+                </g>
               </svg>
             </div>
 
@@ -295,12 +291,15 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                                   );
                               }
                             }}
-                            className={`hover:text-[#8c8c8c] px-2  text-left cursor-pointer ${
+                            className={`transition-all duration-300 px-2 text-left cursor-pointer ${
                               conversation.conversationId ===
                               currentConversationId
                                 ? "text-[#ffff] bg-[#545454] rounded-md px-2 py-1 border border-white border-opacity-50"
-                                : ""
-                            }`}
+                                : hoveredConversationId ===
+                                  conversation.conversationId
+                                ? "text-[#8c8c8c]"
+                                : "text-[#ffffff]"
+                            } ${isHovered ? "opacity-100" : "opacity-0"}`}
                           >
                             {conversation.title}
                           </p>
@@ -401,13 +400,19 @@ export const ChatContainer: FC<ChatContainerProps> = ({
       {/* Profile  Container */}
       <div className="flex flex-row gap-[4px]  settingsContainer ">
         <Link
-            href="/ai/profile"
-          className="  hoverBgBtn   text-[14px]   flex flex-row items-center justify-center gap-[13px] w-[135px]    "
+          href="/ai/profile"
+          className="     text-[14px]   flex flex-row items-center justify-center gap-[13px] w-[135px]    "
         >
-          <div className="mainIcon flex items-center justify-center">
+          <div className="mainIcon w-[35px] h-[35px] flex items-center justify-center bg-white text-black rounded-full">
             {clientSplitUserName}
           </div>
-          <p>{clientEmail}</p>
+          <p
+            className={`transition-opacity duration-300 ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {clientEmail}
+          </p>
         </Link>
 
         <Link href="/ai/profile" className="mainIcon !w-[20px] !h-[20px]">
@@ -415,9 +420,15 @@ export const ChatContainer: FC<ChatContainerProps> = ({
         </Link>
       </div>
 
-      <div className="flex flex-row gap-[10px] justify-end self-end items-center  text-[14px]   settingsContainer !border-none !mt-0 ">
+      <div className="flex flex-row gap-[10px] justify-start self-start items-start  text-[14px]   settingsContainer !border-none !mt-0 ">
         {/* <Image src={FaceIcon} width={18} height={18} alt="Solomon Icon" /> */}
-        <p className="text-white">YungCEO AI</p>
+        <p
+          className={`text-white transition-opacity duration-300 ${
+            isHovered ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          YungCEO AI
+        </p>
         {/* <Link
           href="https://www.instagram.com/solomoncopilot/"
           target="_blank"

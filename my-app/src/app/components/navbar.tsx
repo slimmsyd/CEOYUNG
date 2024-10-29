@@ -537,7 +537,7 @@ export default function Navbar({
     
     </ul>
 
-    <div className="lg:flex hidden items-center gap-2 flex-1">
+    <div className="lg:flex hidden items-end justify-end gap-2 flex-1">
       {session ? (
         <Link
           href="/ai/chat"
@@ -599,12 +599,22 @@ mt-2 w-48 rounded-md shadow-lg z-10">
         <a href="/ycai" className="block px-4 py-2 text-sm text-white ">YCAI</a>
         <a href="/zero-to-glitching" className="block px-4 py-2 text-sm text-white ">Zero To Glitching</a>
         <div className="border-t border-white/10 my-2"></div>
+        {session ? (
+        <Link
+          href="/ai/chat"
+          className="inline-flex bg-white text-black items-center  justify-center w-full whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2  rounded-[14px] h-10"
+        >
+          Go to app
+        </Link>
+      ) : (
         <button
           className="inline-flex items-center  justify-center w-full whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2 text-white rounded-[14px] h-10"
           onClick={() => signIn("google")}
         >
           Sign in{" "}
-        </button>          </div>
+        </button>    
+      )}
+            </div>
     </div>
   )}
 </div>

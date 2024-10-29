@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Navbar from "./components/navbar";
 import Header from "./components/header";
-import { useState, useEffect, useCallback ,useRef} from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Footer from "./components/footer";
 import GlobalButton from "./components/globalbutton";
 import Link from "next/link";
@@ -52,10 +52,8 @@ export default function Home() {
     if (!address) {
       setIsAdmin(false);
     }
-
   }, [address]);
   useEffect(() => {
-
     if (!isAdmin) {
     }
   }, [isAdmin]);
@@ -120,36 +118,6 @@ export default function Home() {
     }).then(() => setShowPopup(false));
   }, [articleImage, articleName, articleLink]);
 
-  // Smooth Scroll feature
-
-  // useEffect(() => {
-  //   // Initialize Lenis for smooth scrolling
-  //   const lenis = new Lenis({
-  //     duration: 1.2,
-  //     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  //     direction: "vertical",
-  //     gestureDirection: "vertical",
-  //     smooth: true,
-  //     smoothTouch: false,
-  //     touchMultiplier: 2,
-  //     infinite: false,
-  //   } as any);
-
-  //   const raf = (time: number) => {
-  //     lenis.raf(time);
-  //     requestAnimationFrame(raf);
-  //   };
-
-  //   requestAnimationFrame(raf);
-
-  //   const mm = gsap.matchMedia();
-
-  //   return () => {
-  //     lenis.destroy();
-  //     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  //   };
-  // }, []);
-
   const services = [
     {
       src: "/images/mining_machines.png",
@@ -210,24 +178,24 @@ export default function Home() {
   const setupMarquee = useCallback(() => {
     const marquee = marqueeRef.current;
     if (!marquee) return;
-  
+
     const content = marquee.firstElementChild as HTMLElement;
     if (!content) return;
-  
+
     // Clone the content
     const clone = content.cloneNode(true) as HTMLElement;
     marquee.appendChild(clone);
-  
+
     // Calculate the animation duration based on content width
     const contentWidth = content.offsetWidth;
     const duration = contentWidth / 50; // Adjust 50 to change speed
-  
+
     // Apply the animation
-    marquee.style.setProperty('--marquee-duration', `${duration}s`);
-  
+    marquee.style.setProperty("--marquee-duration", `${duration}s`);
+
     // No need for cleanup as we're using CSS animation
   }, []);
-  
+
   useEffect(() => {
     setupMarquee();
   }, [setupMarquee]);
@@ -240,20 +208,24 @@ export default function Home() {
           scrollToSection={scrollToSection}
         />
 
-   
-
         <section className="header py-[2rem] text-white flex flex-col pt-40">
-          <div className="flex flex-col md:w-[60%] w-full gap-[10px]">
-            <h1 className="md:text-[78px] text-[48px] font-bold ">
+          <div className="flex flex-col md:w-[80%] m-auto text-center items-center justify-center w-full gap-[10px]">
+            <h1 className="mb-4 text-[30px] font-extrabold leading-tight text-dark sm:text-[60px] text-white">
               Take Control Of Your Future.
+              <span className="bg-gradient-to-l from-[#007AFF] via-[#007AFF] to-transparent bg-clip-text text-transparent">
+                YungCEO
+              </span>
             </h1>
-            <p className="text-[#a3a3a3] text-[14px]">
-              At 22 years old, I've been traveling outside the U.S., sustaining
-              my lifestyle by leveraging digital products and other online
-              income streams. Now, I'm here to teach you how to do the same. My
-              goal is to help you reclaim your time through the power of passive
-              income.
-            </p>
+
+            <div className="max-w-[700px] mx-auto text-white text-center items-center justify-center">
+              <p>
+                At 22 years old, I've been traveling outside the U.S.,
+                sustaining my lifestyle by leveraging digital products and other
+                online income streams. Now, I'm here to teach you how to do the
+                same. My goal is to help you reclaim your time through the power
+                of passive income.
+              </p>
+            </div>
 
             <div className="flex flex-row gap-[15px] items-center  mt-[20px]">
               <button
@@ -273,13 +245,31 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="video items-end justify-end md:self-end self-center md:mt-[20px] mt-[100px]">
+          <div className=" justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
+            <span className="inline-flex gap-[10px] items-center justify-center">
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M13 18V20H17V22H7V20H11V18H3C2.44772 18 2 17.5523 2 17V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V17C22 17.5523 21.5523 18 21 18H13ZM4 5V16H20V5H4ZM10 7.5L15 10.5L10 13.5V7.5Z"></path>
+              </svg>
+              Here The Voice
+            </span>
+          </div>
+
+          <div className="video items-center justify-center md:self-center self-center  ">
             <iframe
               width="738"
               height="503"
               src="https://www.youtube.com/embed/pLVrdKaCkog"
               title="Welcome To your Future"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              className="border-[7px] border-[hsla(0,0%,50%,0.3)]"
             ></iframe>
           </div>
         </section>
@@ -670,12 +660,14 @@ export default function Home() {
               </div>
 
               <div className="pricingCard  h-full bg-transparent relative">
-                <div className = "w-full flex items-center justify-center relative">
-                  <div className="absolute top-[-25px] flex items-center justify-center w-[170px] text-bold  h-[20px] bg-[#2947da] m-auto rounded-md">
+                <div className="w-full flex items-center justify-center relative">
+                  <div className=" absolute  justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
+                    <span className="inline-flex gap-[10px] items-center justify-center">
                     MOST POPULAR
+                    </span>
                   </div>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center pt-[50px]">
                   <h3 className="text-bold">Bread Winner</h3>
                   <div className="flex flex-row gap-[5px] items-center">
                     <h2 className="text-[30px] font-bold text-[#2947da]">
@@ -1092,45 +1084,47 @@ export default function Home() {
         {/* <Testimonials /> */}
 
         <section className="h-auto my-[100px] flex items-center justify-center w-full text-white overflow-hidden">
-      <div className="flex flex-col items-center justify-center gap-[20px] w-full">
-        <h2 className="text-[40px] font-bold">
-          Testimonials
-        </h2>
-        <p>Recent Reviews</p>
-        <div ref={marqueeRef} className="marquee-container">
-          <div className="marquee-content">
-            {testimonial.map((testimonial, index) => (
-              <div key={index} className="card justify-between hover:border-white hover:border-opacity-100 transition-all duration-300 flex-shrink-0 mx-4" style={{
-                display: 'flex',
-                position: 'relative',
-                flexDirection: 'column',
-                gap: '10px',
-                borderRadius: '8px',
-                padding: '1rem 1rem',
-                color: 'rgb(255, 255, 255)',
-                border: '1px solid rgb(44, 44, 51)',
-                boxShadow: 'rgba(38, 44, 52, 0.2) 0px 32px 64px -12px',
-                width: '500px',
-                maxWidth: '500px',
-                height: '300px',
-              }}>
-                <Stars />
-                <p className="text-[16px]">"{testimonial.text}"</p>
-                <div className="flex flex-col">
-                  <p className="font-semibold">- {testimonial.name}</p>
-                  <p className="text-[14px]">{testimonial.location}</p>
-                </div>
+          <div className="flex flex-col items-center justify-center gap-[20px] w-full">
+            <h2 className="text-[40px] font-bold">Testimonials</h2>
+            <p>Recent Reviews</p>
+            <div ref={marqueeRef} className="marquee-container">
+              <div className="marquee-content">
+                {testimonial.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className="card justify-between hover:border-white hover:border-opacity-100 transition-all duration-300 flex-shrink-0 mx-4"
+                    style={{
+                      display: "flex",
+                      position: "relative",
+                      flexDirection: "column",
+                      gap: "10px",
+                      borderRadius: "8px",
+                      padding: "1rem 1rem",
+                      color: "rgb(255, 255, 255)",
+                      border: "1px solid rgb(44, 44, 51)",
+                      boxShadow: "rgba(38, 44, 52, 0.2) 0px 32px 64px -12px",
+                      width: "500px",
+                      maxWidth: "500px",
+                      height: "300px",
+                    }}
+                  >
+                    <Stars />
+                    <p className="text-[16px]">"{testimonial.text}"</p>
+                    <div className="flex flex-col">
+                      <p className="font-semibold">- {testimonial.name}</p>
+                      <p className="text-[14px]">{testimonial.location}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
         <section className="h-[70vh] my-[100px] flex items-center justify-center w-full">
-          <div className="productContainer max-w-[700px] flex flex-row  text-white border border-[#f0f0f0] border-opacity-50 rounded-lg">
+          <div className="productContainer max-w-[700px] flex flex-col md:flex-row  text-white border border-[#f0f0f0] border-opacity-50 rounded-lg">
             <div
-              className={`element-card w-[200%]  h-[320px] relative flex flex-col justify-end p-[10px] items-start overflow-hidden `}
+              className={`element-card w-[100%] md:w-[200%] p-0 md:p-[20px]  h-[320px] relative flex flex-col justify-end p-[10px] items-start overflow-hidden `}
               style={{
                 backgroundImage: `url(/images/Young_black_hustle.jpg)`,
                 backgroundSize: "cover",
@@ -1138,7 +1132,7 @@ export default function Home() {
                 backgroundRepeat: "no-repeat",
               }}
             ></div>
-            <div className="productDescriptio px-[20px] pt-[10px]">
+            <div className="productDescription px-[20px] py-[10px] ]">
               <h3 className="text-[#2947da] text-[20px] font-bold">
                 On Sale $19.99 For a Limited Time Only!
               </h3>
@@ -1178,13 +1172,15 @@ export default function Home() {
                 <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
                   10+ Years
                 </h3>
-                  <p className="text-body-color dark:text-dark-6">Experience</p>
+                <p className="text-body-color dark:text-dark-6">Experience</p>
               </div>
               <div className="border-t border-stroke pt-4 sm:pt-0 sm:border-t-0 sm:border-x sm:px-12">
                 <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
                   5,000+
                 </h3>
-                <p className="text-body-color dark:text-dark-6">Happy Clients</p>
+                <p className="text-body-color dark:text-dark-6">
+                  Happy Clients
+                </p>
               </div>
               <div>
                 <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">

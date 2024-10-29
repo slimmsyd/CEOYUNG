@@ -149,12 +149,17 @@ display: flex;
 }
 
 .chatContainer {
-  width: 300px;
-  max-width: 300px;
+  transition: all 200ms ease-in-out;
+  min-width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
   padding-left: 15px;
   padding-right: 15px;
-  z-index: 1;
-  background: #121212;
+  z-index: 20;
+  position: relative;
+  background: #191919;
+  z-index: 20;
 }
 .none {
   display: none;
@@ -177,10 +182,7 @@ display: flex;
   .mobileChatBtn {
     display: flex !important;
   }
-  .chatDashBoardContainer {
-    /* padding-left: 17px !important;
-    padding-right: 17px !important; */
-  }
+ 
   .renderCardsWrapper {
     /* min-width: 100% !important;  */
     overflow-x: scroll;
@@ -257,8 +259,6 @@ display: flex;
   margin-top: 24px;
   padding: 15px 0px;
   padding-right: 5px;
-  border-top: 0.5px solid #807f7f;
-  border-bottom: 0.5px solid #807f7f;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -284,16 +284,24 @@ display: flex;
   border: 0.5px solid #807f7f57;
   overflow-x: hidden;
   position: relative;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-x:hidden
+}
+
+.chatDashboardWrapper::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 .chatDashBoardContainer {
   padding: 70px;
-  /* padding-right: 0px; */
   padding-top: 0px;
-  padding-bottom: 70px;
+  padding-bottom: 80px;
   display: flex;
   height: 100%;
   width: 100%;
+  margin: 0 auto;
+  max-width: 800px;
   flex-direction: column;
   position: relative;
 }
@@ -590,36 +598,38 @@ display: flex;
 }
 
 .chatFormSubmit {
-  padding: 15px 70px;
-  width: 80%;
+  padding: 15px;
+  width: 100%;
   height: 49px;
+  position: fixed;
   bottom: 0;
-  flex: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 800px;
   display: flex;
   align-items: end;
   font-size: 14px;
-  position: fixed;
+  background: #191919;
 }
 @media screen and (max-width: 1180px) {
   .chatFormSubmit {
     padding: 15px 0px;
-    min-width: 650px;
-    width: auto;
-    /* width: -webkit-fill-available; */
+    width: calc(100% - 30px);
+    min-width: auto;
+    max-width: 800px;
   }
 }
-
 .chatFormSubmit textarea {
   height: 55px;
   outline: none;
-  width: 890px;
+  width: 100%;
   max-width: 890px;
-  background: #1c1b1b;
+  background: rgba(35, 37, 37);
   border-radius: 10px;
   border: 1px solid #505050;
   resize: none;
-  padding: 15px 25px;
-  padding-right: 90px;
+  padding: 15px;
+  /* padding-right: 90px; */
   font-size: 14px;
   position: relative;
   color: #ffff;
@@ -643,6 +653,9 @@ display: flex;
   background: #827f7f2e;
   transition: background 250ms ease-in-out;
 }
+.textAreaContainer{
+  width: 100%;
+}
 @media screen and (max-width: 1357px) {
   .chatFormSubmit textarea {
     height: 55px;
@@ -651,6 +664,7 @@ display: flex;
   .textAreaContainer {
     height: 55px;
     width: 95%;
+
   }
 }
 
@@ -675,7 +689,7 @@ display: flex;
 }
 
 .deleteChatContainer {
-  width: 110pxs;
+  width: 110px;
   height: 96px;
   border-radius: 5px;
   border: 1px solid #b4b4b4;
@@ -892,7 +906,6 @@ display: flex;
 .editProfileSettingsContainer {
   height: 100%;
   width: 750px;
-  border: 0.5px solid #b4b4b4;
   border-radius: 8px;
   background: white;
   position: relative;

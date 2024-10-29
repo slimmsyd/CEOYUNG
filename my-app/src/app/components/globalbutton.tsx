@@ -13,7 +13,7 @@ return (
     <Link 
     href={href}
     target="_blank"
-    className={`mt-[25px] max-w-[${width}] flex items-center justify-center bg-[${bgColor || '#2947da'}] text-black px-4 py-2 rounded-md transition-all duration-300`}
+    className={`mt-[25px] max-w-[${width}] text-white flex items-center justify-center bg-[${bgColor || '#2947da'}] px-4 py-2 rounded-md transition-all duration-300`}
     style={{ width }}>
       {text}
     </Link>
