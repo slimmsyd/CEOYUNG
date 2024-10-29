@@ -53,7 +53,7 @@ const ChatDashboard: React.FC = () => {
     setShowGuidelines(false);
  };
 
- const chatBotUrl = " http://127.0.0.1:5000/chat";
+ const chatBotUrl = " http://10.0.0.152:8888/chat";
 
 
 
@@ -231,22 +231,22 @@ const ChatDashboard: React.FC = () => {
   const chatDashBoardRef = useRef<HTMLDivElement>(null);
     // Check for special commands
     const specialCommands = {
-      'br': '/br',
-      'down': '/down',
-      'help': '/help',
-      'listbr': '/listbr',
-      'new': '/new',
-      'pdf': '/pdf',
-      'rem': '/rem',
-      'save': '/save',
-      'see': '/see',
-      'size': '/size',
-      'support': '/support',
-      'up': '/up',
-      'usage': '/usage',
-      'v': '/v',
-      'vec': '/vectorimage',
-      'ycai': '/ycai'
+      'br': '$br',
+      'down': '$down',
+      'help': '$help',
+      'listbr': '$listbr',
+      'new': '$new',
+      'pdf': '$pdf',
+      'rem': '$rem',
+      'save': '$save',
+      'see': '$see',
+      'size': '$size',
+      'support': '$support',
+      'up': '$up',
+      'usage': '$usage',
+      'v': '$v',
+      'vec': '$vectorimage',
+      'ycai': '$ycai'
     };
 
 

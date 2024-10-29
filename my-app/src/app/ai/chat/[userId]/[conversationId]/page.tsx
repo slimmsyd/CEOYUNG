@@ -40,20 +40,21 @@ import axios from "axios";
 // import { useSessionGate } from "@/app/profile/_middlewhere";
 // import LoadingComponent from "@/app/components/helper/Loading";
 export default function ConversationPage() {
-  const chatBotUrl = " http://127.0.0.1:5000/chat";
-  const generatePdfUrl = " http://127.0.0.1:5000/generate_pdf";
+  const chatBotUrl = " http://10.0.0.152:8888/chat";
+  const generatePdfUrl = " http://10.0.0.152:8888/generate_pdf";
 
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   //Should wrap these in a bigger function since being used multiple times?
-
   const [sessionStatus, setSessionStatus] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const [showGuidelines, setShowGuidelines] = useState(true);
 
   const [pdfImages, setPdfImages] = useState<string[]>([]);
   const [selectedPdfImage, setSelectedPdfImage] = useState<string | null>(null);
+  const [logoImage, setLogoImage] = useState<string | null>(null);
 
+  
   //List of Backround PDF imagse
   const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
 
@@ -87,9 +88,6 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
   const [currentConversationId, setCurrentConversationId] = useState<
     number | string | null
   >(null);
-
-  // const [newTitle, setNewTitle] = useState("");
-
   const { conversations, isLoading, setConversations } = useConversations(
     session as any
   );
@@ -391,8 +389,9 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       'help': '$help',
       'listbr': '$listbr',
       'new': '$new',
-      'pdf': '$pdf',
-      'rem': '$rem',
+      'generatepdf': '$generatepdf',
+        'pdf': '$pdf',
+        'rem': '$rem',
       'usage': '$usage',
     };
 
@@ -423,7 +422,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
 
     setMessagesIsLoading(true);
 
-    const command = message.trim().split(" ")[0].toLowerCase().replace("/", "");
+    const command = message.trim().split(" ")[0].toLowerCase();
 
     console.log("Command", command);
 
@@ -464,6 +463,13 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       }
       setMessagesIsLoading(false);
       return;
+    };
+
+    if(command === "$generatepdf") {
+      console.log("Generating PDF", message);
+      handleGeneratePdf(command, message, e);
+      setMessagesIsLoading(false);
+      return;
     }
 
     if (command === "$pdf") {
@@ -488,6 +494,9 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       setMessagesIsLoading(false);
       return;
     }
+
+
+
 
     async function uploadImage(imagePath: string, message: string) {
       // Fetch the image as a Blob
@@ -746,18 +755,88 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       setisUploading(false);
     }
   };
+
+
+  const handleGeneratePdf = async (
+    command: string,
+    fullMessage: string,
+    e: FormEvent
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    
+    // Add all the text data
+    formData.append('userId', session?.user.id);
+    formData.append('content', fullMessage.substring(fullMessage.indexOf(" ") + 1));
+    formData.append('filename', `user_report_${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}.pdf`);
+    formData.append('conversationId', currentConversationId);
+
+    // Add the logo file if it exists
+    if (selectedFile?.[0]) {
+      formData.append('logo_image', selectedFile[0]);
+    }
+
+    // Add background image path if needed
+    const transformImagePath = (originalPath: string) => {
+      const fileName = originalPath.split('/').pop();
+      return `public/images/backgrounds/${fileName}`;
+    };
+    
+    if (pdfImages?.[0]) {
+      formData.append('background_image', transformImagePath(pdfImages[0]));
+    }
+
+    try {
+      const response = await fetch('http://10.0.0.152:8888/generate_pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Handle PDF response
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = formData.get('filename') as string;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+
+      setResponses(prev => [...prev, {
+        question: fullMessage,
+        response: "PDF generated successfully. Check your downloads.",
+        id: Date.now().toString(),
+      }]);
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setResponses(prev => [...prev, {
+        question: fullMessage,
+        response: `Error generating PDF: ${error.message}`,
+        id: Date.now().toString(),
+      }]);
+    }
+  };
+
+
   const handleSpecialCommand = async (
     command: string,
     fullMessage: string,
     e: FormEvent
   ) => {
-    const baseUrl = "http://127.0.0.1:5000";
+    const baseUrl = "http://10.0.0.152:8888";
     let commandEndpoint;
     let requestBody;
 
     if (command === "upscale") {
       console.log("Upscale Command", fullMessage);
-    } else if (command === "generate") {
+    } else if (command === "$hello") {
       console.log("Generate Command", fullMessage);
       console.log("User ID:", session?.user.id);
       console.log(
@@ -812,7 +891,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      if (command === "generate") {
+      if (command === "$generatepdf") {
         // Handle PDF response
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
