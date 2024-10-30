@@ -161,7 +161,7 @@ export const ChatContainer: FC<ChatContainerProps> = ({
   useEffect(() => {}, [chatContainerShown]);
 
   useEffect(() => {
-    console.log("Conversations", conversations);
+    // console.log("Conversations", conversations);
 
   }, [conversations]);
 
@@ -184,9 +184,9 @@ export const ChatContainer: FC<ChatContainerProps> = ({
   // Group conversations
   const groupedConversations = conversations?.reduce(
     (groups, conversation) => {
-      if (isToday(conversation.createdAt.toString())) {
+      if (conversation.createdAt && isToday(conversation.createdAt.toString())) {
         groups.today.push(conversation);
-      } else {
+      } else if (conversation.createdAt) {
         groups.recent.push(conversation);
       }
       return groups;
@@ -287,7 +287,7 @@ export const ChatContainer: FC<ChatContainerProps> = ({
               <>
                 {groupedConversations.today.length > 0 && (
                   <>
-                    <p className={`text-gray-400 text-sm px-2 ${isHovered ? "opacity-100" : "opacity-0"}`}>Today</p>
+                    <p className="text-gray-400 text-sm px-2">Today</p>
                     {groupedConversations.today.map((conversation) => (
                       <div key={conversation.conversationId} className="relative">
                         <span

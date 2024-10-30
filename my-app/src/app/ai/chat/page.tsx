@@ -52,8 +52,9 @@ const ChatDashboard: React.FC = () => {
     setShowGuidelines(false);
  };
 
- const chatBotUrl = " http://192.168.1.79:8888/chat";
- const generatePdfUrl = " http://192.168.1.79:8888/generate_pdf";
+ const chatBotUrl = " https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net/chat";
+ const mainURL = "https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net"
+ const generatePdfUrl = `${mainURL}/generate_pdf`;
 
  const [logoImage, setLogoImage] = useState<string | null>(null);
  
@@ -240,18 +241,29 @@ const ChatDashboard: React.FC = () => {
       'help': '$help',
       'listbr': '$listbr',
       'new': '$new',
-      'pdf': '$pdf',
-      'rem': '$rem',
-      'save': '$save',
-      'see': '$see',
-      'size': '$size',
-      'support': '$support',
-      'up': '$up',
+      'generatepdf': '$generatepdf',
+        'pdf': '$pdf',
+        'rem': '$rem',
       'usage': '$usage',
-      'v': '$v',
-      'vec': '$vectorimage',
-      'ycai': '$ycai'
     };
+    useEffect(() => {
+      const loadPdfImages = () => {
+        // Assuming the public folder is at the root of your project
+        const pdfImagesContext = (require as any).context(
+          "/public/pdfImage",
+          false,
+          /\.(png|jpe?g|gif)$/i
+        );
+        const imageFiles = pdfImagesContext
+          .keys()
+          .map((key) => `/pdfImage${key.replace(".", "")}`);
+        setPdfImages(imageFiles);
+      };
+  
+      loadPdfImages();
+    }, []);
+
+
 
 
     const [pdfImages, setPdfImages] = useState<string[]>([]);
@@ -353,7 +365,7 @@ const ChatDashboard: React.FC = () => {
         formData.append('file', file); // Change 'files' to 'file'
         formData.append('message', message); // Add the message to the form data
   
-        fetch('http://127.0.0.1:5000/upload', {
+        fetch(`${mainURL}/upload`, {
           method: 'POST',
           body: formData,
     
@@ -508,6 +520,74 @@ const ChatDashboard: React.FC = () => {
   const [isFileUploaded, setisFileUploaded] = useState(false);
   const [uploadProgress, setuploadProgress] = useState(0);
   let uploadInput = React.createRef();
+
+
+  const handleGeneratePdf = async (
+    command: string,
+    fullMessage: string,
+    e: FormEvent
+  ) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    
+    // Add all the text data
+    formData.append('userId', session?.user.id);
+    formData.append('content', fullMessage.substring(fullMessage.indexOf(" ") + 1));
+    formData.append('filename', `user_report_${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}.pdf`);
+    formData.append('conversationId', currentConversationId);
+
+    // Add the logo file if it exists
+    if (selectedFile?.[0]) {
+      formData.append('logo_image', selectedFile[0]);
+    }
+
+    // Add background image path if needed
+    const transformImagePath = (originalPath: string) => {
+      const fileName = originalPath.split('/').pop();
+      return `public/images/backgrounds/${fileName}`;
+    };
+    
+    if (pdfImages?.[0]) {
+      formData.append('background_image', transformImagePath(pdfImages[0]));
+    }
+
+    try {
+      const response = await fetch(`${mainURL}/generate_pdf`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Handle PDF response
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = formData.get('filename') as string;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+
+      setResponses(prev => [...prev, {
+        question: fullMessage,
+        response: "PDF generated successfully. Check your downloads.",
+        id: Date.now().toString(),
+      }]);
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setResponses(prev => [...prev, {
+        question: fullMessage,
+        response: `Error generating PDF: ${error.message}`,
+        id: Date.now().toString(),
+      }]);
+    }
+  };
   
   // Update handleDrop to work like handleSelectFile
   const handleSelectFile = (e) => {
@@ -549,7 +629,7 @@ const ChatDashboard: React.FC = () => {
             },
           };
           const response = await axios.post(
-            "http://10.0.0.152:8888/process_image",
+            `${mainURL}/process_image`,
             data,
             config
           );
@@ -615,7 +695,7 @@ const ChatDashboard: React.FC = () => {
         }
       };
   const handleSpecialCommand = async (command: string, fullMessage: string) => {
-    const baseUrl = 'http://127.0.0.1:5000'; // Adjust this to your API base URL
+    const baseUrl = `${mainURL}`; // Adjust this to your API base URL
     const commandEndpoint = `${baseUrl}${specialCommands[command as keyof typeof specialCommands]}`;
 
     console.log("Command Endpoint:", commandEndpoint);

@@ -70,7 +70,6 @@ export default function Navbar({
     transform
     -translate-x-1/2
     z-50
-    bg-[hsl(222.2,84%,4.9%)] 
     text-white
     flex w-full max-w-screen-xl items-center justify-between rounded-3xl dark:shadow-muted/25 shadow-lg shadow-foreground/10 border-[0.5px] border-gray-700 py-4 px-6"
   >

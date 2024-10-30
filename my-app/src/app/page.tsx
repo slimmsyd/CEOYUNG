@@ -201,15 +201,15 @@ export default function Home() {
   }, [setupMarquee]);
 
   return (
-    <div className="bg-[url('https://jutsu.ai/images/BgGrid.svg')] bg-contain bg-center bg-no-repeat customBG  ">
-      <main className="px-[4rem]">
+    <div className=" customBG  ">
+      <main className="px-[4rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat">
         <Navbar
           handleConnect={handleConnect}
           scrollToSection={scrollToSection}
         />
 
-        <section className="header py-[2rem] text-white flex flex-col pt-40">
-          <div className="flex flex-col md:w-[80%] m-auto text-center items-center justify-center w-full gap-[10px]">
+        <section className="header py-[2rem] text-white flex flex-col pt-40 ">
+          <div className="flex flex-col md:w-[70%] m-auto text-center items-center justify-center w-full gap-[10px]">
             <h1 className="mb-4 text-[30px] font-extrabold leading-tight text-dark sm:text-[60px] text-white">
               Take Control Of Your Future.
               <span className="bg-gradient-to-l from-[#007AFF] via-[#007AFF] to-transparent bg-clip-text text-transparent">
@@ -230,7 +230,8 @@ export default function Home() {
             <div className="flex flex-row gap-[15px] items-center  mt-[20px]">
               <button
                 onClick={() => scrollToSection("pricingSection")}
-                className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md hover:bg-transparent  hover:border-black transition-colors"
+                className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
+               !bg-transparent border-[0.5px] border-gray-400   "
               >
                 Get Premium
               </button>
@@ -262,15 +263,16 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="video items-center justify-center md:self-center self-center  ">
-            <iframe
-              width="738"
-              height="503"
-              src="https://www.youtube.com/embed/pLVrdKaCkog"
-              title="Welcome To your Future"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              className="border-[7px] border-[hsla(0,0%,50%,0.3)]"
-            ></iframe>
+          <div className="video items-center justify-center md:self-center self-center">
+            <div className="border-gradient p-[2px]">
+              <iframe
+                height="503"
+                src="https://www.youtube.com/embed/pLVrdKaCkog"
+                title="Welcome To your Future"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                className="w-[320px] md:w-[950px] rounded-xl"
+              />
+            </div>
           </div>
         </section>
 
@@ -285,154 +287,66 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex md:flex-row flex-col gap-[20px]">
-              <div className="flex flex-col gap-[10px] items-center">
-                <div className="svg-contatiner bg-[#2947da] p-4 rounded-lg w-[55px] h-[55px] flex items-center justify-center">
-                  <svg
-                    width="44"
-                    height="44"
-                    viewBox="0 0 44 44"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="fill-current"
-                  >
-                    <g clip-path="url(#clip0_1697_2534)">
-                      <path
-                        d="M31.8312 24.2688H12.1687C11.6875 24.2688 11.2062 24.475 10.9312 24.8875C10.6562 25.3 10.5187 25.7813 10.6562 26.2625C12.1 31.35 16.775 34.925 22 34.925C27.3625 34.925 31.9 31.4875 33.3437 26.2625C33.4812 25.7813 33.4125 25.3 33.0687 24.8875C32.7937 24.475 32.3125 24.2688 31.8312 24.2688ZM22 31.7625C18.8375 31.7625 16.0187 30.0438 14.4375 27.3625H29.5625C28.05 30.0438 25.2312 31.7625 22 31.7625Z"
-                        fill="white"
-                      ></path>
-                      <path
-                        d="M22 0.550049C10.175 0.550049 0.549988 10.175 0.549988 22C0.549988 33.825 10.175 43.5188 22.0687 43.5188C33.9625 43.5188 43.5875 33.8938 43.5875 22C43.5875 10.1063 33.825 0.550049 22 0.550049ZM22 40.425C11.825 40.425 3.57499 32.175 3.57499 22C3.57499 11.825 11.8937 3.6438 22 3.6438C32.1062 3.6438 40.425 11.8938 40.425 22.0688C40.425 32.2438 32.175 40.425 22 40.425Z"
-                        fill="white"
-                      ></path>
-                      <path
-                        d="M13.75 18.425C15.2688 18.425 16.5 17.1938 16.5 15.675C16.5 14.1563 15.2688 12.925 13.75 12.925C12.2312 12.925 11 14.1563 11 15.675C11 17.1938 12.2312 18.425 13.75 18.425Z"
-                        fill="white"
-                      ></path>
-                      <path
-                        d="M30.25 18.425C31.7688 18.425 33 17.1938 33 15.675C33 14.1563 31.7688 12.925 30.25 12.925C28.7312 12.925 27.5 14.1563 27.5 15.675C27.5 17.1938 28.7312 18.425 30.25 18.425Z"
-                        fill="white"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_1697_2534">
-                        <rect width="44" height="44" fill="white"></rect>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
 
-                <h3>Easy To Get Started</h3>
+<div className="mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:py-16 lg:pb-32 relative max-w-7xl">
+  <div className="grid sm:grid-cols-4 gap-y-8">
+    <div className="relative group">
+      <div 
+        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]" 
+        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
+      ></div>
+      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
+        1
+      </div>
+      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+        Log in with your <strong>GitHub account</strong>
+      </p>
+    </div>
 
-                <p className="text-[14px]">
-                  Gain access to video and pdf walkthrough lessons that walk you
-                  through the process step by step to make passive income
-                  online.
-                </p>
-              </div>
+    <div className="relative group">
+      <div 
+        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
+      ></div>
+      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
 
-              {/* Dashed line */}
-              <div className="w-[0.5px] h-auto border-r border-dashed border-gray-300"></div>
+        2
+      </div>
+      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+        Install our <strong>GitHub app</strong> and import your repositories
+      </p>
+    </div>
 
-              <div className="flex flex-col gap-[10px] items-center">
-                <div className="svg-contatiner bg-[#2947da] p-4 rounded-lg w-[55px] h-[55px] flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    version="1.1"
-                    id="_x32_"
-                    width="70px"
-                    height="70px"
-                    viewBox="0 0 525 612"
-                    fill="#ffffff"
-                  >
-                    <g>
-                      <polygon
-                        className="st0"
-                        points="390.031,195.609 256,18.563 121.969,195.609 0,99.094 0,354.859 256,354.859 512,354.859 512,99.094     "
-                      ></polygon>
-                      <rect
-                        y="413.438"
-                        className="st0"
-                        width="512"
-                        height="80"
-                      ></rect>
-                    </g>
-                  </svg>
-                </div>
+    <div className="relative group">
+      <div 
+        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
+      ></div>
+      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
+        3
+      </div>
+      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+        Browse your <strong>repositories</strong> and start working on <strong>issues</strong>
+      </p>
+    </div>
 
-                <h3>Exclusive Money Making Tools</h3>
+    <div className="relative group">
+      <div 
+        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
+      ></div>
+      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
+        4
+      </div>
+      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+        Work in <strong>real-time</strong> with your team on your <strong>projects</strong>
+      </p>
+    </div>
+  </div>
+</div>
 
-                <p className="text-[14px]">
-                  Gain Access Or Discounts To Exclusive Custom Coded Software
-                  That Makes Earning Money Online 10x Easier!
-                </p>
-              </div>
 
-              {/* Dashed line */}
-              <div className="w-[0.5px] h-auto border-r border-dashed border-gray-300"></div>
-
-              <div className="flex flex-col gap-[10px] items-center">
-                <div className="svg-contatiner bg-[#2947da] p-4 rounded-lg w-[55px] h-[55px] flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="#ffffff"
-                    width="80px"
-                    height="800px"
-                    viewBox="0 0 25 25"
-                  >
-                    <path d="M5,7A1,1,0,0,0,4,8V22a1,1,0,0,0,1,1H19a1,1,0,0,0,1-1V8a1,1,0,0,0-1-1H13V4.723a2,2,0,1,0-2,0V7ZM18,9V21H6V9ZM7,13a1,1,0,0,1,1-1h2a1,1,0,0,1,0,2H8A1,1,0,0,1,7,13Zm6,0a1,1,0,0,1,1-1h2a1,1,0,0,1,0,2H14A1,1,0,0,1,13,13ZM1,14V12a1,1,0,0,1,2,0v2a1,1,0,0,1-2,0Zm22-2v2a1,1,0,0,1-2,0V12a1,1,0,0,1,2,0ZM7,18a1,1,0,0,1,1-1h8a1,1,0,0,1,0,2H8A1,1,0,0,1,7,18Z"></path>
-                  </svg>
-                </div>
-
-                <h3>Exclusive Methods</h3>
-
-                <p className="text-[14px]">
-                  Instantly Gain Access To A Consistently Updated Repository Of
-                  Money Making Methods You Can Start Now With Little To No
-                  Capital.
-                </p>
-              </div>
-
-              {/* Dashed line */}
-              <div className="w-[0.5px] h-auto border-r border-dashed border-gray-300"></div>
-
-              <div className="flex flex-col gap-[10px] items-center">
-                <div className="svg-contatiner bg-[#2947da] p-4 rounded-lg w-[55px] h-[55px] flex items-center justify-center">
-                  <svg
-                    width="44"
-                    height="44"
-                    viewBox="0 0 44 44"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M36.4375 7.35627C32.1062 2.95627 26.0562 0.82502 19.9375 1.51252C10.3813 2.47502 2.81875 10.1063 1.7875 19.5938C1.375 23.9938 2.26875 28.2563 4.46875 31.9688L1.71875 39.1188C1.30625 40.0813 1.58125 41.25 2.40625 41.9375C2.8875 42.35 3.50625 42.625 4.125 42.625C4.5375 42.625 4.88125 42.5563 5.29375 42.35L11.55 39.1875C15.3312 41.4563 19.5937 42.4188 24.0625 42.0063C33.6875 41.1125 41.3875 33.4813 42.35 23.7875C42.9687 17.6688 40.8375 11.6875 36.4375 7.35627ZM39.2562 23.5125C38.4312 31.6938 31.9 38.1563 23.7187 38.9125C19.6625 39.325 15.8125 38.2938 12.4438 36.0938C12.1688 35.8875 11.8938 35.8188 11.6187 35.8188C11.4125 35.8188 11.1375 35.8875 10.9312 35.9563L5.0875 38.8438L7.63125 32.2438C7.8375 31.7625 7.76875 31.2813 7.49375 30.8688C5.3625 27.5688 4.46875 23.7188 4.88125 19.7313C5.70625 11.825 12.1688 5.43127 20.2125 4.60627C25.4375 4.05627 30.5937 5.84377 34.2375 9.55627C37.95 13.2 39.8062 18.2875 39.2562 23.5125Z"
-                      fill="white"
-                    ></path>
-                    <path
-                      d="M16.2937 16.4313H26.4687C27.2937 16.4313 28.05 15.7438 28.05 14.8501C28.05 13.9563 27.3625 13.2688 26.4687 13.2688H16.2937C15.4687 13.2688 14.7125 13.9563 14.7125 14.8501C14.7125 15.7438 15.4687 16.4313 16.2937 16.4313Z"
-                      fill="white"
-                    ></path>
-                    <path
-                      d="M30.525 20.4187H16.2937C15.4687 20.4187 14.7125 21.1062 14.7125 22C14.7125 22.8937 15.4 23.5125 16.2937 23.5125H30.525C31.35 23.5125 32.1062 22.825 32.1062 22C32.1062 21.175 31.35 20.4187 30.525 20.4187Z"
-                      fill="white"
-                    ></path>
-                    <path
-                      d="M23.4437 27.5688H16.2937C15.4687 27.5688 14.7125 28.2563 14.7125 29.1501C14.7125 30.0438 15.4 30.7313 16.2937 30.7313H23.375C24.2 30.7313 24.9562 30.0438 24.9562 29.1501C24.9562 28.2563 24.2687 27.5688 23.4437 27.5688Z"
-                      fill="white"
-                    ></path>
-                  </svg>
-                </div>
-
-                <h3>Likeminded Community</h3>
-
-                <p className="text-[14px]">
-                  You Are Who You Associate With And We Are Here To Elevate And
-                  Support Each Other. Your Network Is Your Net worth.
-                </p>
-              </div>
-            </div>
+           
           </div>
         </section>
       </main>
@@ -1122,7 +1036,14 @@ export default function Home() {
         </section>
 
         <section className="h-[70vh] my-[100px] flex items-center justify-center w-full">
-          <div className="productContainer max-w-[700px] flex flex-col md:flex-row  text-white border border-[#f0f0f0] border-opacity-50 rounded-lg">
+          <div className="productContainer max-w-[700px] flex flex-col md:flex-row  text-white border  hover:border-opacity-100   rounded-lg"
+          style={{
+            transition: "all 0.3s ease-in-out",
+            border: "1px solid rgb(44, 44, 51)",
+            boxShadow: "rgba(38, 44, 52, 0.2) 0px 32px 64px -12px",
+
+          }}
+          >
             <div
               className={`element-card w-[100%] md:w-[200%] p-0 md:p-[20px]  h-[320px] relative flex flex-col justify-end p-[10px] items-start overflow-hidden `}
               style={{
@@ -1133,7 +1054,7 @@ export default function Home() {
               }}
             ></div>
             <div className="productDescription px-[20px] py-[10px] ]">
-              <h3 className="text-[#2947da] text-[20px] font-bold">
+              <h3 className="text-[20px] font-bold bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent">
                 On Sale $19.99 For a Limited Time Only!
               </h3>
               <h3 className="text-[32px] font-bold">Zero To Glitching Ebook</h3>

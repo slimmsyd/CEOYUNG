@@ -41,8 +41,9 @@ import axios from "axios";
 // import { useSessionGate } from "@/app/profile/_middlewhere";
 // import LoadingComponent from "@/app/components/helper/Loading";
 export default function ConversationPage() {
-  const chatBotUrl = " http://192.168.1.79:8888/chat";
-  const generatePdfUrl = " http://192.168.1.79:8888/generate_pdf";
+  const chatBotUrl = " https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net/chat";
+  const mainURL = "https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net"
+  const generatePdfUrl = `${mainURL}/generate_pdf`;
 
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
@@ -509,7 +510,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       formData.append('file', file); // Change 'files' to 'file'
       formData.append('message', message); // Add the message to the form data
 
-      fetch('http://127.0.0.1:5000/upload', {
+      fetch(`${mainURL}/upload`, {
         method: 'POST',
         body: formData,
   
@@ -703,7 +704,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
         },
       };
       const response = await axios.post(
-        "http://10.0.0.152:8888/process_image",
+        `${mainURL}/process_image`,
         data,
         config
       );
@@ -721,7 +722,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
             // Set imageUrl directly instead of an array
             const newImageUrl = response.data.image_url.startsWith('http')
               ? response.data.image_url // Use the existing URL if it already has the protocol
-              : `http://10.0.0.152:8888${response.data.image_url}`; // Prepend the base URL if not
+              : `${mainURL}${response.data.image_url}`; // Prepend the base URL if not
             return {
               ...resp,
               imageUrl: newImageUrl, // Set the new URL directly
@@ -795,13 +796,16 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       const fileName = originalPath.split('/').pop();
       return `public/images/backgrounds/${fileName}`;
     };
+
+    console.log("Loggin the pdfImage", pdfImages[0])
     
     if (pdfImages?.[0]) {
       formData.append('background_image', transformImagePath(pdfImages[0]));
     }
 
+    
     try {
-      const response = await fetch('http://10.0.0.152:8888/generate_pdf', {
+      const response = await fetch(`${mainURL}/genPDF`, {
         method: 'POST',
         body: formData,
       });
@@ -843,7 +847,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
     fullMessage: string,
     e: FormEvent
   ) => {
-    const baseUrl = "http://10.0.0.152:8888";
+    const baseUrl = `${mainURL}`;
     let commandEndpoint;
     let requestBody;
 
