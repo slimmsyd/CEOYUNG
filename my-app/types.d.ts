@@ -34,6 +34,8 @@ export interface User extends NextAuthUser {
 export interface Conversation {
   conversationId:  string;
   title: string;
+  createdAt: Date;
+  updatedAt: Date;
   messages: Message[];
 }
 

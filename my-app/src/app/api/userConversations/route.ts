@@ -32,7 +32,9 @@ export async function GET(request: NextRequest) {
       .filter(uc => uc.conversation !== null)  // Filter out null conversations
       .map(uc => ({
         conversationId: uc.conversationId,
-        title: uc.conversation.title
+        title: uc.conversation.title,
+        createdAt: uc.conversation.createdAt,
+        updatedAt: uc.conversation.updatedAt
       }));
 
     return NextResponse.json(conversations);

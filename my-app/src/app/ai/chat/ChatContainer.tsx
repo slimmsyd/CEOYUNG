@@ -160,10 +160,39 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
   useEffect(() => {}, [chatContainerShown]);
 
+  useEffect(() => {
+    console.log("Conversations", conversations);
+
+  }, [conversations]);
+
   // Add placeholder conversations
 
   // Add hover state
   const [isHovered, setIsHovered] = useState(false);
+
+  // Add these helper functions before the return statement
+  const isToday = (date: string) => {
+    const today = new Date();
+    const compareDate = new Date(date);
+    return (
+      compareDate.getDate() === today.getDate() &&
+      compareDate.getMonth() === today.getMonth() &&
+      compareDate.getFullYear() === today.getFullYear()
+    );
+  };
+
+  // Group conversations
+  const groupedConversations = conversations?.reduce(
+    (groups, conversation) => {
+      if (isToday(conversation.createdAt.toString())) {
+        groups.today.push(conversation);
+      } else {
+        groups.recent.push(conversation);
+      }
+      return groups;
+    },
+    { today: [], recent: [] } as { today: Conversation[]; recent: Conversation[] }
+  ) || { today: [], recent: [] };
 
   return (
     <div
@@ -253,82 +282,170 @@ export const ChatContainer: FC<ChatContainerProps> = ({
           {/* Clear all Chats Div */}
           <div className="absolute w-[10px] h-[10px] left-[-20px] cursor-pointer	 "></div>
 
-          <div className="flex flex-col gap-[13px] overflow-scroll w-[95%] chatScrollbar ">
+          <div className="flex flex-col gap-[13px] overflow-scroll w-[95%] chatScrollbar">
             {isLoading ? null : (
               <>
-                {conversations?.map((conversation) => (
-                  <div key={conversation.conversationId} className="relative">
-                    <span
-                      ref={editingTitleRef}
-                      onMouseEnter={() =>
-                        setHoveredConversationId(conversation.conversationId)
-                      }
-                      className="flex  flex-row  gap-[13px] ite           ms-start justify-start w-full"
-                    >
-                      {editTitleId === (conversation as any).conversationId &&
-                      editingTitle === true ? (
-                        <form
-                          onSubmit={onChangeConvoTitle}
-                          className="flex flex-row justify-center items-center gap-3"
+                {groupedConversations.today.length > 0 && (
+                  <>
+                    <p className={`text-gray-400 text-sm px-2 ${isHovered ? "opacity-100" : "opacity-0"}`}>Today</p>
+                    {groupedConversations.today.map((conversation) => (
+                      <div key={conversation.conversationId} className="relative">
+                        <span
+                          ref={editingTitleRef}
+                          onMouseEnter={() =>
+                            setHoveredConversationId(conversation.conversationId)
+                          }
+                          className="flex  flex-row  gap-[13px] ite           ms-start justify-start w-full"
                         >
-                          <input
-                            className="chatMessageContainer"
-                            type="text"
-                            value={editedTitle}
-                            onChange={handleTitleChange}
-                            disabled={editTitleId === null}
-                            onKeyDown={handleKeyDown}
-                          />
-                        </form>
-                      ) : (
-                        <div className="flex flex-row justify-between items-center w-full pr-[5px]">
-                          <p
-                            onClick={() => {
-                              if (!editingTitle) {
-                                onConversationClick &&
-                                  onConversationClick(
-                                    conversation.conversationId
-                                  );
-                              }
-                            }}
-                            className={`transition-all duration-300 px-2 text-left cursor-pointer ${
-                              conversation.conversationId ===
-                              currentConversationId
-                                ? "text-[#ffff] bg-[#545454] rounded-md px-2 py-1 border border-white border-opacity-50"
-                                : hoveredConversationId ===
-                                  conversation.conversationId
-                                ? "text-[#8c8c8c]"
-                                : "text-[#ffffff]"
-                            } ${isHovered ? "opacity-100" : "opacity-0"}`}
-                          >
-                            {conversation.title}
-                          </p>
-                          {hoveredConversationId ===
-                            conversation.conversationId && (
-                            <svg
-                              width={15}
-                              height={15}
-                              aria-hidden="true"
-                              focusable="false"
-                              data-prefix="far"
-                              data-icon="layer-group"
-                              role="img"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 576 512"
-                              className="ml-2"
-                              onMouseDown={() => setShowDeleteContainer(true)}
+                          {editTitleId === (conversation as any).conversationId &&
+                          editingTitle === true ? (
+                            <form
+                              onSubmit={onChangeConvoTitle}
+                              className="flex flex-row justify-center items-center gap-3"
                             >
-                              <path
-                                fill="currentColor"
-                                d="M288 0c-8.5 0-17 1.7-24.8 5.1L53.9 94.8C40.6 100.5 32 113.5 32 128s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2L312.8 5.1C305 1.7 296.5 0 288 0zm-5.9 49.2C284 48.4 286 48 288 48s4 .4 5.9 1.2L477.7 128 293.9 206.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 128 282.1 49.2zM53.9 222.8C40.6 228.5 32 241.5 32 256s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 235.5 477.7 256 293.9 334.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 256 146 235.5 85.1 209.4 53.9 222.8zm0 128C40.6 356.5 32 369.5 32 384s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 363.5 477.7 384 293.9 462.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 384 146 363.5 85.1 337.4 53.9 350.8z"
-                              ></path>
-                            </svg>
+                              <input
+                                className="chatMessageContainer"
+                                type="text"
+                                value={editedTitle}
+                                onChange={handleTitleChange}
+                                disabled={editTitleId === null}
+                                onKeyDown={handleKeyDown}
+                              />
+                            </form>
+                          ) : (
+                            <div className="flex flex-row justify-between items-center w-full pr-[5px]">
+                              <div className="flex flex-col px-2 py-1">
+                                <p
+                                  onClick={() => {
+                                    if (!editingTitle) {
+                                    onConversationClick &&
+                                      onConversationClick(
+                                        conversation.conversationId
+                                            );
+                                    }
+                                  }}
+                                className={`transition-all duration-300  text-left cursor-pointer ${
+                                  conversation.conversationId ===
+                                  currentConversationId
+                                    ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
+                                    : hoveredConversationId ===
+                                      conversation.conversationId
+                                    ? "text-[#8c8c8c]"
+                                    : "text-[#ffffff]"
+                                } ${isHovered ? "opacity-100" : "opacity-0"}`}
+                              >
+                                {conversation.title}
+                              </p>
+                            </div>
+                            {hoveredConversationId ===
+                              conversation.conversationId && (
+                                <svg
+                                  width={15}
+                                  height={15}
+                                  aria-hidden="true"
+                                  focusable="false"
+                                  data-prefix="far"
+                                  data-icon="layer-group"
+                                  role="img"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 576 512"
+                                  className="ml-2"
+                                  onMouseDown={() => setShowDeleteContainer(true)}
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M288 0c-8.5 0-17 1.7-24.8 5.1L53.9 94.8C40.6 100.5 32 113.5 32 128s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2L312.8 5.1C305 1.7 296.5 0 288 0zm-5.9 49.2C284 48.4 286 48 288 48s4 .4 5.9 1.2L477.7 128 293.9 206.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 128 282.1 49.2zM53.9 222.8C40.6 228.5 32 241.5 32 256s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 235.5 477.7 256 293.9 334.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 256 146 235.5 85.1 209.4 53.9 222.8zm0 128C40.6 356.5 32 369.5 32 384s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 363.5 477.7 384 293.9 462.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 384 146 363.5 85.1 337.4 53.9 350.8z"
+                                  ></path>
+                                </svg>
+                              )}
+                            </div>
                           )}
-                        </div>
-                      )}
-                    </span>
-                  </div>
-                ))}
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
+                
+                {groupedConversations.recent.length > 0 && (
+                  <>
+                    <p className="text-gray-400 text-sm px-2">Recent</p>
+                    {groupedConversations.recent.map((conversation) => (
+                      <div key={conversation.conversationId} className="relative">
+                        <span
+                          ref={editingTitleRef}
+                          onMouseEnter={() =>
+                            setHoveredConversationId(conversation.conversationId)
+                          }
+                          className="flex  flex-row  gap-[13px] ite           ms-start justify-start w-full"
+                        >
+                          {editTitleId === (conversation as any).conversationId &&
+                          editingTitle === true ? (
+                            <form
+                              onSubmit={onChangeConvoTitle}
+                              className="flex flex-row justify-center items-center gap-3"
+                            >
+                              <input
+                                className="chatMessageContainer"
+                                type="text"
+                                value={editedTitle}
+                                onChange={handleTitleChange}
+                                disabled={editTitleId === null}
+                                onKeyDown={handleKeyDown}
+                              />
+                            </form>
+                          ) : (
+                            <div className="flex flex-row justify-between items-center w-full pr-[5px]">
+                              <div className="flex flex-col px-2 py-1">
+                                <p
+                                  onClick={() => {
+                                    if (!editingTitle) {
+                                    onConversationClick &&
+                                      onConversationClick(
+                                        conversation.conversationId
+                                            );
+                                    }
+                                  }}
+                                className={`transition-all duration-300  text-left cursor-pointer ${
+                                  conversation.conversationId ===
+                                  currentConversationId
+                                    ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
+                                    : hoveredConversationId ===
+                                      conversation.conversationId
+                                    ? "text-[#8c8c8c]"
+                                    : "text-[#ffffff]"
+                                } ${isHovered ? "opacity-100" : "opacity-0"}`}
+                              >
+                                {conversation.title}
+                              </p>
+                            </div>
+                            {hoveredConversationId ===
+                              conversation.conversationId && (
+                                <svg
+                                  width={15}
+                                  height={15}
+                                  aria-hidden="true"
+                                  focusable="false"
+                                  data-prefix="far"
+                                  data-icon="layer-group"
+                                  role="img"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 576 512"
+                                  className="ml-2"
+                                  onMouseDown={() => setShowDeleteContainer(true)}
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    d="M288 0c-8.5 0-17 1.7-24.8 5.1L53.9 94.8C40.6 100.5 32 113.5 32 128s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2L312.8 5.1C305 1.7 296.5 0 288 0zm-5.9 49.2C284 48.4 286 48 288 48s4 .4 5.9 1.2L477.7 128 293.9 206.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 128 282.1 49.2zM53.9 222.8C40.6 228.5 32 241.5 32 256s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 235.5 477.7 256 293.9 334.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 256 146 235.5 85.1 209.4 53.9 222.8zm0 128C40.6 356.5 32 369.5 32 384s8.6 27.5 21.9 33.2l209.3 89.7c7.8 3.4 16.3 5.1 24.8 5.1s17-1.7 24.8-5.1l209.3-89.7c13.3-5.7 21.9-18.8 21.9-33.2s-8.6-27.5-21.9-33.2l-31.2-13.4L430 363.5 477.7 384 293.9 462.8c-1.9 .8-3.9 1.2-5.9 1.2s-4-.4-5.9-1.2L98.3 384 146 363.5 85.1 337.4 53.9 350.8z"
+                                  ></path>
+                                </svg>
+                              )}
+                            </div>
+                          )}
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
               </>
             )}
 
