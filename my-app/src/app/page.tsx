@@ -301,7 +301,7 @@ export default function Home() {
             </div>
 
             <div className="mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:py-16 lg:pb-32 relative max-w-7xl">
-              <div className="grid sm:grid-cols-4 gap-y-8">
+              <div className="grid sm:grid-cols-4 gap-y-8 gap-x-8">
                 <div className="relative group">
                   <div
                     className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
@@ -320,7 +320,9 @@ export default function Home() {
                     1
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Log in with your <strong>GitHub account</strong>
+                  Gain access to video and pdf walkthrough lessons that walk you through the process step by step to make passive 
+
+<strong>income online.</strong>
                   </p>
                 </div>
 
@@ -342,8 +344,8 @@ export default function Home() {
                     2
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Install our <strong>GitHub app</strong> and import your
-                    repositories
+                  Instantly Gain Access To A Consistently Updated Repository Of Money Making Methods You Can Start Now With Little To No Capital.
+
                   </p>
                 </div>
 
@@ -365,8 +367,8 @@ export default function Home() {
                     3
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Browse your <strong>repositories</strong> and start working
-                    on <strong>issues</strong>
+                  Gain Access Or Discounts To Exclusive Custom Coded Software That Makes Earning Money Online 10x Easier!
+
                   </p>
                 </div>
 
@@ -388,8 +390,9 @@ export default function Home() {
                     4
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Work in <strong>real-time</strong> with your team on your{" "}
-                    <strong>projects</strong>
+                  You Are Who You Associate With And We Are Here To Elevate And Support Each Other. Your Network Is Your Net worth.
+
+
                   </p>
                 </div>
               </div>
