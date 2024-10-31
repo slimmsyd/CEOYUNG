@@ -415,7 +415,7 @@ export default function Home() {
         />
       </section>
 
-      <div className="px-[8rem] relative overflow-x-hidden">
+      <div className="px-[2rem] sm:px-[6rem] relative overflow-x-hidden">
         {/* ... rest of the component ... */}
 
         <div

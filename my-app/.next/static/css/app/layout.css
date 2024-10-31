@@ -1524,6 +1524,10 @@ video {
   padding-left: 8rem;
   padding-right: 8rem;
 }
+.px-\[2rem\]{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 .pb-16{
   padding-bottom: 4rem;
 }
@@ -3292,6 +3296,12 @@ background-repeat: no-repeat !important;
   .sm\:py-8{
     padding-top: 2rem;
     padding-bottom: 2rem;
+  }
+
+
+  .sm\:px-\[6rem\]{
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 
 
