@@ -18,6 +18,11 @@ import Video from "./components/video";
 
 import Stars from "./components/svgs/stars";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPalette } from '@fortawesome/free-solid-svg-icons';
+import { CommandPaletteIcon } from '@primer/octicons-react';
+
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
@@ -218,7 +223,9 @@ export default function Home() {
             </h1>
 
             <div className="max-w-[700px] mx-auto text-white text-center items-center justify-center">
-              <p>
+              <p
+                className="text-[rgb(161,161,170)]"
+              >
                 At 22 years old, I've been traveling outside the U.S.,
                 sustaining my lifestyle by leveraging digital products and other
                 online income streams. Now, I'm here to teach you how to do the
@@ -279,7 +286,13 @@ export default function Home() {
         <section className="included my-[100px]">
           <div className="w-full flex flex-col gap-[50px] items-center justify-center text-white text-center">
             <div className="flex items-center justify-center flex-col gap-[10px] max-w-[550px]">
-              <h2 className="text-[40px]">Whats Included</h2>
+              <h2
+                className="text-[40px]
+              font-bold bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent
+              "
+              >
+                Whats Included
+              </h2>
 
               <p>
                 These are some of the things offered in The YungCEO Society that
@@ -287,66 +300,100 @@ export default function Home() {
               </p>
             </div>
 
+            <div className="mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:py-16 lg:pb-32 relative max-w-7xl">
+              <div className="grid sm:grid-cols-4 gap-y-8">
+                <div className="relative group">
+                  <div
+                    className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, #18181b, #3F3F46, #18181b)",
+                    }}
+                  ></div>
+                  <div
+                    className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                    }}
+                  >
+                    1
+                  </div>
+                  <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+                    Log in with your <strong>GitHub account</strong>
+                  </p>
+                </div>
 
-<div className="mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:py-16 lg:pb-32 relative max-w-7xl">
-  <div className="grid sm:grid-cols-4 gap-y-8">
-    <div className="relative group">
-      <div 
-        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]" 
-        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
-      ></div>
-      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
-        1
-      </div>
-      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-        Log in with your <strong>GitHub account</strong>
-      </p>
-    </div>
+                <div className="relative group">
+                  <div
+                    className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, #18181b, #3F3F46, #18181b)",
+                    }}
+                  ></div>
+                  <div
+                    className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                    }}
+                  >
+                    2
+                  </div>
+                  <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+                    Install our <strong>GitHub app</strong> and import your
+                    repositories
+                  </p>
+                </div>
 
-    <div className="relative group">
-      <div 
-        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
-        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
-      ></div>
-      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
+                <div className="relative group">
+                  <div
+                    className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, #18181b, #3F3F46, #18181b)",
+                    }}
+                  ></div>
+                  <div
+                    className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                    }}
+                  >
+                    3
+                  </div>
+                  <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+                    Browse your <strong>repositories</strong> and start working
+                    on <strong>issues</strong>
+                  </p>
+                </div>
 
-        2
-      </div>
-      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-        Install our <strong>GitHub app</strong> and import your repositories
-      </p>
-    </div>
-
-    <div className="relative group">
-      <div 
-        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
-        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
-      ></div>
-      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
-        3
-      </div>
-      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-        Browse your <strong>repositories</strong> and start working on <strong>issues</strong>
-      </p>
-    </div>
-
-    <div className="relative group">
-      <div 
-        className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
-        style={{backgroundImage: "linear-gradient(to right, #18181b, #3F3F46, #18181b)"}}
-      ></div>
-      <div className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white" style={{background: "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)"}}>
-        4
-      </div>
-      <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-        Work in <strong>real-time</strong> with your team on your <strong>projects</strong>
-      </p>
-    </div>
-  </div>
-</div>
-
-
-           
+                <div className="relative group">
+                  <div
+                    className="absolute h-px hidden sm:block group-last:hidden top-[20px] left-[calc(50%+20px)] w-[calc(100%-40px)]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, #18181b, #3F3F46, #18181b)",
+                    }}
+                  ></div>
+                  <div
+                    className="relative rounded-lg flex items-center justify-center mb-4 w-10 h-10 border border-gray-300 flex-shrink-0 icon mx-auto font-semibold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                    }}
+                  >
+                    4
+                  </div>
+                  <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
+                    Work in <strong>real-time</strong> with your team on your{" "}
+                    <strong>projects</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -368,7 +415,7 @@ export default function Home() {
         />
       </section>
 
-      <div className="px-[4rem] relative overflow-x-hidden">
+      <div className="px-[8rem] relative overflow-x-hidden">
         {/* ... rest of the component ... */}
 
         <div
@@ -379,7 +426,9 @@ export default function Home() {
             id="pricingSection"
             className="flex flex-col items-center my-[100px]   gap-[14px]"
           >
-            <h3>Pick Your Plan</h3>
+            <h3 className="font-bold bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparents">
+              Pick Your Plan
+            </h3>
 
             <div className="w-[80px] h-[2px] dividerLine"></div>
 
@@ -577,7 +626,7 @@ export default function Home() {
                 <div className="w-full flex items-center justify-center relative">
                   <div className=" absolute  justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
                     <span className="inline-flex gap-[10px] items-center justify-center">
-                    MOST POPULAR
+                      MOST POPULAR
                     </span>
                   </div>
                 </div>
@@ -1035,7 +1084,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="h-[70vh] my-[100px] flex items-center justify-center w-full">
+        {/* <section className="h-[70vh] my-[100px] flex items-center justify-center w-full">
           <div className="productContainer max-w-[700px] flex flex-col md:flex-row  text-white border  hover:border-opacity-100   rounded-lg"
           style={{
             transition: "all 0.3s ease-in-out",
@@ -1073,71 +1122,145 @@ export default function Home() {
               />
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="testimonials h-full my-[100px] py-[20px] text-white flex flex-row relative overflow-x-hidden">
-          <div className="flex flex-col gap-[10px] w-[80%]">
-            <h2 className="text-[40px] font-bold relative top-0 left-0">
-              About Me
-            </h2>
-            <p>Recent Reviews</p>
-
-            <p className=" max-w-[600px] text-[15px]">
-              I am a 22 year old who has been deep into the field of generating
-              income online for now over 10 years. I have managed to leverage
-              multiple online skills to be able to sustain myself traveling full
-              Time without working a Job for the past 2 years.
-            </p>
-            <div className="flex flex-col md:items-center items-start justify-start space-y-6 sm:flex-row sm:space-y-0 sm:space-x-6">
-              <div>
-                <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
-                  10+ Years
+        <section className="testimonials h-full my-[100px] py-[20px] gap-[40px] text-white flex flex-row relative overflow-x-hidden">
+          <div className="flex flex-col gap-[10px] w-full px-[20px] f">
+            <div
+              className="productContainer w-full flex flex-col lg:flex-row  text-white border  hover:border-opacity-100   rounded-lg"
+              style={{
+                transition: "all 0.3s ease-in-out",
+                border: "1px solid rgb(44, 44, 51)",
+                boxShadow: "rgba(38, 44, 52, 0.2) 0px 32px 64px -12px",
+              }}
+            >
+              <div
+                className={`element-card w-[100%] md:w-[100%]  md:p-[20px]  h-[320px] relative flex flex-col justify-end p-[10px] items-start overflow-hidden `}
+                style={{
+                  backgroundImage: `url(/images/Young_black_hustle.jpg)`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              ></div>
+              <div className="productDescription px-[20px] py-[10px] flex flex-col gap-[10px] justify-around">
+                <h3 className="text-[20px] font-bold bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent">
+                  On Sale $19.99 For a Limited Time Only!
                 </h3>
-                <p className="text-body-color dark:text-dark-6">Experience</p>
-              </div>
-              <div className="border-t border-stroke pt-4 sm:pt-0 sm:border-t-0 sm:border-x sm:px-12">
-                <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
-                  5,000+
+                <h3 className="text-[32px] font-bold">
+                  Zero To Glitching Ebook
                 </h3>
-                <p className="text-body-color dark:text-dark-6">
-                  Happy Clients
+                <p className="text-[14px]">
+                  I created this ebook as an all inclusive solution for anyone
+                  looking to create streams of passive income online. Whether
+                  you are a beginner or have already made money selling digital
+                  products this e-book will help you increase your income
+                  online. This Book also comes with +400 digital product
+                  templates, 500+ Digital Product Ideas and More.
                 </p>
-              </div>
-              <div>
-                <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
-                  160,000+
-                </h3>
-                <p className="text-body-color dark:text-dark-6">Followers</p>
+
+                <GlobalButton
+                  href="https://calendly.com/ceo-terrapincrypto/beginner-level-consultation?back=1&month=2024-09"
+                  text="Select Team"
+                  itemPosition="start"
+                />
               </div>
             </div>
 
-            <div className="flex flex-row gap-[20px]">
-              <Link
-                href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
-                target="_blank"
-                className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300
-                  px-4 py-2 rounded-md transition-all duration-300`}
+            <div
+              className="flex flex-col gap-[10px] items-start justify-start w-full pt-[20px] px-[20px]
+           border border-gray-800 rounded-lg
+          "
+            >
+
+<div
+                    className="relative rounded-lg flex items-center justify-center  w-10 h-10 border border-gray-300 flex-shrink-0 icon  font-semibold text-white"
+                    style={{
+                      background:
+                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                    }}
+                  >
+   <CommandPaletteIcon size={24} className="w-5 h-5 flex-shrink-0 u-text-gray-900" />                  </div>
+              <h2
+                className="text-[40px] font-bold relative top-0 left-0
+             bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent
+            "
               >
-                Get Premium
-              </Link>
-              <GlobalButton
-                href="https://discord.gg/YErgCF5ZQE"
-                text="Join Discord "
-                width="200px"
-                bgColor="#2947da"
-              />
+                About Me
+              </h2>
+
+              <p className=" w-full text-[15px] text-[rgb(161,161,170)]">
+                I am a 22 year old who has been deep into the field of
+                generating income online for now over 10 years. I have managed
+                to leverage multiple online skills to be able to sustain myself
+                traveling full Time without working a Job for the past 2 years.
+              </p>
+              <div className="flex flex-col md:items-center items-start justify-start space-y-6 sm:flex-row sm:space-y-0 sm:space-x-6">
+                <div>
+                  <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
+                    10+ Years
+                  </h3>
+                  <p className="text-body-color dark:text-dark-6">Experience</p>
+                </div>
+                <div className="border-t border-stroke pt-4 sm:pt-0 sm:border-t-0 sm:border-x sm:px-12">
+                  <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
+                    5,000+
+                  </h3>
+                  <p className="text-body-color dark:text-dark-6">
+                    Happy Clients
+                  </p>
+                </div>
+                <div>
+                  <h3 className="mb-2 text-2xl font-bold text-dark dark:text-white">
+                    160,000+
+                  </h3>
+                  <p className="text-body-color dark:text-dark-6">Followers</p>
+                </div>
+              </div>
+
+              <div className="flex flex-row gap-[20px]">
+                <Link
+                  href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
+                  target="_blank"
+                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300
+                  px-4 py-2 rounded-md transition-all duration-300`}
+                >
+                  Get Premium
+                </Link>
+                <GlobalButton
+                  href="https://discord.gg/YErgCF5ZQE"
+                  text="Join Discord "
+                  width="200px"
+                  bgColor="#2947da"
+                />
+              </div>
+
+              <p className=" max-w-[600px] text-[15px]"></p>
+              <p className=" max-w-[600px] text-[15px]"></p>
+
+              {/* WHat We DO */}
             </div>
+          </div>
 
-            <p className=" max-w-[600px] text-[15px]"></p>
-            <p className=" max-w-[600px] text-[15px]"></p>
-
-            {/* WHat We DO */}
+          <div
+            className="flex flex-col gap-[10px] w-full px-[20px]
+           border border-gray-800 rounded-lg max-w-[450px]
+          "
+            style={{
+              backgroundImage: `url('/images/YungCeo.png')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+         
+     
           </div>
         </section>
       </div>
 
-      <section id="about" className="relative h-full bg-black">
-        <div className="flex flex-col md:flex-row relative w-full bg-[#0B0B0B]">
+      <section id="about" className="relative h-full mt-[100px]">
+        <div className="flex flex-col md:flex-row relative w-full">
           {services.map((service, index) => (
             <div
               key={index}
@@ -1152,7 +1275,7 @@ export default function Home() {
               }}
             >
               <div
-                className={`absolute inset-0 bg-[#0B0B0B] ${
+                className={`absolute inset-0 bg-[#0B0B0B80] ${
                   index === 1 ? "opacity-0" : "group-hover:opacity-0"
                 } transition-opacity duration-300`}
               ></div>
