@@ -1236,6 +1236,9 @@ video {
 .border-\[0\.5px\]{
   border-width: 0.5px;
 }
+.border-\[1px\]{
+  border-width: 1px;
+}
 .border-b{
   border-bottom-width: 1px;
 }
@@ -1278,6 +1281,10 @@ video {
 .border-gray-800{
   --tw-border-opacity: 1;
   border-color: rgb(31 41 55 / var(--tw-border-opacity));
+}
+.border-\[rgb\(161\2c 161\2c 170\)\]{
+  --tw-border-opacity: 1;
+  border-color: rgb(161 161 170 / var(--tw-border-opacity));
 }
 .border-opacity-50{
   --tw-border-opacity: 0.5;

@@ -18,10 +18,9 @@ import Video from "./components/video";
 
 import Stars from "./components/svgs/stars";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPalette } from '@fortawesome/free-solid-svg-icons';
-import { CommandPaletteIcon } from '@primer/octicons-react';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPalette } from "@fortawesome/free-solid-svg-icons";
+import { CommandPaletteIcon } from "@primer/octicons-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -223,9 +222,7 @@ export default function Home() {
             </h1>
 
             <div className="max-w-[700px] mx-auto text-white text-center items-center justify-center">
-              <p
-                className="text-[rgb(161,161,170)]"
-              >
+              <p className="text-[rgb(161,161,170)]">
                 At 22 years old, I've been traveling outside the U.S.,
                 sustaining my lifestyle by leveraging digital products and other
                 online income streams. Now, I'm here to teach you how to do the
@@ -245,8 +242,7 @@ export default function Home() {
               <Link
                 href="https://discord.gg/YErgCF5ZQE"
                 target="_blank"
-                className={` max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300
-                  px-4 py-2 rounded-md transition-all duration-300`}
+                className={` max-w-[200px] w-[200px] flex items-center justify-center bg-white text-[rgb(161,161,170)]  `}
               >
                 Join Discord
               </Link>
@@ -320,9 +316,9 @@ export default function Home() {
                     1
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                  Gain access to video and pdf walkthrough lessons that walk you through the process step by step to make passive 
-
-<strong>income online.</strong>
+                    Gain access to video and pdf walkthrough lessons that walk
+                    you through the process step by step to make passive
+                    <strong>income online.</strong>
                   </p>
                 </div>
 
@@ -344,8 +340,9 @@ export default function Home() {
                     2
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                  Instantly Gain Access To A Consistently Updated Repository Of Money Making Methods You Can Start Now With Little To No Capital.
-
+                    Instantly Gain Access To A Consistently Updated Repository
+                    Of Money Making Methods You Can Start Now With Little To No
+                    Capital.
                   </p>
                 </div>
 
@@ -367,8 +364,8 @@ export default function Home() {
                     3
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                  Gain Access Or Discounts To Exclusive Custom Coded Software That Makes Earning Money Online 10x Easier!
-
+                    Gain Access Or Discounts To Exclusive Custom Coded Software
+                    That Makes Earning Money Online 10x Easier!
                   </p>
                 </div>
 
@@ -390,33 +387,40 @@ export default function Home() {
                     4
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                  You Are Who You Associate With And We Are Here To Elevate And Support Each Other. Your Network Is Your Net worth.
-
-
+                    You Are Who You Associate With And We Are Here To Elevate
+                    And Support Each Other. Your Network Is Your Net worth.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
-      </main>
 
-      <section className="h-full  w-full relative">
-        <div className="overlay text-white z-10 h-full w-full absolute flex items-center justify-center bg-black bg-opacity-50">
-          {/* <p className="text-[48px]">YUNG CEO</p> */}
+        <div
+          className="h-full w-full relative
+        border-[rgb(161,161,170)] border-[1px] rounded-lg
+        "
+        >
+          <div className="overlay text-white z-10 h-full w-full absolute flex items-center justify-center bg-black bg-opacity-50">
+            {/* <p className="text-[48px]">YUNG CEO</p> */}
+          </div>
+          <Video
+            src="/Young_Black_Camera.mp4"
+            type="video/mp4"
+            width="100%"
+            height="100%"
+            controls={false}
+            autoPlay={true}
+            loop={true}
+            muted={true} // Ensure the video is muted for autoplay to work
+            className="relative h-[80vh] rounded-lg         border-[rgb(161,161,170)] border-[1px] "
+          />
         </div>
-        <Video
-          src="/Young_Black_Camera.mp4"
-          type="video/mp4"
-          width="100%"
-          height="100%"
-          controls={false}
-          autoPlay={true}
-          loop={true}
-          muted={true} // Ensure the video is muted for autoplay to work
-          className="relative h-[80vh]"
-        />
-      </section>
+      </main>
+      {/* 
+      <section className="h-full  w-full relative">
+      
+      </section> */}
 
       <div className="px-[2rem] sm:px-[6rem] relative overflow-x-hidden">
         {/* ... rest of the component ... */}
@@ -647,6 +651,7 @@ export default function Home() {
                   <GlobalButton
                     href="https://calendly.com/ceo-terrapincrypto/beginner-level-consultation?back=1&month=2024-09"
                     text="Select Team"
+                    textColor="rgb(161,161,170)"
                   />
                 </div>
                 <div className="w-full my-[25px] h-[2px] dividerLine"></div>
@@ -1175,15 +1180,18 @@ export default function Home() {
            border border-gray-800 rounded-lg
           "
             >
-
-<div
-                    className="relative rounded-lg flex items-center justify-center  w-10 h-10 border border-gray-300 flex-shrink-0 icon  font-semibold text-white"
-                    style={{
-                      background:
-                        "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
-                    }}
-                  >
-   <CommandPaletteIcon size={24} className="w-5 h-5 flex-shrink-0 u-text-gray-900" />                  </div>
+              <div
+                className="relative rounded-lg flex items-center justify-center  w-10 h-10 border border-gray-300 flex-shrink-0 icon  font-semibold text-white"
+                style={{
+                  background:
+                    "linear-gradient(136.82deg, hsla(0, 0%, 100%, .08) 9.54%, hsla(0, 0%, 100%, 0) 101.31%)",
+                }}
+              >
+                <CommandPaletteIcon
+                  size={24}
+                  className="w-5 h-5 flex-shrink-0 u-text-gray-900"
+                />{" "}
+              </div>
               <h2
                 className="text-[40px] font-bold relative top-0 left-0
              bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent
@@ -1235,6 +1243,7 @@ export default function Home() {
                   text="Join Discord "
                   width="200px"
                   bgColor="#2947da"
+                  textColor="rgb(161,161,170)"
                 />
               </div>
 
@@ -1251,14 +1260,11 @@ export default function Home() {
           "
             style={{
               backgroundImage: `url('/images/YungCeo.png')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
-          >
-         
-     
-          </div>
+          ></div>
         </section>
       </div>
 
