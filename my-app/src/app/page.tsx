@@ -242,7 +242,7 @@ export default function Home() {
               <Link
                 href="https://discord.gg/YErgCF5ZQE"
                 target="_blank"
-                className={` max-w-[200px] w-[200px] flex items-center justify-center bg-white text-[rgb(161,161,170)]  `}
+                className={` max-w-[200px] rounded-md h-[40px] w-[180px] flex items-center justify-center bg-white text-black  `}
               >
                 Join Discord
               </Link>

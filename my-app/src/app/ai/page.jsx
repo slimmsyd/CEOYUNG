@@ -17,7 +17,7 @@ export default function AI() {
   }
 
   return (
-    <div className="bg-[url('https://jutsu.ai/images/BgGrid.svg')] bg-contain bg-center bg-no-repeat customBG  px-4 ">
+    <div className="px-[4rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat overflow-x-hidden">
       {/* <Navbar /> */}
       <Navbar />
 
@@ -65,20 +65,24 @@ export default function AI() {
       </div>
 
       <div className="max-w-[700px] mx-auto text-white text-center items-center justify-center">
-        <p>
+        <p
+        className="text-[rgb(161,161,170)]"
+        >
           AI content generation website is a platform that utilizes artificial
           intelligegnce technologies, such as natural lanauge processing, to
           generate content.
         </p>
 
         <div className="flex flex-row  mt-10 items-center justify-center">
-          <a
-            href="https://whop.com/yungceo/"
-            class="mb-4 inline-flex items-center justify-center rounded-lg bg-[#007AFF] px-6 py-3 text-base font-medium text-white hover:bg-primary/90"
-          >
-            Get Started
-          </a>
+        <Link
+                href="https://whop.com/yungceo/"
+                className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
+               !bg-transparent border-[0.5px] border-gray-400   "
+              >
+          Get Premium
+        </Link>
         </div>
+     
 
         <p className="my-10">Powered By Discord</p>
       </div>
