@@ -12,12 +12,10 @@ export default function AI() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  }
+
 
   return (
-    <div className="px-[4rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat overflow-x-hidden">
+    <div className="px-[0rem] md:px-[0rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat overflow-x-hidden">
       {/* <Navbar /> */}
       <Navbar />
 
@@ -66,7 +64,7 @@ export default function AI() {
 
       <div className="max-w-[700px] mx-auto text-white text-center items-center justify-center">
         <p
-        className="text-[rgb(161,161,170)]"
+        className=""
         >
           AI content generation website is a platform that utilizes artificial
           intelligegnce technologies, such as natural lanauge processing, to
@@ -77,7 +75,9 @@ export default function AI() {
         <Link
                 href="https://whop.com/yungceo/"
                 className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
-               !bg-transparent border-[0.5px] border-gray-400   "
+               bg-transparent
+               hover:bg-white/5 
+               border-[0.5px] border-gray-400   "
               >
           Get Premium
         </Link>
@@ -308,7 +308,7 @@ export default function AI() {
                   </svg>
                   New!
                 </span>
-                <h1 class="mb-4 text-3xl font-bold text-dark sm:text-4xl md:text-[52px]/[1.25] lg:text-4xl xl:text-[52px]/[1.25] dark:text-white">
+                <h1 class=" bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent text-[40px] mb-[20px] font-bold">
                   Generate High Quality Digital Products &amp; Documents In
                   Seconds
                 </h1>
@@ -325,7 +325,10 @@ export default function AI() {
                   />
 
                   <a href="https://whop.com/yungceo/">
-                    <button class="h-12 rounded-lg bg-primary px-6 py-3 font-medium text-white hover:bg-primary/90">
+                    <button
+             className="w-[140px] flex items-center justify-center md:flex text-white px-4 py-2 rounded-md 
+                      bg-transparent border-[0.5px] border-gray-400 hover:bg-white/5 transition-colors"
+                    >
                       Generate
                     </button>
                   </a>
@@ -395,7 +398,7 @@ export default function AI() {
                 <span class="flex items-center p-2 my-[25px] px-6 gap-2 text-sm font-medium border rounded-3xl shadow-md w-fit">
                   About YungCEO AI
                 </span>
-                <h2 class="text-dark dark:text-white text-3xl font-bold sm:text-4xl md:text-[40px]">
+                <h2 class="bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparent text-[40px] mb-[20px] font-bold">
                   Turn your phone into a money printer!
                 </h2>
               </div>
@@ -598,8 +601,9 @@ export default function AI() {
             id="pricingSection"
             className="flex flex-col items-center my-[100px]   gap-[14px]"
           >
-            <h3>Pick Your Plan</h3>
-
+            <h3 className="font-bold bg-gradient-to-r from-[#52525b] via-[#a1a1aa] to-[#52525b] bg-clip-text text-transparents">
+              Pick Your Plan
+            </h3>
             <div className="w-[80px] h-[2px] dividerLine"></div>
 
             <div className="flex md:flex-row flex-col gap-[10px]">

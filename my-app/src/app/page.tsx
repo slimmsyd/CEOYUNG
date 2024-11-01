@@ -235,7 +235,7 @@ export default function Home() {
               <button
                 onClick={() => scrollToSection("pricingSection")}
                 className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
-               !bg-transparent border-[0.5px] border-gray-400   "
+               bg-transparent hover:bg-white/5 border-[0.5px] border-gray-400   "
               >
                 Get Premium
               </button>
@@ -316,7 +316,8 @@ export default function Home() {
                     1
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Gain access to video and pdf walkthrough lessons that walk
+                    Gain access to{" "}
+                    <strong className="text-white">video and pdf walkthrough lessons</strong> that walk
                     you through the process step by step to make passive
                     <strong>income online.</strong>
                   </p>
@@ -341,8 +342,11 @@ export default function Home() {
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
                     Instantly Gain Access To A Consistently Updated Repository
-                    Of Money Making Methods You Can Start Now With Little To No
-                    Capital.
+                    Of Money Making Methods You Can Start Now With
+                    <strong className="text-white">
+                      {" "}
+                      Little To No Capital.
+                    </strong>
                   </p>
                 </div>
 
@@ -364,7 +368,11 @@ export default function Home() {
                     3
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    Gain Access Or Discounts To Exclusive Custom Coded Software
+                    Gain Access Or Discounts To 
+                    <strong className="text-white">
+                      {" "}
+                      Exclusive Custom Coded Software
+                    </strong>
                     That Makes Earning Money Online 10x Easier!
                   </p>
                 </div>
@@ -387,8 +395,12 @@ export default function Home() {
                     4
                   </div>
                   <p className="mt-2 text-gray-600 text-center max-w-[12rem] mx-auto prose prose-primary dark:prose-invert prose-sm">
-                    You Are Who You Associate With And We Are Here To Elevate
-                    And Support Each Other. Your Network Is Your Net worth.
+                    <strong className="text-white">
+                      {" "}
+                      You Are Who You Associate With
+                    </strong>{" "}
+                    And We Are Here To Elevate And Support Each Other. Your
+                    Network Is Your Net worth.
                   </p>
                 </div>
               </div>
@@ -1233,7 +1245,7 @@ export default function Home() {
                 <Link
                   href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
                   target="_blank"
-                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300
+                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300 hover:bg-white/5 
                   px-4 py-2 rounded-md transition-all duration-300`}
                 >
                   Get Premium
