@@ -3215,6 +3215,14 @@ background-repeat: no-repeat !important;
   background-color: rgb(255 255 255 / 0.1);
 }
 
+.hover\:bg-white\/95:hover{
+  background-color: rgb(255 255 255 / 0.95);
+}
+
+.hover\:bg-white\/85:hover{
+  background-color: rgb(255 255 255 / 0.85);
+}
+
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));

@@ -242,7 +242,7 @@ export default function Home() {
               <Link
                 href="https://discord.gg/YErgCF5ZQE"
                 target="_blank"
-                className={` max-w-[200px] rounded-md h-[40px] w-[180px] flex items-center justify-center bg-white text-black  `}
+                className={` max-w-[200px] rounded-md h-[40px] w-[180px] flex items-center justify-center hover:bg-white/85  bg-white text-black  `}
               >
                 Join Discord
               </Link>
@@ -1245,8 +1245,8 @@ export default function Home() {
                 <Link
                   href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
                   target="_blank"
-                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300 hover:bg-white/5 
-                  px-4 py-2 rounded-md transition-all duration-300`}
+                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300 hover:bg-white/85 
+           `}
                 >
                   Get Premium
                 </Link>
