@@ -79,14 +79,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ response, shouldAnimate = tru
     }
   }, [isTyping, displayedMessage, response]);
 
-  // useEffect(() => {
-  //   if (isTyping) {
-  //     setDisplayedMessage('');
-  //     setIsTyping(true);
-  //   } else {
-  //     setDisplayedMessage(response.response);
-  //   }
-  // }, [isTyping, response]);
 
   const formattedMessage = formatResponse(displayedMessage)
 

@@ -679,6 +679,8 @@ To generate a PDF:
     }
   };
 
+
+
   const [, setfileURL] = useState("");
   const [selectedFile, setselectedFile] = useState(null);
   const [uploadedFile, setuploadedFile] = useState({});
@@ -1054,10 +1056,7 @@ To generate a PDF:
         }
         const messages = await response.json();
 
-        // console.log("Add the IDS",messages.map(msgs => msgs.id))
 
-        // Map API response to expected format in state
-        //Naming conventions matter
         const formattedMessages = messages.map((msg: Message) => ({
           question: msg.userContent,
           response: msg.botResponse,
@@ -1078,7 +1077,6 @@ To generate a PDF:
     }
   };
 
-  useEffect(() => {}, [responses]);
 
   useEffect(() => {
     setResponses([]); // Clear previous messages
@@ -1101,18 +1099,15 @@ To generate a PDF:
 
   const [chatContainerShown, setChatContainerShown] = useState<boolean>(false);
   const chatContainerToggle = () => {
-    console.log("IS this being clicked??? Showon yes or no");
+ 
     setChatContainerShown(!chatContainerShown);
   };
 
   useEffect(() => {
-    console.log("Responses", selectedFile);
-  }, [selectedFile]);
+    }, [selectedFile]);
 
-  useEffect(() => { 
-
-    console.log("Logging the current state of the messages container", messagesIsLoading)
-  },[messagesIsLoading])
+useEffect(() => { 
+},[conversations])
 
   //Function takes you to the bottom of the div by clicking the floating button.
 
@@ -1147,7 +1142,10 @@ To generate a PDF:
         className="chatDashboardWrapper relative w-full text-left"
       >
 
-        <ChatHeader />
+        <ChatHeader
+           conversations={conversations}
+
+        />
 
 
         <div className={`chatDashBoardContainer `}>

@@ -478,12 +478,7 @@ export default function Profile() {
               <div className="border border-gray-700 rounded-lg p-4">
                 <div className="flex flex-col gap-[15px]">
                   <ul className = "flex flex-col gap-[10px]">
-                    <li>Select an PDF background : '$br',</li>
-                    <li>Help Commands : '$help',</li>
-                    <li>List PDF background : '$listbr',</li>
-                    <li>Generate PDF : '$generatepdf',</li>
-                    <li>Remove image background : '$rem',</li>
-                    <li>View your ussage : '$usage',</li>
+                    <li>Type $help to see the list of commands</li>
                   </ul>
                 </div>
               </div>

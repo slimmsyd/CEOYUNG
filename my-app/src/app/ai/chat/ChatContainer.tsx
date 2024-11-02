@@ -167,7 +167,6 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
   // Add placeholder conversations
 
-  // Add hover state
   const [isHovered, setIsHovered] = useState(false);
 
   // Add these helper functions before the return statement
