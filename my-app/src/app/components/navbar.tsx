@@ -517,7 +517,7 @@ export default function Navbar({
           </Link>
         ) : (
           <button
-            className="inline-flex self-end justify-end max-w-[100px] items-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2 text-white rounded-[14px] h-10 ml-auto"
+          className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
             onClick={() => signIn("google")}
           >
             Sign in{" "}
@@ -593,8 +593,7 @@ mt-2 w-48 rounded-md shadow-lg z-10 px-[3px] border-[#2222220d] border-[0.5px]"
                 </Link>
               ) : (
                 <button
-                  className="  w-full  flex items-center justify-center  md:flex text-black px-4 py-2 rounded-md 
-               bg-white border-[0.5px] border-gray-400   "
+                   className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
                   onClick={() => signIn("google")}
                 >
                   Sign in{" "}
