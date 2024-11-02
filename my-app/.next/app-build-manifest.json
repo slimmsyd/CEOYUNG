@@ -15,6 +15,17 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/ai/page.js"
+    ],
+    "/ai/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/ai/chat/page.css",
+      "static/chunks/app/ai/chat/page.js"
+    ],
+    "/ai/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/ai/profile/page.js"
     ]
   }
 }

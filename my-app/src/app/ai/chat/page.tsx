@@ -35,7 +35,40 @@ import axios from "axios";
 import ChatHeader from "../../components/ChatHeader";
 
 import { Dashboard } from "./Dashboard";
+
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import { WhopAPI } from "@whop-apps/sdk";
 const ChatDashboard: React.FC = () => {
+
+
+
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const[companyInfo, setCompanyInfo] = useState<any>(null);
+  const[whopError, setWhopError] = useState<any>(null);
+
+  async function fetchWhopData() {
+    try {
+      // Replace 'your_company_id' with your actual Whop company ID
+      const response = await WhopAPI.app().GET("/app/companies/{id}", {
+        params: { path: { id: "your_company_id" } },
+      });
+      
+      console.log("Whop Company Data:", response);
+      setCompanyInfo(response);
+      
+    } catch (error) {
+      console.error("Error fetching Whop data:", error);
+      setWhopError(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchWhopData();
+  }, []);
+
   //Introduction Guidelines.
 
   const [showGuidelines, setShowGuidelines] = useState(true);

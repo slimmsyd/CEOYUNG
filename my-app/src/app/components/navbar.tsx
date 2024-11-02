@@ -511,7 +511,7 @@ export default function Navbar({
         {session ? (
           <Link
             href="/ai/chat"
-            className=" hidden md:flex px-4 py-2 rounded-md  bg-white text-black hover:border-black transition-colors"
+        className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
           >
             Go to app
           </Link>
@@ -534,7 +534,7 @@ export default function Navbar({
       <div className="relative">
         <button
           className="inline-flex
-
+    bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]
     items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-9 lg:hidden rounded-[14px] h-10"
           type="button"
           onClick={toggleDropdown}

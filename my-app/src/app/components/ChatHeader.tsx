@@ -24,7 +24,7 @@ export default function ChatHeader() {
         data-header="original"
         className="flex flex-row w-[100%] px-[10px] py-[20px] h-[50px] gap-[10px] items-center justify-end text-white border-b border-[#807f7f57]"
       >
-        <Link href="/ai/chat" className="bg-[#424242] hover:bg-[#545454] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer">
+     <Link href="/ai/chat" className="bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer">
           Dashboard
         </Link>
       </div>
@@ -35,7 +35,7 @@ export default function ChatHeader() {
           isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <Link href="/ai/chat" className="bg-[#424242] hover:bg-[#545454] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer">
+        <Link href="/ai/chat" className="bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer">
           Dashboard
         </Link>
       </div>

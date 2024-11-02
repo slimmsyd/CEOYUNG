@@ -235,7 +235,7 @@ export default function Home() {
               <button
                 onClick={() => scrollToSection("pricingSection")}
                 className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
-               bg-transparent hover:bg-white/5 border-[0.5px] border-gray-400   "
+             bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
               >
                 Get Premium
               </button>
@@ -1245,7 +1245,7 @@ export default function Home() {
                 <Link
                   href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
                   target="_blank"
-                  className={`mt-[25px] max-w-[200px] w-[200px] text-black flex items-center justify-center bg-white  px-4 py-2 rounded-md transition-all duration-300 hover:bg-white/85 
+                  className={`mt-[25px] max-w-[200px] w-[200px] text-white flex items-center justify-center      bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
            `}
                 >
                   Get Premium
@@ -1254,7 +1254,7 @@ export default function Home() {
                   href="https://discord.gg/YErgCF5ZQE"
                   text="Join Discord "
                   width="200px"
-                  bgColor="#2947da"
+                  bgColor="#ffffff"
                   textColor="rgb(161,161,170)"
                 />
               </div>

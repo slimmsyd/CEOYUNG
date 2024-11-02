@@ -385,13 +385,10 @@ export default function Profile() {
 
       {/* Chat Container Componet  */}
 
-
-
       <div
         ref={chatDashBoardRef}
         className="chatDashboardWrapper w-full text-left"
       >
-
         <ChatHeader />
 
         <div className={`chatDashBoardContainer `}>
@@ -402,12 +399,14 @@ export default function Profile() {
                 <div className="flex flex-col gap-[15px]">
                   <div className="flex flex-row gap-[15px]">
                     <div className="relative group">
-                      <div 
+                      <div
                         className="w-[60px] h-[60px] rounded-full bg-transparent border border-gray-700"
                         style={{
-                          backgroundImage: profileImage ? `url(${profileImage})` : 'none',
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center'
+                          backgroundImage: profileImage
+                            ? `url(${profileImage})`
+                            : "none",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
                         }}
                       ></div>
                       <input
@@ -417,20 +416,20 @@ export default function Profile() {
                         accept="image/*"
                         onChange={handleImageUpload}
                       />
-                      <div 
+                      <div
                         className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <div className="w-6 h-6 rounded-full border border-gray-500 flex items-center justify-center bg-gray-800">
-                          <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="12" 
-                            height="12" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2" 
-                            strokeLinecap="round" 
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
                             strokeLinejoin="round"
                           >
                             <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
@@ -452,11 +451,41 @@ export default function Profile() {
                 </div>
 
                 <button
-                  className="mt-4 hidden md:flex text-white px-4 py-2 rounded-md hover:border-white hover:bg-[#363737] transition-colors bg-[#232525]"
+                  className=" mt-4 bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
                   onClick={handleSignOut}
                 >
                   Sign Out{" "}
                 </button>
+              </div>
+            </div>
+
+            {/* <div className = "flex flex-col gap-[15px]">
+            <div className="border border-gray-700 rounded-lg p-4">
+              </div>
+            </div> */}
+
+            {/* <div className = "flex flex-col gap-[15px]">
+            <div className="border border-gray-700 rounded-lg p-4">
+              </div>
+
+              
+            </div> */}
+          </div>
+
+          <div className="flex flex-col gap-[15px] space-y-4 my-[5rem]">
+            <div className="flex flex-col gap-[15px]">
+              <h3>Command List</h3>
+              <div className="border border-gray-700 rounded-lg p-4">
+                <div className="flex flex-col gap-[15px]">
+                  <ul className = "flex flex-col gap-[10px]">
+                    <li>Select an PDF background : '$br',</li>
+                    <li>Help Commands : '$help',</li>
+                    <li>List PDF background : '$listbr',</li>
+                    <li>Generate PDF : '$generatepdf',</li>
+                    <li>Remove image background : '$rem',</li>
+                    <li>View your ussage : '$usage',</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
