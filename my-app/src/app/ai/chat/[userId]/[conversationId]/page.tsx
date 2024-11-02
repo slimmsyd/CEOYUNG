@@ -387,12 +387,9 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
   // Check for special commands
     const specialCommands = {
       'br': '$br',
-      'down': '$down',
       'help': '$help',
       'listbr': '$listbr',
-      'new': '$new',
       'generatepdf': '$generatepdf',
-        'pdf': '$pdf',
         'rem': '$rem',
       'usage': '$usage',
     };
@@ -426,7 +423,35 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
 
     const command = message.trim().split(" ")[0].toLowerCase();
 
-    console.log("Command", command);
+
+    //Help commabd 
+    if(command === "$help") { 
+      const helpText = `Available Commands:
+- $help: Shows this list of commands
+- $listbr: Shows available background templates
+- $br <number>: Selects a background template by number
+- $generatepdf: Generates a PDF with selected background and optional logo
+- $usage: Shows your current account usage
+- $rem: Removes the last uploaded file
+
+To generate a PDF:
+1. Use $listbr to see available backgrounds
+2. Select a background with $br <number>
+3. (Optional) Click the clip icon to upload a logo
+4. Use $generatepdf followed by your content`;
+
+      setResponses((prevResponses) => [
+        ...prevResponses,
+        {
+          question: message,
+          response: helpText,
+          id: Date.now().toString(),
+        },
+      ]);
+      setMessage(""); // Clear the message input
+      setMessagesIsLoading(false);
+      return;
+    }
 
     if (command === "$listbr") {
       setResponses((prevResponses) => [
@@ -443,12 +468,9 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
       return; // Exit the function after ha
     }
 
-    // New functionality to handlendle $br <num>
-    if (command.startsWith("$br")) {
 
-    }
 
-    
+ 
 
     if (command === "$br") {
       
@@ -633,6 +655,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
           // console.log("Logging the new Responses", responses);
 
           console.log("Logging the bot reply", botReply);
+          setMessagesIsLoading(false);
           await fetch("/api/messages", {
             method: "POST",
             headers: {
@@ -646,6 +669,7 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
               imageUrl: "",
             }),
           });
+
 
           //Add the conversations arrawy or update
         } catch (error) {
@@ -1084,6 +1108,11 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
   useEffect(() => {
     console.log("Responses", selectedFile);
   }, [selectedFile]);
+
+  useEffect(() => { 
+
+    console.log("Logging the current state of the messages container", messagesIsLoading)
+  },[messagesIsLoading])
 
   //Function takes you to the bottom of the div by clicking the floating button.
 

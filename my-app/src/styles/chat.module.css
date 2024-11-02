@@ -531,11 +531,17 @@
   padding: 8px 16px;
   border-radius: 8px 0px 8px 8px;
   max-width: 75%;
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, transform 0.5s, background 0.3s;
   border-radius: 5px;
-  background: #424242;
-
+  background: rgba(39,60,110,0.1);
+  
+  border: 1px solid rgb(39,60,110);
 }
+
+.bot_Messages:hover {
+  background: rgba(39,60,110,0.39);
+}
+
 .bot_Messages::before, .user_Messages::before  {
   content: attr(data-split-username); /* Use the attribute content */
   position: absolute;
