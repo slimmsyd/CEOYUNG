@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Conversation } from "../../../types";
 
 interface ChatHeaderProps { 
-  conversations: Conversation[];
+  conversations?: Conversation[];
 }
 
 export default function ChatHeader({conversations}: ChatHeaderProps) {
@@ -20,9 +20,11 @@ export default function ChatHeader({conversations}: ChatHeaderProps) {
     // Extract conversation ID from path (last segment)
     const id = path.split('/').pop() || '';
     console.log("Current conversation ID", id)
-    const conversation = conversations.find((convo) => convo.conversationId === id);
-    setCurrentConvoId(id);
-    setCurrentConvoName(conversation?.title || '');
+    if (conversations) {
+      const conversation = conversations.find((convo) => convo.conversationId === id);
+      setCurrentConvoId(id);
+      setCurrentConvoName(conversation?.title || '');
+    }
   }, [conversations]);
   
 

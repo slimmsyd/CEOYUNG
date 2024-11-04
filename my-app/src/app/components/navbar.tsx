@@ -17,12 +17,10 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Link from "next/link";
 
 interface NavbarProps {
-  handleConnect: () => void;
   scrollToSection: (sectionId: string) => void;
 }
 
 export default function Navbar({
-  handleConnect,
   scrollToSection,
 }: NavbarProps) {
   const { data: session } = useSession();

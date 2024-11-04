@@ -372,17 +372,31 @@ const ChatDashboard: React.FC = () => {
       }
   
       if(command === "$help") {
-        const commandList = Object.keys(specialCommands).join(", "); // Create a list of commands
-        setResponses((prevResponses) => [
-          ...prevResponses,
-          {
-            question: message,
-            response: `Here are your available commands: $${commandList}`, // Update response to show commands
-            id: Date.now().toString(),
-          },
-        ]);
-        setMessagesIsLoading(false);
-        return;
+        const helpText = `Available Commands:
+- $help: Shows this list of commands
+- $listbr: Shows available background templates
+- $br <number>: Selects a background template by number
+- $generatepdf: Generates a PDF with selected background and optional logo
+- $usage: Shows your current account usage
+- $rem: Removes the last uploaded file
+
+To generate a PDF:
+1. Use $listbr to see available backgrounds
+2. Select a background with $br <number>
+3. (Optional) Click the clip icon to upload a logo
+4. Use $generatepdf followed by your content`;
+
+      setResponses((prevResponses) => [
+        ...prevResponses,
+        {
+          question: message,
+          response: helpText,
+          id: Date.now().toString(),
+        },
+      ]);
+      setMessage(""); // Clear the message input
+      setMessagesIsLoading(false);
+      return;
       }
   
   
@@ -1146,7 +1160,12 @@ const ChatDashboard: React.FC = () => {
           className="chatDashboardWrapper w-full text-left"
         >
        
-       <ChatHeader />
+       <ChatHeader
+           conversations={conversations}
+
+        />
+
+
 
 
           <div className="chatDashBoardContainer">

@@ -389,7 +389,8 @@ export default function Profile() {
         ref={chatDashBoardRef}
         className="chatDashboardWrapper w-full text-left"
       >
-        <ChatHeader />
+        <ChatHeader
+        />
 
         <div className={`chatDashBoardContainer `}>
           <div className="flex flex-col gap-[15px] space-y-4 my-[5rem]">
@@ -459,17 +460,7 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* <div className = "flex flex-col gap-[15px]">
-            <div className="border border-gray-700 rounded-lg p-4">
-              </div>
-            </div> */}
-
-            {/* <div className = "flex flex-col gap-[15px]">
-            <div className="border border-gray-700 rounded-lg p-4">
-              </div>
-
-              
-            </div> */}
+         
           </div>
 
           <div className="flex flex-col gap-[15px] space-y-4 my-[5rem]">
@@ -478,23 +469,13 @@ export default function Profile() {
               <div className="border border-gray-700 rounded-lg p-4">
                 <div className="flex flex-col gap-[15px]">
                   <ul className = "flex flex-col gap-[10px]">
-                    <li>Type $help to see the list of commands</li>
+                    <li>Type $help in chat to see list of all commands</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* <div className = "flex flex-col gap-[15px]">
-            <div className="border border-gray-700 rounded-lg p-4">
-              </div>
-            </div> */}
 
-            {/* <div className = "flex flex-col gap-[15px]">
-            <div className="border border-gray-700 rounded-lg p-4">
-              </div>
-
-              
-            </div> */}
           </div>
         </div>
       </div>

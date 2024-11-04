@@ -2,25 +2,22 @@
 
 import Image from "next/image";
 import Navbar from "./components/navbar";
-import Header from "./components/header";
 import { useState, useEffect, useCallback, useRef } from "react";
 import Footer from "./components/footer";
 import GlobalButton from "./components/globalbutton";
 import Link from "next/link";
-import LoadingComponent from "./components/loadingComponent";
-import { useAccount } from "wagmi";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { teardownTraceSubscriber } from "next/dist/build/swc";
 import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Video from "./components/video";
-
+import axios from "axios";
 import Stars from "./components/svgs/stars";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
+;
 import { CommandPaletteIcon } from "@primer/octicons-react";
+
+import {useSession, signIn, signOut} from "next-auth/react"
+import { toast } from "react-toastify";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,36 +28,132 @@ export default function Home() {
   const [articleLink, setArticleLink] = useState("/");
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const { address } = useAccount();
 
-  const ADMINADRESS = "0xDcFD8d5BD36667D16aDDD211C59BCdE1A9c4e23B";
-  const DEVADDRESS = "EUy7RKJsBoG81yheHS7YCD8wyfJbp6CD7XB2DScoSZEs";
-  const { open } = useWeb3Modal();
 
-  const handleConnect = () => {
-    open();
-  };
+  const {data: session} = useSession()
+
+  async function getAllUsers() {
+    const key = "vpBqd9i4AwGFvUDnzQdaHA9aVm8NwuUtFLJzPDI-odw"
+    
+    console.log("Logging the session", session)
+
+    try {
+      // Get all memberships
+      const response = await axios.get('https://api.whop.com/api/v2/memberships', {
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Accept': 'application/json'
+        }
+      });
+      
+      // Map out all member emails
+      console.log("Logging all memebrships", response.data.data)
+      const memberEmails = response.data.data.map((member: any) => member.email);
+      // console.log("All member emails:", memberEmails);
+      if (session?.user?.email) {
+        const userMembership = response.data.data.find(
+          (membership: any) => membership.email === session.user.email
+        );
+
+        if (userMembership) {
+          console.log('Found user membership:', userMembership);
+          return userMembership;
+        } else {
+          console.log('User not found in memberships');
+          return null;
+        }
+      } else {
+        console.log('No session user email available');
+        return null;
+      }
+
+    } catch (error) {
+      console.error('Error fetching memberships:', error.response ? error.response.data : error.message);
+      toast.error("Error fetching memberships");
+    }
+  }
+  // getAllUsers()
+
+async function testWhopAPI() {
+
+  console.log("This was clicked")
+
+    const key = "vpBqd9i4AwGFvUDnzQdaHA9aVm8NwuUtFLJzPDI-odw"
+    console.log("Key", key)
+  
+    try {
+      const response = await axios.get('https://api.whop.com/api/v2/products', {
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Accept': 'application/json'
+        }
+      });
+      
+      console.log('Products:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching products:', error.response ? error.response.data : error.message);
+}
+
+}
+
+
+
+async function handlePurchase(productId: string) {
+  const key = "vpBqd9i4AwGFvUDnzQdaHA9aVm8NwuUtFLJzPDI-odw"
+
+  console.log("Session", session)
+  if(!session || session === null){
+   signIn("google")
+    window.alert("Please sign in to purchase")
+  }else{
+    
+
+  
+  try {
+    // Get the specific product details
+    const response = await axios.get(`https://api.whop.com/api/v2/products/${productId}`, {
+      headers: {
+        'Authorization': `Bearer ${key}`,
+        'Accept': 'application/json'
+      }
+    });
+    
+    console.log('Product Response:', response.data);
+    console.log('Experiences:', response.data.experiences);
+    
+    // Try to find a valid checkout URL
+    const experience = response.data.experiences[0];
+    console.log('First Experience:', experience);
+    
+    if (experience) {
+      // Check different possible properties for the checkout URL
+      const checkoutUrl = `https://whop.com/yungceo/?pass=${productId}`;
+      window.open(checkoutUrl, '_blank');
+      
+      // if (checkoutLink) {
+      //   window.location.href = checkoutLink;
+      // } else {
+      //   console.error('No checkout link found in experience:', experience);
+      // }
+    } else {
+      console.error('No experiences found for product');
+    }
+    
+  } catch (error) {
+    console.error('Error fetching product details:', error.response ? error.response.data : error.message);
+    }
+  }
+}
+
+
+  
+
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    if (
-      address === ADMINADRESS ||
-      address === (DEVADDRESS as unknown as `0x${string}`)
-    ) {
-      setIsAdmin(true);
-    }
-
-    if (!address) {
-      setIsAdmin(false);
-    }
-  }, [address]);
-  useEffect(() => {
-    if (!isAdmin) {
-    }
-  }, [isAdmin]);
 
   useEffect(() => {
     // Set loading to true before fetching data
@@ -208,7 +301,6 @@ export default function Home() {
     <div className=" customBG  ">
       <main className="px-[4rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat">
         <Navbar
-          handleConnect={handleConnect}
           scrollToSection={scrollToSection}
         />
 
@@ -233,7 +325,8 @@ export default function Home() {
 
             <div className="flex flex-row gap-[15px] items-center  mt-[20px]">
               <button
-                onClick={() => scrollToSection("pricingSection")}
+                onClick={testWhopAPI}
+                // onClick={() => scrollToSection("pricingSection")}
                 className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
              bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
               >
@@ -249,7 +342,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=" justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
+          <div
+          onClick={() => handlePurchase('prod_qBClHu8uCriXn')} // BreadWinner AI Plan product ID
+          className=" justify-center m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
             <span className="inline-flex gap-[10px] items-center justify-center">
               <svg
                 stroke="currentColor"
@@ -464,10 +559,18 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <GlobalButton
+                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn')}
+                    className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
+                    bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
+                     >
+                    Select Basic
+                    </button>
+
+                  {/* <GlobalButton
                     href="https://calendly.com/ceo-terrapincrypto/30min?back=1&month=2024-09"
                     text="Select Basic"
-                  />
+                    bgColor="white"
+                  /> */}
                 </div>
                 <div className="w-full my-[25px] h-[2px] dividerLine"></div>
 
@@ -660,11 +763,15 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <GlobalButton
-                    href="https://calendly.com/ceo-terrapincrypto/beginner-level-consultation?back=1&month=2024-09"
-                    text="Select Team"
-                    textColor="rgb(161,161,170)"
-                  />
+
+
+                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn')}
+                    className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
+                    bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
+                     >
+                    Select Team
+                    </button>
+             
                 </div>
                 <div className="w-full my-[25px] h-[2px] dividerLine"></div>
 
@@ -854,10 +961,15 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <GlobalButton
-                    href="https://calendly.com/ceo-terrapincrypto/intermediate-level-consultation?back=1"
-                    text="Select Ceo"
-                  />
+                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn')}
+                    className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
+                    bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
+                     >
+                    Select Ceo
+                    </button>
+             
+
+           
                 </div>
                 <div className="w-full my-[25px] h-[2px] dividerLine"></div>
 
@@ -1179,11 +1291,7 @@ export default function Home() {
                   templates, 500+ Digital Product Ideas and More.
                 </p>
 
-                <GlobalButton
-                  href="https://calendly.com/ceo-terrapincrypto/beginner-level-consultation?back=1&month=2024-09"
-                  text="Select Team"
-                  itemPosition="start"
-                />
+             
               </div>
             </div>
 
@@ -1361,7 +1469,7 @@ function Testimonials() {
     {
       image: "/images/Flipping_Coin.jpg",
       alt: "Another Testimonial",
-      text: "I'm very critical when it comes to reviewing things. YungCEO delivers on not only just the information you're seeking but also a dope community where everyone is open to any topic, building, learning and earning with each other. If you're looking for that change into digital products, YungCEO is Dank Approved 💪🏾",
+      text: "“Absolutely amazing server! Tons of support when it comes to learning marketable online income earning skills! Don’t get left behind!",
       location: "YungCEO Society Member",
       name: "pentadank",
     },
@@ -1406,7 +1514,7 @@ function Testimonials() {
       </div>
 
       <div className="flex flex-row gap-[20px] h-full w-full justify-center items-center pb-[2rem] ">
-        <div className="flex flex-row gap-[20px] flex-1 items-end self-end justify-end">
+        <div className="flex flex-row gap-[20px] flex-1 items-end self-end">
           <div
             onClick={prevSlide}
             className="border border-gray-400 border-opacity-50 p-2 cursor-pointer z-10"
