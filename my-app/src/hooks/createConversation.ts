@@ -53,9 +53,14 @@ export default function useCreateConversation(
         setConversations((prev: Conversation[]) => {
           const updatedConversations = [
             ...prev,
-            { conversationId: data.id, title: data.title, messages: [] }, // Added messages property
+            {
+              conversationId: data.id,
+              title: data.title,
+              messages: [],
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
           ];
-          // Update local storage with new conversation list
           sessionStorage.setItem(
             "conversations",
             JSON.stringify(updatedConversations)

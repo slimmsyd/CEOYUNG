@@ -746,7 +746,7 @@ async function handlePurchase(productId: string) {
 
               <div className="pricingCard  h-full bg-transparent relative">
                 <div className="w-full flex items-center justify-center relative">
-                  <div className=" absolute  justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] mt-[50px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
+                  <div className=" absolute  justify-center mt-[25px] m-auto flex items-center p-2 my-[35px] px-6 gap-2 text-sm font-medium border border-[hsl(217.2,32.6%,17.5%)] rounded-3xl shadow-md w-fit">
                     <span className="inline-flex gap-[10px] items-center justify-center">
                       MOST POPULAR
                     </span>
@@ -765,7 +765,7 @@ async function handlePurchase(productId: string) {
 
 
 
-                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn')}
+                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn"')}
                     className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
                     bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
                      >
