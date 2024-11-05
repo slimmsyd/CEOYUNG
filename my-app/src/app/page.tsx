@@ -324,7 +324,7 @@ async function handlePurchase(productId: string) {
                 Get Premium
               </button>
               <Link
-                href="https://discord.gg/YErgCF5ZQE"
+                href="https://discord.com/invite/YErgCF5ZQE"
                 target="_blank"
                 className={` max-w-[200px] rounded-md h-[40px] w-[180px] flex items-center justify-center hover:bg-white/85  bg-white text-black  `}
               >
@@ -1350,7 +1350,7 @@ async function handlePurchase(productId: string) {
                   Get Premium
                 </Link>
                 <GlobalButton
-                  href="https://discord.gg/YErgCF5ZQE"
+                  href="https://discord.com/invite/YErgCF5ZQE"
                   text="Join Discord "
                   width="200px"
                   bgColor="#ffffff"
