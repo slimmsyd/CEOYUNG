@@ -22,12 +22,7 @@ import { toast } from "react-toastify";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const [showPopup, setShowPopup] = useState(false);
-  const [articleImage, setArticleImage] = useState("");
-  const [articleName, setArticleName] = useState("News In Article");
-  const [articleLink, setArticleLink] = useState("/");
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [allMemberships, setAllMemberships] = useState([])
   const [userMembership, setUserMembership] = useState(null)
   
@@ -36,8 +31,6 @@ export default function Home() {
   const {data: session} = useSession()
 
   async function getAllUsers() {
-    const key = "vpBqd9i4AwGFvUDnzQdaHA9aVm8NwuUtFLJzPDI-odw"
-    
     console.log("Logging the session", session)
 
     try {
@@ -45,10 +38,9 @@ export default function Home() {
       const response = await axios.get('/api/memberships'); 
       
       // Map out all member emails
-      console.log("Logging all memebrships", response.data.data)
+      console.log("Logging all memberships", response.data.data)
       setAllMemberships(response.data.data)
-      const memberEmails = response.data.data.map((member: any) => member.email);
-      // console.log("All member emails:", memberEmails);
+      
       if (session?.user?.email) {
         const userMembership = response.data.data.find(
           (membership: any) => membership.email === session.user.email
@@ -57,16 +49,24 @@ export default function Home() {
         console.log("Logging the user membership", userMembership)
 
         if (userMembership) {
-          console.log('Found user membership:', userMembership);
+          // Store membership details in localStorage
+          localStorage.setItem('userMembership', JSON.stringify({
+            status: userMembership.status,
+            plan: userMembership.plan,
+            valid: userMembership.valid,
+            expiresAt: userMembership.expiresAt,
+            renewalPeriodStart: userMembership.renewalPeriodStart
+          }));
+          
           setUserMembership(true)
           return userMembership;
         } else {
-          console.log('User not found in memberships');
+          localStorage.removeItem('userMembership'); // Clear if no membership found
           setUserMembership(false)
           return null;
         }
       } else {
-        console.log('No session user email available');
+        localStorage.removeItem('userMembership'); // Clear if no session
         setUserMembership(false)
         return null;
       }
@@ -165,44 +165,7 @@ async function handlePurchase(productId: string) {
   useEffect(() => {
     console.log("Loading princple", loading);
   }, [loading]);
-  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target && typeof event.target.result === "string") {
-          setArticleImage(event.target.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  }, []);
 
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  }, []);
-
-  const handleSave = useCallback(() => {
-    if (!isAdmin) {
-      console.log("Logging Admin", isAdmin);
-      console.log(articleImage, articleName, articleLink);
-      return;
-    }
-
-    // Save article data to the server
-    fetch("/api/article", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        image: articleImage,
-        name: articleName,
-        link: articleLink,
-      }),
-    }).then(() => setShowPopup(false));
-  }, [articleImage, articleName, articleLink]);
 
   const services = [
     {

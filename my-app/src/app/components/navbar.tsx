@@ -533,11 +533,7 @@ export default function Navbar({
           </button>
         )}
 
-        {/* <a href="https://app.jutsu.ai/signup">
-        <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2 text-white rounded-[14px] h-10">
-          Signup
-        </button>
-      </a> */}
+   
       </div>
 
       <div className="relative">
