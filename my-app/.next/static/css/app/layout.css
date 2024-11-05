@@ -619,6 +619,9 @@ video {
 .pointer-events-none{
   pointer-events: none;
 }
+.visible{
+  visibility: visible;
+}
 .fixed{
   position: fixed;
 }
@@ -3343,8 +3346,18 @@ background-repeat: no-repeat !important;
   }
 
 
+  .md\:inline-flex{
+    display: inline-flex;
+  }
+
+
   .md\:grid{
     display: grid;
+  }
+
+
+  .md\:hidden{
+    display: none;
   }
 
 

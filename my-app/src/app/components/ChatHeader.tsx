@@ -14,6 +14,7 @@ export default function ChatHeader({ conversations, deleteConversation }: ChatHe
   const [currentConvoName, setCurrentConvoName] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
+  const [isChatVisible, setIsChatVisible] = useState(true);
 
   useEffect(() => {
     // Get current URL path
@@ -93,6 +94,21 @@ export default function ChatHeader({ conversations, deleteConversation }: ChatHe
     }
   };
 
+  const toggleChatVisibility = () => {
+    const chatContainer = document.querySelector('.chatContainer') as HTMLElement;
+    if (chatContainer) {
+      if (chatContainer.style.transform === 'translateX(100%)') {
+        // If hidden, show it
+        chatContainer.style.transform = 'translateX(0)';
+        chatContainer.style.opacity = '1';
+      } else {
+        // If visible, hide it
+        chatContainer.style.transform = 'translateX(100%)';
+        chatContainer.style.opacity = '0';
+      }
+    }
+  };
+
   return (
     <>
       {/* Original header */}
@@ -100,47 +116,78 @@ export default function ChatHeader({ conversations, deleteConversation }: ChatHe
         data-header="original"
         className="flex flex-row w-[100%] px-[10px] py-[20px] h-[50px] gap-[10px] items-center justify-end text-white border-b border-[#807f7f57]"
       >
-        <div className="flex-grow text-left">
+        <div className="flex-grow text-left flex items-center gap-2">
           {isEditing ? (
             <input
               type="text"
               value={`${editedTitle}`}
               onChange={handleTitleChange}
               onKeyDown={handleTitleSubmit}
-              // onBlur={handleTitleBlur}
               className="bg-transparent border-be text-[14px] outline-none w-[300px]"
               autoFocus
-              onClick={(e) => e.stopPropagation()} // Prevent click from bubbling
+              onClick={(e) => e.stopPropagation()}
             />
           ) : (
-            <h3
-              className="text-[14px] cursor-pointer hover:text-gray-300"
-              onClick={handleTitleClick}
-            >
-              Current Conversation: {currentConvoName}
-            </h3>
+
+            <>
+      
+<button
+                className="inline-flex bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)] items-center justify-center text-sm font-medium transition-colors w-9 rounded-[14px] h-10 md:hidden"
+                type="button"
+                aria-haspopup="menu"
+                onClick={toggleChatVisibility}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  className="text-3xl"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="32"
+                    d="M96 256h320M96 176h320M96 336h320"
+                  ></path>
+                </svg>
+              </button>
+              <h3
+                className="text-[14px] cursor-pointer hover:text-gray-300"
+                onClick={handleTitleClick}
+              >
+                Current Conversation: {currentConvoName}
+              </h3>
+         
+            </>
           )}
         </div>
 
         <div className="inline-flex items-center gap-[10px]">
-          <svg
-          onClick={() => deleteConversation(currentConvoId)}
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="far"
-            data-icon="trash"
-            className="svg-inline--fa fa-trash fa-fw !cursor-pointer "
-            role="img"
-            width="20px"
-            height="20px"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-          >
-            <path
-              fill="currentColor"
-              d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"
-            ></path>
-          </svg>
+          {window.location.pathname !== '/ai/chat' && (
+            <svg
+              onClick={() => deleteConversation(currentConvoId)}
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="far"
+              data-icon="trash"
+              className="svg-inline--fa fa-trash fa-fw !cursor-pointer "
+              role="img"
+              width="20px"
+              height="20px"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"
+              ></path>
+            </svg>
+          )}
           <Link
             href="/ai/chat"
             className="bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
@@ -156,47 +203,79 @@ export default function ChatHeader({ conversations, deleteConversation }: ChatHe
           isScrolled ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex-grow text-left">
+        <div className="flex-grow text-left flex items-center gap-2">
           {isEditing ? (
             <input
               type="text"
               value={editedTitle}
               onChange={handleTitleChange}
               onKeyDown={handleTitleSubmit}
-              // onBlur={handleTitleBlur}
               className="bg-transparent border-b border-white text-[14px] outline-none w-[300px]"
               autoFocus
-              onClick={(e) => e.stopPropagation()} // Prevent click from bubbling
+              onClick={(e) => e.stopPropagation()}
             />
           ) : (
-            <h3
-              className="text-[14px] cursor-pointer hover:text-gray-300"
-              onClick={handleTitleClick}
-            >
-              Current Conversation: {currentConvoName}
-            </h3>
+            <>
+
+<button
+                className="inline-flex bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)] items-center justify-center text-sm font-medium transition-colors w-9 rounded-[14px] h-10 md:hidden"
+                type="button"
+                aria-haspopup="menu"
+                onClick={toggleChatVisibility}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  className="text-3xl"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="32"
+                    d="M96 256h320M96 176h320M96 336h320"
+                  ></path>
+                </svg>
+              </button>
+              <h3
+                className="text-[14px] cursor-pointer hover:text-gray-300"
+                onClick={handleTitleClick}
+              >
+                Current Conversation: {currentConvoName}
+              </h3>
+         
+            </>
+
+
           )}
         </div>
     
         <div className="inline-flex items-center gap-[10px]">
-          <svg
-            onClick={() => deleteConversation(currentConvoId)}
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="far"
-            data-icon="trash"
+        {window.location.pathname !== '/ai/chat' && (
+            <svg
+              onClick={() => deleteConversation(currentConvoId)}
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="far"
+              data-icon="trash"
               className="svg-inline--fa fa-trash fa-fw !cursor-pointer "
-            role="img"
-            width="20px"
-            height="20px"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-          >
-            <path
-              fill="currentColor"
-              d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"
-            ></path>
-          </svg>
+              role="img"
+              width="20px"
+              height="20px"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"
+              ></path>
+            </svg>
+          )}
           <Link
             href="/ai/chat"
             className="bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"

@@ -160,10 +160,7 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
   useEffect(() => {}, [chatContainerShown]);
 
-  useEffect(() => {
-    // console.log("Conversations", conversations);
-
-  }, [conversations]);
+  useEffect(() => {}, [conversations]);
 
   // Add placeholder conversations
 
@@ -183,15 +180,38 @@ export const ChatContainer: FC<ChatContainerProps> = ({
   // Group conversations
   const groupedConversations = conversations?.reduce(
     (groups, conversation) => {
-      if (conversation.createdAt && isToday(conversation.createdAt.toString())) {
+      if (
+        conversation.createdAt &&
+        isToday(conversation.createdAt.toString())
+      ) {
         groups.today.push(conversation);
       } else if (conversation.createdAt) {
         groups.recent.push(conversation);
       }
       return groups;
     },
-    { today: [], recent: [] } as { today: Conversation[]; recent: Conversation[] }
+    { today: [], recent: [] } as {
+      today: Conversation[];
+      recent: Conversation[];
+    }
   ) || { today: [], recent: [] };
+
+  const toggleChatVisibility = () => {
+    const chatContainer = document.querySelector(
+      ".chatContainer"
+    ) as HTMLElement;
+    if (chatContainer) {
+      if (chatContainer.style.transform === "translateX(100%)") {
+        // If hidden, show it
+        chatContainer.style.transform = "translateX(0)";
+        chatContainer.style.opacity = "1";
+      } else {
+        // If visible, hide it
+        chatContainer.style.transform = "translateX(100%)";
+        chatContainer.style.opacity = "0";
+      }
+    }
+  };
 
   return (
     <div
@@ -235,25 +255,35 @@ export const ChatContainer: FC<ChatContainerProps> = ({
 
             <Link href="/">Yung AI</Link>
           </div>
-          <div
-            onClick={handleMobileChatBtnClick}
-            className=" mobileChatBtn !relative flex items-center justify-start"
+
+          <button
+            className="inline-flex bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)] items-center justify-center text-sm font-medium transition-colors w-9 rounded-[14px] h-10 md:hidden"
+            type="button"
+            aria-haspopup="menu"
+            onClick={toggleChatVisibility}
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              stroke="currentColor"
               fill="currentColor"
-              viewBox="0 0 256 256"
+              strokeWidth="0"
+              viewBox="0 0 512 512"
+              className="text-3xl"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z"></path>
+              <path
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="32"
+                d="M96 256h320M96 176h320M96 336h320"
+              ></path>
             </svg>
-          </div>
+          </button>
 
           <div className="flex flex-row gap-[13px]">
-            <div
-            
-            >
+            <div>
               <svg
                 role="img"
                 width="32"
@@ -288,15 +318,21 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                   <>
                     <p className="text-gray-400 text-sm px-2">Today</p>
                     {groupedConversations.today.map((conversation) => (
-                      <div key={conversation.conversationId} className="relative">
+                      <div
+                        key={conversation.conversationId}
+                        className="relative"
+                      >
                         <span
                           ref={editingTitleRef}
                           onMouseEnter={() =>
-                            setHoveredConversationId(conversation.conversationId)
+                            setHoveredConversationId(
+                              conversation.conversationId
+                            )
                           }
                           className="flex  flex-row  gap-[13px] ite           ms-start justify-start w-full"
                         >
-                          {editTitleId === (conversation as any).conversationId &&
+                          {editTitleId ===
+                            (conversation as any).conversationId &&
                           editingTitle === true ? (
                             <form
                               onSubmit={onChangeConvoTitle}
@@ -317,27 +353,27 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                                 <p
                                   onClick={() => {
                                     if (!editingTitle) {
-                                    onConversationClick &&
-                                      onConversationClick(
-                                        conversation.conversationId
-                                            );
+                                      onConversationClick &&
+                                        onConversationClick(
+                                          conversation.conversationId
+                                        );
                                     }
                                   }}
-                                className={`transition-all duration-300  text-left cursor-pointer ${
-                                  conversation.conversationId ===
-                                  currentConversationId
-                                    ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
-                                    : hoveredConversationId ===
-                                      conversation.conversationId
-                                    ? "text-[#8c8c8c]"
-                                    : "text-[#ffffff]"
-                                } ${isHovered ? "opacity-100" : "opacity-0"}`}
-                              >
-                                {conversation.title}
-                              </p>
-                            </div>
-                            {hoveredConversationId ===
-                              conversation.conversationId && (
+                                  className={`transition-all duration-300  text-left cursor-pointer ${
+                                    conversation.conversationId ===
+                                    currentConversationId
+                                      ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
+                                      : hoveredConversationId ===
+                                        conversation.conversationId
+                                      ? "text-[#8c8c8c]"
+                                      : "text-[#ffffff]"
+                                  } ${isHovered ? "opacity-100" : "opacity-0"}`}
+                                >
+                                  {conversation.title}
+                                </p>
+                              </div>
+                              {hoveredConversationId ===
+                                conversation.conversationId && (
                                 <svg
                                   width={15}
                                   height={15}
@@ -349,7 +385,9 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 576 512"
                                   className="ml-2"
-                                  onMouseDown={() => setShowDeleteContainer(true)}
+                                  onMouseDown={() =>
+                                    setShowDeleteContainer(true)
+                                  }
                                 >
                                   <path
                                     fill="currentColor"
@@ -364,20 +402,32 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                     ))}
                   </>
                 )}
-                
+
                 {groupedConversations.recent.length > 0 && (
                   <>
-                    <p className={`text-gray-400 text-sm px-2 ${isHovered ? "opacity-100" : "opacity-0"}`}>Recent</p>
+                    <p
+                      className={`text-gray-400 text-sm px-2 ${
+                        isHovered ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      Recent
+                    </p>
                     {groupedConversations.recent.map((conversation) => (
-                      <div key={conversation.conversationId} className="relative">
+                      <div
+                        key={conversation.conversationId}
+                        className="relative"
+                      >
                         <span
                           ref={editingTitleRef}
                           onMouseEnter={() =>
-                            setHoveredConversationId(conversation.conversationId)
+                            setHoveredConversationId(
+                              conversation.conversationId
+                            )
                           }
                           className="flex  flex-row  gap-[13px] ite           ms-start justify-start w-full"
                         >
-                          {editTitleId === (conversation as any).conversationId &&
+                          {editTitleId ===
+                            (conversation as any).conversationId &&
                           editingTitle === true ? (
                             <form
                               onSubmit={onChangeConvoTitle}
@@ -398,27 +448,27 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                                 <p
                                   onClick={() => {
                                     if (!editingTitle) {
-                                    onConversationClick &&
-                                      onConversationClick(
-                                        conversation.conversationId
-                                            );
+                                      onConversationClick &&
+                                        onConversationClick(
+                                          conversation.conversationId
+                                        );
                                     }
                                   }}
-                                className={`transition-all duration-300  text-left cursor-pointer ${
-                                  conversation.conversationId ===
-                                  currentConversationId
-                                    ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
-                                    : hoveredConversationId ===
-                                      conversation.conversationId
-                                    ? "text-[#8c8c8c]"
-                                    : "text-[#ffffff]"
-                                } ${isHovered ? "opacity-100" : "opacity-0"}`}
-                              >
-                                {conversation.title}
-                              </p>
-                            </div>
-                            {hoveredConversationId ===
-                              conversation.conversationId && (
+                                  className={`transition-all duration-300  text-left cursor-pointer ${
+                                    conversation.conversationId ===
+                                    currentConversationId
+                                      ? "text-[#ffff] bg-[#545454] rounded-md  border border-white border-opacity-50"
+                                      : hoveredConversationId ===
+                                        conversation.conversationId
+                                      ? "text-[#8c8c8c]"
+                                      : "text-[#ffffff]"
+                                  } ${isHovered ? "opacity-100" : "opacity-0"}`}
+                                >
+                                  {conversation.title}
+                                </p>
+                              </div>
+                              {hoveredConversationId ===
+                                conversation.conversationId && (
                                 <svg
                                   width={15}
                                   height={15}
@@ -430,7 +480,9 @@ export const ChatContainer: FC<ChatContainerProps> = ({
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 576 512"
                                   className="ml-2"
-                                  onMouseDown={() => setShowDeleteContainer(true)}
+                                  onMouseDown={() =>
+                                    setShowDeleteContainer(true)
+                                  }
                                 >
                                   <path
                                     fill="currentColor"
@@ -545,7 +597,6 @@ export const ChatContainer: FC<ChatContainerProps> = ({
         >
           YungCEO AI
         </p>
-    
       </div>
     </div>
   );

@@ -1118,7 +1118,9 @@ To generate a PDF:
           ref={chatDashBoardRef}
           className="chatDashboardWrapper w-full text-left"
         >
-          <ChatHeader conversations={conversations} />
+          <ChatHeader conversations={conversations}
+          deleteConversation={deleteConversation}
+          />
 
           <div className="chatDashBoardContainer">
             {/* Dashboard Component  */}
