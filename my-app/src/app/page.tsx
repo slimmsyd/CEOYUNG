@@ -28,6 +28,9 @@ export default function Home() {
   const [articleLink, setArticleLink] = useState("/");
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [allMemberships, setAllMemberships] = useState([])
+  const [userMembership, setUserMembership] = useState(null)
+  
 
 
   const {data: session} = useSession()
@@ -39,15 +42,11 @@ export default function Home() {
 
     try {
       // Get all memberships
-      const response = await axios.get('https://api.whop.com/api/v2/memberships', {
-        headers: {
-          'Authorization': `Bearer ${key}`,
-          'Accept': 'application/json'
-        }
-      });
+      const response = await axios.get('/api/memberships'); 
       
       // Map out all member emails
       console.log("Logging all memebrships", response.data.data)
+      setAllMemberships(response.data.data)
       const memberEmails = response.data.data.map((member: any) => member.email);
       // console.log("All member emails:", memberEmails);
       if (session?.user?.email) {
@@ -55,15 +54,20 @@ export default function Home() {
           (membership: any) => membership.email === session.user.email
         );
 
+        console.log("Logging the user membership", userMembership)
+
         if (userMembership) {
           console.log('Found user membership:', userMembership);
+          setUserMembership(true)
           return userMembership;
         } else {
           console.log('User not found in memberships');
+          setUserMembership(false)
           return null;
         }
       } else {
         console.log('No session user email available');
+        setUserMembership(false)
         return null;
       }
 
@@ -72,8 +76,10 @@ export default function Home() {
       toast.error("Error fetching memberships");
     }
   }
-  // getAllUsers()
 
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 async function testWhopAPI() {
 
   console.log("This was clicked")
@@ -155,23 +161,6 @@ async function handlePurchase(productId: string) {
   };
 
 
-  useEffect(() => {
-    // Set loading to true before fetching data
-    setLoading(true);
-    // Fetch saved article data on component mount
-    fetch("/api/article")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Data", data);
-        setArticleImage(data.image.url);
-        setArticleName(data.image.alt);
-        setArticleLink(data.image.link);
-      })
-      .catch((error) => {
-        console.error("Error fetching article data:", error);
-      })
-      .finally(() => setLoading(false));
-  }, []);
 
   useEffect(() => {
     console.log("Loading princple", loading);
@@ -302,6 +291,8 @@ async function handlePurchase(productId: string) {
       <main className="px-[4rem] bg-[url('https://volta.net/home/hero.png')] bg-contain bg-top bg-no-repeat">
         <Navbar
           scrollToSection={scrollToSection}
+          allMemberships={allMemberships}
+          userMembership={userMembership}
         />
 
         <section className="header py-[2rem] text-white flex flex-col pt-40 ">

@@ -2,26 +2,21 @@
 
 import { useState, useEffect } from "react";
 
-import {
-  useAccount,
-  useBalance,
-  useSendTransaction,
-  usePrepareTransactionRequest,
-  useSignMessage,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
 import { useSession, signIn, signOut } from "next-auth/react";
-
+import { toast } from "react-toastify";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Link from "next/link";
 
 interface NavbarProps {
-  scrollToSection: (sectionId: string) => void;
+    scrollToSection: (sectionId: string) => void;
+    allMemberships: any[];
+    userMembership: boolean;
 }
 
 export default function Navbar({
   scrollToSection,
+  allMemberships,
+  userMembership,
 }: NavbarProps) {
   const { data: session } = useSession();
 
@@ -29,6 +24,16 @@ export default function Navbar({
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleGoToApp = () => {
+    if (!userMembership) {
+      console.log("Logging User Membership", userMembership);
+
+      window.alert("You must have a membership to access the app");
+      return;
+    }
+    window.location.href = "/ai/chat ";
   };
 
   return (
@@ -507,12 +512,12 @@ export default function Navbar({
 
       <div className="lg:flex hidden items-end justify-end gap-2 flex-1">
         {session ? (
-          <Link
-            href="/ai/chat"
+          <div
+          onClick={handleGoToApp}
         className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
           >
             Go to app
-          </Link>
+          </div>
         ) : (
           <button
           className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
@@ -583,12 +588,11 @@ mt-2 w-48 rounded-md shadow-lg z-10 px-[3px] border-[#2222220d] border-[0.5px]"
               </a>
               <div className="border-t border-white/10 my-2"></div>
               {session ? (
-                <Link
-                  href="/ai/chat"
-                  className="inline-flex bg-white text-black items-center  justify-center w-full whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2  rounded-[14px] h-10"
+                <div
+                onClick={handleGoToApp}                  className="inline-flex bg-white text-black items-center  justify-center w-full whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary shadow hover:bg-primary/90 px-4 py-2  rounded-[14px] h-10"
                 >
                   Go to app
-                </Link>
+                </div>
               ) : (
                 <button
                    className="  bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] text-[14px] border-[1px] border-[rgb(39,60,110)] transition-colors duration-200 px-4 py-2 rounded-md cursor-pointer"
