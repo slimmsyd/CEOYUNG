@@ -217,66 +217,53 @@ const localStorageConvoId = localStorage.getItem("currentConversationId");
   }
 
   async function deleteConversation(conversationId: string | number) {
+    // Show confirmation dialog
+    const isConfirmed = window.confirm("Are you sure you want to delete this conversation?");
+    
+    // If user cancels, return early
+    if (!isConfirmed) {
+        return;
+    }
+
     const currentConversations = conversations;
-
-
-    console.log("Conversation ID", conversationId);
 
     // Optimistically remove the conversation from UI
     const updatedConversations = currentConversations.filter(
-      (convo) => (convo as any).conversationId !== conversationId
+        (convo) => (convo as any).conversationId !== conversationId
     );
 
     setConversations(updatedConversations);
     sessionStorage.setItem(
-      "conversations",
-      JSON.stringify(updatedConversations)
+        "conversations",
+        JSON.stringify(updatedConversations)
     );
 
     try {
-      const response = await fetch(`/api/deleteConversations/`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: conversationId }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete the conversation");
-      }
+        const response = await fetch(`/api/deleteConversations/`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: conversationId }),
+        });
+        
+        if (!response.ok) {
+            throw new Error("Failed to delete the conversation");
+        }
 
-      // Filter out the deleted conversation
-      const updatedConversations = conversations.filter(
-        (convo) => (convo as any).converatoinID !== conversationId
-      );
-      // console.log("Logging out the Conversation Filter", conversations);
-
-      // Update state and local storage
-      setConversations(updatedConversations); // Update React state
-      sessionStorage.setItem(
-        "conversations",
-        JSON.stringify(updatedConversations)
-      ); // Update local storage
-
-  
-
-      if (response.ok) {
-        // Update the conversations state
-        const updatedConversations = conversations.filter(
-          (convo) => (convo as any).conversationId !== conversationId
-        );
-        setConversations(updatedConversations);
-
-        // Update the session storage
-        sessionStorage.setItem(
-          "conversations",
-          JSON.stringify(updatedConversations)
-        );
-        router.push(`/ai/chat`);
-      }
+        if (response.ok) {
+            router.push(`/ai/chat`);
+        }
     } catch (error) {
-      console.error("Error deleting conversation:", error);
-      alert("Could not delete the conversation. Please try again.");
+        console.error("Error deleting conversation:", error);
+        alert("Could not delete the conversation. Please try again.");
+        
+        // Revert the optimistic update on error
+        setConversations(currentConversations);
+        sessionStorage.setItem(
+            "conversations",
+            JSON.stringify(currentConversations)
+        );
     }
   }
 
@@ -1144,6 +1131,7 @@ useEffect(() => {
 
         <ChatHeader
            conversations={conversations}
+           deleteConversation={deleteConversation}
 
         />
 

@@ -1,9 +1,10 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
   "/ai/chat/page": "app/ai/chat/page.js",
-  "/api/memberships/route": "app/api/memberships/route.js",
+  "/ai/chat/[userId]/[conversationId]/page": "app/ai/chat/[userId]/[conversationId]/page.js",
   "/icon.svg/route": "app/icon.svg/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/userConversations/route": "app/api/userConversations/route.js"
+  "/api/userConversations/route": "app/api/userConversations/route.js",
+  "/api/storedMessages/route": "app/api/storedMessages/route.js",
+  "/api/deleteConversations/route": "app/api/deleteConversations/route.js"
 }

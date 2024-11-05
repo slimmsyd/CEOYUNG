@@ -3,37 +3,39 @@ import { withAuth } from 'next-auth/middleware'
 
 export default withAuth(
   async function middleware(req) {
-    const session = req.nextauth.token;
+//     const session = req.nextauth.token;
+
+    return NextResponse.next()
     
-    if (!session?.email) {
-        console.log("Logging the unauthorized response", session)
-      return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
-    }
+//     if (!session?.email) {
+//         console.log("Logging the unauthorized response", session)
+//       return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
+//     }
 
-    try {
-      const response = await fetch('/api/memberships', {
-        headers: {
-          'Cookie': req.headers.get('cookie') || '' // Pass session cookie
-        }
-      })
+//     try {
+//       const response = await fetch('/api/memberships', {
+//         headers: {
+//           'Cookie': req.headers.get('cookie') || '' // Pass session cookie
+//         }
+//       })
       
-      const data = await response.json()
-      const hasValidMembership = data?.data?.length > 0
+//       const data = await response.json()
+//       const hasValidMembership = data?.data?.length > 0
 
-      if (!hasValidMembership) {
-        return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
-      }
+//       if (!hasValidMembership) {
+//         return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
+//       }
 
-      return NextResponse.next()
-    } catch (error) {
-      console.error('Membership verification failed:', error)
-      return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
-    }
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token
-    }
+//       return NextResponse.next()
+//     } catch (error) {
+//       console.error('Membership verification failed:', error)
+//       return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
+//     }
+//   },
+//   {
+//     callbacks: {
+//       authorized: ({ token }) => !!token
+//     }
 
     
   }
