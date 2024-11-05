@@ -11,18 +11,17 @@ import React, {
   useRef,
   use,
   useId,
-FormEvent,
+  FormEvent,
 } from "react";
 import { useSession, getSession } from "next-auth/react";
 import { Session } from "next-auth";
 
 import dynamic from "next/dynamic";
-import { MessageProvider } from "../../../utilis/MessageContext";//Utilis and helper functions
+import { MessageProvider } from "../../../utilis/MessageContext"; //Utilis and helper functions
 import { isClient } from "../../../utilis/isClient";
 import { useSessionStorage } from "../../../hooks/useSessionStorage";
 import { checkSession } from "@/utilis/CheckSession";
 import ButtonLoadingComponent from "../../components/buttonComponet";
-
 
 import { useChatConversation } from "../../../hooks/ConversationContext";
 import useCreateConversation from "../../../hooks/createConversation";
@@ -40,14 +39,10 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import { WhopAPI } from "@whop-apps/sdk";
 const ChatDashboard: React.FC = () => {
-
-
-
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const[companyInfo, setCompanyInfo] = useState<any>(null);
-  const[whopError, setWhopError] = useState<any>(null);
+  const [companyInfo, setCompanyInfo] = useState<any>(null);
+  const [whopError, setWhopError] = useState<any>(null);
 
   async function fetchWhopData() {
     try {
@@ -55,10 +50,9 @@ const ChatDashboard: React.FC = () => {
       const response = await WhopAPI.app().GET("/app/companies/{id}", {
         params: { path: { id: "your_company_id" } },
       });
-      
+
       console.log("Whop Company Data:", response);
       setCompanyInfo(response);
-      
     } catch (error) {
       console.error("Error fetching Whop data:", error);
       setWhopError(error.message);
@@ -83,18 +77,18 @@ const ChatDashboard: React.FC = () => {
   const handleGuidelinesComplete = () => {
     localStorage.setItem("hasViewedGuidelines", "true");
     setShowGuidelines(false);
- };
+  };
 
- const chatBotUrl = " https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net/chat";
- const mainURL = "https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net"
- const generatePdfUrl = `${mainURL}/generate_pdf`;
+  const chatBotUrl =
+    " https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net/chat";
+  const mainURL =
+    "https://yungceo-ahejhwc4avhrgtb2.canadacentral-01.azurewebsites.net";
+  const generatePdfUrl = `${mainURL}/generate_pdf`;
 
- const [logoImage, setLogoImage] = useState<string | null>(null);
- 
- //List of Backround PDF imagse
- const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
+  const [logoImage, setLogoImage] = useState<string | null>(null);
 
-
+  //List of Backround PDF imagse
+  const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
 
   //First introduction From
   const {
@@ -107,8 +101,6 @@ const ChatDashboard: React.FC = () => {
   } = useSessionStorage();
 
   const [responseLoading, setResponseLoading] = useState(false);
-  
-
 
   const router = useRouter();
   const pathname = usePathname();
@@ -126,7 +118,6 @@ const ChatDashboard: React.FC = () => {
   const [currentConversationId, setCurrentConversationId] = useState<
     number | string | null
   >(null);
-
 
   const [messagesIsLoading, setMessagesIsLoading] = useState<null | boolean>(
     null
@@ -156,7 +147,7 @@ const ChatDashboard: React.FC = () => {
     } else {
       console.log("No user ID available in session");
     }
-  }, [session])
+  }, [session]);
 
   //Stores the Chat
   const {
@@ -188,6 +179,9 @@ const ChatDashboard: React.FC = () => {
   //This function shifts and shows the mobile Chat ccontainer
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [isAtZero, setIsAtZero] = useState<boolean>(false); // State to track the position
+
+  const [pdfImages, setPdfImages] = useState<string[]>([]);
+  const [selectedPdfImage, setSelectedPdfImage] = useState<string | null>(null);
 
   const handleMobileChatBtnClick = () => {
     console.log(
@@ -231,7 +225,6 @@ const ChatDashboard: React.FC = () => {
     localStorage.removeItem("borderClasses");
     localStorage.removeItem("currentQuestion");
 
-    // console.log("clearing the current conversation ID");
     setResponses([]);
     setCurrentConversationId(null);
   }, []);
@@ -258,121 +251,99 @@ const ChatDashboard: React.FC = () => {
   // Update session storage whenever userName or splitUserName changes
 
   const sessionRef = useRef(0);
-  useEffect(() => {
-    // console.log(
-    //   "useEffect: Checking to see if the session ref changed",
-    //   sessionRef.current
-    // );
-  }, [sessionRef]);
+  useEffect(() => {}, [sessionRef]);
 
   //Submit the Inquiry
   const chatDashBoardRef = useRef<HTMLDivElement>(null);
-    // Check for special commands
-    const specialCommands = {
-      'br': '$br',
-      'down': '$down',
-      'help': '$help',
-      'listbr': '$listbr',
-      'new': '$new',
-      'generatepdf': '$generatepdf',
-        'pdf': '$pdf',
-        'rem': '$rem',
-      'usage': '$usage',
+  // Check for special commands
+  const specialCommands = {
+    br: "$br",
+    down: "$down",
+    help: "$help",
+    listbr: "$listbr",
+    new: "$new",
+    generatepdf: "$generatepdf",
+    pdf: "$pdf",
+    rem: "$rem",
+    usage: "$usage",
+  };
+  useEffect(() => {
+    const loadPdfImages = () => {
+      // Assuming the public folder is at the root of your project
+      const pdfImagesContext = (require as any).context(
+        "/public/pdfImage",
+        false,
+        /\.(png|jpe?g|gif)$/i
+      );
+      const imageFiles = pdfImagesContext
+        .keys()
+        .map((key) => `/pdfImage${key.replace(".", "")}`);
+      setPdfImages(imageFiles);
     };
-    useEffect(() => {
-      const loadPdfImages = () => {
-        // Assuming the public folder is at the root of your project
-        const pdfImagesContext = (require as any).context(
-          "/public/pdfImage",
-          false,
-          /\.(png|jpe?g|gif)$/i
-        );
-        const imageFiles = pdfImagesContext
-          .keys()
-          .map((key) => `/pdfImage${key.replace(".", "")}`);
-        setPdfImages(imageFiles);
-      };
-  
-      loadPdfImages();
-    }, []);
 
+    loadPdfImages();
+  }, []);
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
+    if (!message.trim()) {
+      console.log("Empty message, returning");
+      return;
+    }
 
-    const [pdfImages, setPdfImages] = useState<string[]>([]);
-    const [selectedPdfImage, setSelectedPdfImage] = useState<string | null>(null);
+    setMessagesIsLoading(true);
 
-    const handleSubmit = async (e: FormEvent) => {
-      e.preventDefault();
-  
-      if (!message.trim()) {
-        console.log("Empty message, returning");
-        return;
+    const command = message.trim().split(" ")[0].toLowerCase();
+
+    console.log("Command", command);
+
+    if (command === "$listbr") {
+      setResponses((prevResponses) => [
+        ...prevResponses,
+        {
+          question: message,
+          response: "Here are your PDF images:",
+          imageUrl: pdfImages, // Add the loaded PDF images
+          id: Date.now().toString(),
+        },
+      ]);
+      setMessage(""); // Clear the message input
+      setMessagesIsLoading(false);
+      return; // Exit the function after ha
+    }
+
+    if (command === "$br") {
+      const index = parseInt(message.split(" ")[1], 10); // Get the number after $br
+      if (!isNaN(index) && index >= 0 && index < pdfImages.length) {
+        console.log("Selected PDF image", index, "Path:", pdfImages[index]);
+
+        // Log the path to the selected PDF image
+        setSelectedPdfImage(pdfImages[index]); // Set the selected PDF image by index
+      } else {
+        console.log("Invalid index for PDF selection");
       }
-  
-      setMessagesIsLoading(true);
-  
-      const command = message.trim().split(" ")[0].toLowerCase();
-  
-      console.log("Command", command);
-  
-      if (command === "$listbr") {
-        setResponses((prevResponses) => [
-          ...prevResponses,
-          {
-            question: message,
-            response: "Here are your PDF images:",
-            imageUrl: pdfImages, // Add the loaded PDF images
-            id: Date.now().toString(),
-          },
-        ]);
-        setMessage(""); // Clear the message input
-        setMessagesIsLoading(false);
-        return; // Exit the function after ha
-      }
-  
-      // New functionality to handlendle $br <num>
-      if (command.startsWith("$br")) {
-  
-      }
-  
-      
-  
-      if (command === "$br") {
-        
-  
-        const index = parseInt(message.split(" ")[1], 10); // Get the number after $br
-        if (!isNaN(index) && index >= 0 && index < pdfImages.length) {
-          console.log("Selected PDF image", index, "Path:", pdfImages[index]);
-          
-  
-          // Log the path to the selected PDF image
-          setSelectedPdfImage(pdfImages[index]); // Set the selected PDF image by index
-        } else {
-          console.log("Invalid index for PDF selection");
-        }
-        setMessagesIsLoading(false);
-        return;
-      };
-  
-      if(command === "$generatepdf") {
-        console.log("Generating PDF", message);
-        handleGeneratePdf(command, message, e);
-        setMessagesIsLoading(false);
-        return;
-      }
-  
-      if (command === "$pdf") {
-  
-        console.log("Selected PDF image", selectedPdfImage);
-  
-        uploadImage(selectedPdfImage as string, message as string);
-        setMessagesIsLoading(false);
-        return
-      }
-  
-      if(command === "$help") {
-        const helpText = `Available Commands:
+      setMessagesIsLoading(false);
+      return;
+    }
+
+    if (command === "$generatepdf") {
+      console.log("Generating PDF", message);
+      handleGeneratePdf(command, message, e);
+      setMessagesIsLoading(false);
+      return;
+    }
+
+    if (command === "$pdf") {
+      console.log("Selected PDF image", selectedPdfImage);
+
+      uploadImage(selectedPdfImage as string, message as string);
+      setMessagesIsLoading(false);
+      return;
+    }
+
+    if (command === "$help") {
+      const helpText = `Available Commands:
 - $help: Shows this list of commands
 - $listbr: Shows available background templates
 - $br <number>: Selects a background template by number
@@ -397,37 +368,33 @@ To generate a PDF:
       setMessage(""); // Clear the message input
       setMessagesIsLoading(false);
       return;
-      }
-  
-  
-  
-  
-      async function uploadImage(imagePath: string, message: string) {
-        // Fetch the image as a Blob
-        const response = await fetch(imagePath);
-        const blob = await response.blob(); // Convert the response to a Blob
-        const file = new File([blob], "image.png", { type: blob.type }); // Create a File object
-      
-        const formData = new FormData();
-        formData.append('file', file); // Change 'files' to 'file'
-        formData.append('message', message); // Add the message to the form data
-  
-        fetch(`${mainURL}/upload`, {
-          method: 'POST',
-          body: formData,
-    
-        })
-        .then(response => {
+    }
+
+    async function uploadImage(imagePath: string, message: string) {
+      // Fetch the image as a Blob
+      const response = await fetch(imagePath);
+      const blob = await response.blob(); // Convert the response to a Blob
+      const file = new File([blob], "image.png", { type: blob.type }); // Create a File object
+
+      const formData = new FormData();
+      formData.append("file", file); // Change 'files' to 'file'
+      formData.append("message", message); // Add the message to the form data
+
+      fetch(`${mainURL}/upload`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
           if (response.ok) {
             // Check if the response is a PDF
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/pdf")) {
               // Handle PDF download
-              return response.blob().then(blob => {
+              return response.blob().then((blob) => {
                 const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
+                const a = document.createElement("a");
                 a.href = url;
-                a.download = 'output.pdf'; // Specify the download name
+                a.download = "output.pdf"; // Specify the download name
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -437,128 +404,120 @@ To generate a PDF:
               return response.json();
             }
           } else {
-            throw new Error('Network response was not ok.');
+            throw new Error("Network response was not ok.");
           }
         })
-        .then(data => {
-          console.log('Upload successful:', data);
+        .then((data) => {
+          console.log("Upload successful:", data);
         })
-          .catch(error => {
-            console.error('Error uploading image:', error); 
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
+    }
+
+    if (command === "$rem") {
+      await handleUploadFile(e); // Call handleUploadFile directly
+      console.log("Remove command", message);
+      setMessage("");
+      setMessagesIsLoading(false);
+      setselectedFile(null);
+      return;
+    }
+
+    // Check for the /upscale command
+    if (command === "upscale") {
+      await handleUploadFile(e); // Call handleUploadFile directly
+      return; // Exit the function after handling the upscale command
+    }
+
+    if (command in specialCommands) {
+      // Handle special command
+      await handleSpecialCommand(command, message, e);
+    } else {
+      // Regular chat flow
+      if (isClient()) {
+        if (!currentConversationId) {
+          console.log("Creating new conversation");
+          await createConversation().then((convoID) => {
+            console.log("New conversation created with ID:", convoID);
+            setCurrentConversationId(convoID);
+            sessionStorage.setItem("currentConversationId", convoID);
+            localStorage.setItem("currentConversationId", convoID);
           });
-      }
-  
-      if (command === "$rem") {
-        await handleUploadFile(e); // Call handleUploadFile directly
-        console.log("Remove command", message);
+        }
+
+        const updatedConversationId = localStorage.getItem(
+          "currentConversationId"
+        );
+
+        // 1. Set up the new response without any bot response yet.
+        const newResponse = {
+          question: message,
+          response: "",
+          id: "temp",
+        };
+
+        // Use functional update for state
+        setResponses((responses) => [...responses, newResponse]);
+
         setMessage("");
-        setMessagesIsLoading(false);
-        setselectedFile(null)
-        return
-      }
-  
-  
-  
-  
-  
-  
-  
-      
-      
-  
-      // Check for the /upscale command
-      if (command === "upscale") {
-        await handleUploadFile(e); // Call handleUploadFile directly
-        return; // Exit the function after handling the upscale command
-      }
-  
-      if (command in specialCommands) {
-        // Handle special command
-        await handleSpecialCommand(command, message, e);
-      } else {
-        // Regular chat flow
-        if (isClient()) {
-          if (!currentConversationId) {
-            console.log("Creating new conversation");
-            await createConversation().then((convoID) => {
-              console.log("New conversation created with ID:", convoID);
-              setCurrentConversationId(convoID);
-              sessionStorage.setItem("currentConversationId", convoID);
-              localStorage.setItem("currentConversationId", convoID);
-            });
-          }
-  
-          const updatedConversationId = localStorage.getItem(
-            "currentConversationId"
-          );
-  
-          // 1. Set up the new response without any bot response yet.
-          const newResponse = {
-            question: message,
-            response: "",
-            id: "temp",
-          };
-  
-          // Use functional update for state
-          setResponses((responses) => [...responses, newResponse]);
-  
-          setMessage("");
-  
-          console.log("Chat is still bieng called", responses);
-  
-          try {
-            // 2. Fetch bot reply from the API
-            const botReply = await fetch(chatBotUrl, {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
+
+        console.log("Chat is still bieng called", responses);
+
+        try {
+          // 2. Fetch bot reply from the API
+          const botReply = await fetch(chatBotUrl, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
             },
-              mode: 'cors',
-              body: JSON.stringify({
-                userId: session?.user.id,
-                message,
-                conversationId: currentConversationId,
-              }),
-            }).then((res) => res.json());
-            setResponseLoading(false);
-  
-            // 3. Update the responses array with the bot's reply
-            setResponses((prevResponses) =>
-              prevResponses.map((resp) => {
-                if (resp.question === message) {
-                  return { ...resp, response: botReply.response };
-                }
-                return resp;
-              })
-            );
-  
-            // console.log("Logging the new Responses", responses);
-  
-            console.log("Logging the bot reply", botReply);
-            await fetch("/api/messages", {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                userId: session?.user.id, // Ensure you have the current user's ID
-                conversationId: updatedConversationId,
-                userContent: message, // User's message
-                botResponse: botReply.response, // Bot's response, obtained separately
-                imageUrl: "",
-              }),
-            });
-  
-            //Add the conversations arrawy or update
-          } catch (error) {
-            console.error("Error handling submission:", error);
-          }
+            mode: "cors",
+            body: JSON.stringify({
+              userId: session?.user.id,
+              message,
+              conversationId: currentConversationId,
+            }),
+          }).then((res) => res.json());
+          setResponseLoading(false);
+          setMessagesIsLoading(false);
+
+          // 3. Update the responses array with the bot's reply
+          setResponses((prevResponses) =>
+            prevResponses.map((resp) => {
+              if (resp.question === message) {
+                return { ...resp, response: botReply.response };
+              }
+              return resp;
+            })
+          );
+
+          // console.log("Logging the new Responses", responses);
+
+          console.log("Logging the bot reply", botReply);
+          await fetch("/api/messages", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: session?.user.id, // Ensure you have the current user's ID
+              conversationId: updatedConversationId,
+              userContent: message, // User's message
+              botResponse: botReply.response, // Bot's response, obtained separately
+              imageUrl: "",
+            }),
+          });
+
+          //Adding another guarail
+          setMessagesIsLoading(false);
+
+          //Add the conversations arrawy or update
+        } catch (error) {
+          console.error("Error handling submission:", error);
         }
       }
-    };
-
-    
-
+    }
+  };
 
   const [, setfileURL] = useState("");
   const [selectedFile, setselectedFile] = useState(null);
@@ -568,7 +527,6 @@ To generate a PDF:
   const [uploadProgress, setuploadProgress] = useState(0);
   let uploadInput = React.createRef();
 
-
   const handleGeneratePdf = async (
     command: string,
     fullMessage: string,
@@ -577,31 +535,39 @@ To generate a PDF:
     e.preventDefault();
 
     const formData = new FormData();
-    
+
     // Add all the text data
-    formData.append('userId', session?.user.id);
-    formData.append('content', fullMessage.substring(fullMessage.indexOf(" ") + 1));
-    formData.append('filename', `user_report_${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}.pdf`);
-    formData.append('conversationId', currentConversationId);
+    formData.append("userId", session?.user.id);
+    formData.append(
+      "content",
+      fullMessage.substring(fullMessage.indexOf(" ") + 1)
+    );
+    formData.append(
+      "filename",
+      `user_report_${
+        new Date().toISOString().replace(/[-:]/g, "").split(".")[0]
+      }.pdf`
+    );
+    formData.append("conversationId", currentConversationId);
 
     // Add the logo file if it exists
     if (selectedFile?.[0]) {
-      formData.append('logo_image', selectedFile[0]);
+      formData.append("logo_image", selectedFile[0]);
     }
 
     // Add background image path if needed
     const transformImagePath = (originalPath: string) => {
-      const fileName = originalPath.split('/').pop();
+      const fileName = originalPath.split("/").pop();
       return `public/images/backgrounds/${fileName}`;
     };
-    
+
     if (pdfImages?.[0]) {
-      formData.append('background_image', transformImagePath(pdfImages[0]));
+      formData.append("background_image", transformImagePath(pdfImages[0]));
     }
 
     try {
       const response = await fetch(`${mainURL}/generate_pdf`, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
 
@@ -612,30 +578,35 @@ To generate a PDF:
       // Handle PDF response
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = formData.get('filename') as string;
+      a.download = formData.get("filename") as string;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();
 
-      setResponses(prev => [...prev, {
-        question: fullMessage,
-        response: "PDF generated successfully. Check your downloads.",
-        id: Date.now().toString(),
-      }]);
-
+      setResponses((prev) => [
+        ...prev,
+        {
+          question: fullMessage,
+          response: "PDF generated successfully. Check your downloads.",
+          id: Date.now().toString(),
+        },
+      ]);
     } catch (error) {
-      console.error('Error generating PDF:', error);
-      setResponses(prev => [...prev, {
-        question: fullMessage,
-        response: `Error generating PDF: ${error.message}`,
-        id: Date.now().toString(),
-      }]);
+      console.error("Error generating PDF:", error);
+      setResponses((prev) => [
+        ...prev,
+        {
+          question: fullMessage,
+          response: `Error generating PDF: ${error.message}`,
+          id: Date.now().toString(),
+        },
+      ]);
     }
   };
-  
+
   // Update handleDrop to work like handleSelectFile
   const handleSelectFile = (e) => {
     const selectedFileList = [];
@@ -644,111 +615,111 @@ To generate a PDF:
     }
     setselectedFile(selectedFileList);
   };
-      // Upload file to server
-      const handleUploadFile = async (e) => {
-        e.preventDefault();
-    
-        setisUploading(true);
-        const data = new FormData();
-        console.log("THe upload input", uploadInput.files);
-    
-        // Append the file to the request body
-        for (let i = 0; i < uploadInput.files.length; i++) {
-          data.append("file", uploadInput.files[i], uploadInput.files[i].name);
-        }
-    
-        const newResponse = {
-          question: message,
-          response: "",
-          id: "temp",
-        };
-    
-        setResponses((responses) => [...responses, newResponse]);
-    
-        setMessage("");
-    
-        console.log("LOggin he data", data);
-        try {
-          const config = {
-            onUploadProgress: (progressEvent) => {
-              const { loaded, total } = progressEvent;
-              setuploadProgress(Math.round((loaded / total) * 100));
-            },
-          };
-          const response = await axios.post(
-            `${mainURL}/process_image`,
-            data,
-            config
-          );
-          const body = response.data;
-    
-          if(response.status === 200) {
-            setMessagesIsLoading(false);
-          }
-    
-    
-          console.log("Logging the response", response.data);
-          setResponses((prevResponses) =>
-            prevResponses.map((resp) => {
-              if (resp.question === message) {
-                // Set imageUrl directly instead of an array
-                const newImageUrl = response.data.image_url.startsWith('http')
-                  ? response.data.image_url // Use the existing URL if it already has the protocol
-                  : response.data.image_url; // Prepend the base URL if not
-                return {
-                  ...resp,
-                  imageUrl: newImageUrl, // Set the new URL directly
-                };
-              }
-              return resp;
-            })
-    
-          );
-          setMessagesIsLoading(false);
-          setSelectedFile(null);
-          console.log("Logging the responses", responses);
-    
-          const updatedConversationId = sessionStorage.getItem(
-            "currentConversationId"
-          );
-    
-          console.log("Logging the response data", response.data.responses);
-    
-          await fetch("/api/messages", {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              userId: session?.user.id, // Ensure you have the current user's ID
-              conversationId: updatedConversationId,
-              userContent: message, // User's message
-              imageUrl: response.data.image_url, // Image URL from the bot
-            }),
-          });
-    
-          console.log("Returning the body", body);
-          setfileURL(`${chatBotUrl}/${body.filename}`);
-          if (response.status === 200) {
-            setisFileUploaded(true); // flag to show the uploaded file
-            setisUploading(false);
-            setuploadedFile(selectedFile); // set the uploaded file to show the name
-            setMessagesIsLoading(false);
-          }
-        } catch (error) {
-          console.error(error);
-          setisUploading(false);
-          setMessagesIsLoading(false);
-        }
+  // Upload file to server
+  const handleUploadFile = async (e) => {
+    e.preventDefault();
+
+    setisUploading(true);
+    const data = new FormData();
+    console.log("THe upload input", uploadInput.files);
+
+    // Append the file to the request body
+    for (let i = 0; i < uploadInput.files.length; i++) {
+      data.append("file", uploadInput.files[i], uploadInput.files[i].name);
+    }
+
+    const newResponse = {
+      question: message,
+      response: "",
+      id: "temp",
+    };
+
+    setResponses((responses) => [...responses, newResponse]);
+
+    setMessage("");
+
+    console.log("LOggin he data", data);
+    try {
+      const config = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          setuploadProgress(Math.round((loaded / total) * 100));
+        },
       };
+      const response = await axios.post(
+        `${mainURL}/process_image`,
+        data,
+        config
+      );
+      const body = response.data;
+
+      if (response.status === 200) {
+        setMessagesIsLoading(false);
+      }
+
+      console.log("Logging the response", response.data);
+      setResponses((prevResponses) =>
+        prevResponses.map((resp) => {
+          if (resp.question === message) {
+            // Set imageUrl directly instead of an array
+            const newImageUrl = response.data.image_url.startsWith("http")
+              ? response.data.image_url // Use the existing URL if it already has the protocol
+              : response.data.image_url; // Prepend the base URL if not
+            return {
+              ...resp,
+              imageUrl: newImageUrl, // Set the new URL directly
+            };
+          }
+          return resp;
+        })
+      );
+      setMessagesIsLoading(false);
+      setSelectedFile(null);
+      console.log("Logging the responses", responses);
+
+      const updatedConversationId = sessionStorage.getItem(
+        "currentConversationId"
+      );
+
+      console.log("Logging the response data", response.data.responses);
+
+      await fetch("/api/messages", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user.id, // Ensure you have the current user's ID
+          conversationId: updatedConversationId,
+          userContent: message, // User's message
+          imageUrl: response.data.image_url, // Image URL from the bot
+        }),
+      });
+
+      console.log("Returning the body", body);
+      setfileURL(`${chatBotUrl}/${body.filename}`);
+      if (response.status === 200) {
+        setisFileUploaded(true); // flag to show the uploaded file
+        setisUploading(false);
+        setuploadedFile(selectedFile); // set the uploaded file to show the name
+        setMessagesIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setisUploading(false);
+      setMessagesIsLoading(false);
+    }
+  };
   const handleSpecialCommand = async (command: string, fullMessage: string) => {
     const baseUrl = `${mainURL}`; // Adjust this to your API base URL
-    const commandEndpoint = `${baseUrl}${specialCommands[command as keyof typeof specialCommands]}`;
+    const commandEndpoint = `${baseUrl}${
+      specialCommands[command as keyof typeof specialCommands]
+    }`;
 
     console.log("Command Endpoint:", commandEndpoint);
     window.alert(commandEndpoint);
 
-    return
+    return;
 
     try {
       const response = await fetch(commandEndpoint, {
@@ -771,24 +742,35 @@ To generate a PDF:
       console.log(`Command ${command} response:`, data);
 
       // Update UI with command response
-      setResponses(prevResponses => [
+      setResponses((prevResponses) => [
         ...prevResponses,
-        { question: fullMessage, response: data.response, id: Date.now().toString() }
+        {
+          question: fullMessage,
+          response: data.response,
+          id: Date.now().toString(),
+        },
       ]);
-
     } catch (error) {
       console.error(`Error executing command ${command}:`, error);
       // Update UI with error message
-      setResponses(prevResponses => [
+      setResponses((prevResponses) => [
         ...prevResponses,
-        { question: fullMessage, response: `Error executing command: ${error instanceof Error ? error.message : 'Unknown error'}`, id: Date.now().toString() }
+        {
+          question: fullMessage,
+          response: `Error executing command: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`,
+          id: Date.now().toString(),
+        },
       ]);
     } finally {
       setMessagesIsLoading(false);
     }
   };
 
-  useEffect(() => {}, [messagesIsLoading]);
+  useEffect(() => {
+    console.log("Logging the messagesIsLoading", messagesIsLoading);
+  }, [messagesIsLoading]);
 
   // Where we are going to send the Chat Data Request
 
@@ -828,8 +810,6 @@ To generate a PDF:
     }
   }
 
-  useEffect(() => {}, []);
-
   async function getConversation(conversationId: any) {
     // console.log(
     //   "Logging the converatation ID in the getConversation",
@@ -864,7 +844,6 @@ To generate a PDF:
   const handleSubmitTitle = async (event: any) => {
     event.preventDefault(); // Prevent form submission
     let titleChange: string = "";
-
 
     return;
     console.log("Event Key", event.key);
@@ -971,13 +950,11 @@ To generate a PDF:
     // console.log("Activating conversation with ID:", convoId);
     localStorage.setItem("currentConversationId", convoId);
     sessionStorage.setItem("currentConversationId", convoId);
-    console.log("Logging the convoId", convoId)
-
+    console.log("Logging the convoId", convoId);
 
     const targetPath = `/ai/chat/${session?.user.id}/${convoId}`;
 
-    console.log("Logging the target path", targetPath)
-
+    console.log("Logging the target path", targetPath);
 
     router.push(targetPath, undefined);
 
@@ -1021,16 +998,15 @@ To generate a PDF:
         JSON.stringify(updatedConversations)
       );
 
-     
-    try {
-      const response = await fetch(`/api/deleteConversations/`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: conversationId }),
-      });
-      if (!response.ok) {
+      try {
+        const response = await fetch(`/api/deleteConversations/`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: conversationId }),
+        });
+        if (!response.ok) {
           throw new Error("Failed to delete the conversation");
         }
 
@@ -1103,25 +1079,6 @@ To generate a PDF:
     setChatContainerShown(!chatContainerShown);
   };
 
-
-
-  // const { loading } = useSessionGate();
-
-
-  // if (loading) {
-  //   return (
-  //     <div className="h-[100vh] w-full flex items-center justify-center">
-
-  //         {/* <LoadingComponent /> */}
-
-  //     </div>
-  //   );
-
-
-  // }
-
-
-
   return (
     <MessageProvider>
       {showGuidelines && <Guidelines onComplete={handleGuidelinesComplete} />}
@@ -1132,12 +1089,14 @@ To generate a PDF:
         <ChatContainer
           setConversations={setConversations}
           conversations={conversations}
-          currentConversationId = {currentConversationId}
+          currentConversationId={currentConversationId}
           splitUserName={splitUserName}
           userName={userName || ""}
           email={email || ""}
           onConversationClick={handleConversationClick}
-          onDeleteConvo={(convoId: string | number) => deleteConversation(convoId.toString())}
+          onDeleteConvo={(convoId: string | number) =>
+            deleteConversation(convoId.toString())
+          }
           onChangeConvoTitle={handleSubmitTitle}
           handleTitleClick={handleTitleClick}
           editTitleId={editTitleId}
@@ -1159,14 +1118,7 @@ To generate a PDF:
           ref={chatDashBoardRef}
           className="chatDashboardWrapper w-full text-left"
         >
-       
-       <ChatHeader
-           conversations={conversations}
-
-        />
-
-
-
+          <ChatHeader conversations={conversations} />
 
           <div className="chatDashBoardContainer">
             {/* Dashboard Component  */}
@@ -1176,90 +1128,96 @@ To generate a PDF:
               <Dashboard
                 userName={userName || ""}
                 handleButtonClick={handleButtonClick}
-                formRef = {formRef}
-                isResponseLoading = {messagesIsLoading || false}
-                handleSubmit= {handleSubmit}
-                setMessage = {setMessage}
-                message = {message}
-
-
+                formRef={formRef}
+                isResponseLoading={messagesIsLoading || false}
+                handleSubmit={handleSubmit}
+                setMessage={setMessage}
+                message={message}
               />
             )}
 
-{currentConversationId ? (
+            {currentConversationId ? (
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="chatFormSubmit"
+                onDragOver={(e) => e.preventDefault()}
+              >
+                <div className="relative textAreaContainer">
+                  <textarea
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        formRef.current?.requestSubmit();
+                      }
+                    }}
+                    value={message}
+                    placeholder="Ask Thou Question..."
+                  ></textarea>
 
-            <form
-              ref={formRef}
-              onSubmit={handleSubmit}
-              className="chatFormSubmit"
-              onDragOver={(e) => e.preventDefault()}
-            >
-
-              <div className="relative textAreaContainer">
-                <textarea
-                  onChange={(e) => {
-                    setMessage(e.target.value);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      formRef.current?.requestSubmit();
-                    }
-                  }}
-                  value={message}
-                  placeholder="Ask Thou Question..."
-                ></textarea>
-
-                <div className="textAreaIconWrapper flex flex-row gap-[11px]">
-                  <input
-                    type="file"
-                    id="fileInput"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    onChange={handleSelectFile}
-                    ref={(ref) => {
-                      uploadInput = ref;
-                    }}                  />
-                  <button className="textAreaIcon" onClick={() => document.getElementById('fileInput')?.click()}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                  <div className="textAreaIconWrapper flex flex-row gap-[11px]">
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleSelectFile}
+                      ref={(ref) => {
+                        uploadInput = ref;
+                      }}
+                    />
+                    <button
+                      className="textAreaIcon"
+                      onClick={() =>
+                        document.getElementById("fileInput")?.click()
+                      }
                     >
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M9 7a5 5 0 0 1 10 0v8a7 7 0 1 1-14 0V9a1 1 0 0 1 2 0v6a5 5 0 0 0 10 0V7a3 3 0 1 0-6 0v8a1 1 0 1 0 2 0V9a1 1 0 1 1 2 0v6a3 3 0 1 1-6 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M9 7a5 5 0 0 1 10 0v8a7 7 0 1 1-14 0V9a1 1 0 0 1 2 0v6a5 5 0 0 0 10 0V7a3 3 0 1 0-6 0v8a1 1 0 1 0 2 0V9a1 1 0 1 1 2 0v6a3 3 0 1 1-6 0z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
 
-                  <button type="submit" className="textAreaIcon">
-                  {messagesIsLoading ?  <ButtonLoadingComponent /> : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      fill="none"
-                      viewBox="0 0 32 32"
-                      className=""
-                    >
-                      <path
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  )}
-                </button>
+                    <button type="submit" className="textAreaIcon">
+                      {messagesIsLoading ? (
+                        <ButtonLoadingComponent />
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          fill="none"
+                          viewBox="0 0 32 32"
+                          className=""
+                        >
+                          <path
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                            d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
-              </div>
-              {selectedFile && <div className="mt-2">Selected file: {selectedFile.name}</div>}
-            </form>
+                {selectedFile && (
+                  <div className="mt-2">Selected file: {selectedFile.name}</div>
+                )}
+              </form>
             ) : null}
           </div>
         </div>

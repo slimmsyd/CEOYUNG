@@ -10,7 +10,6 @@ import GlobalButton from "../components/globalbutton";
 export default function AI() {
   const { data: session } = useSession();
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
 

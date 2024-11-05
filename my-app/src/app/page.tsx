@@ -756,7 +756,7 @@ async function handlePurchase(productId: string) {
 
 
 
-                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn"')}
+                  <button onClick={() => handlePurchase('prod_qBClHu8uCriXn')}
                     className="  w-[180px] flex items-center justify-center  md:flex text-white px-4 py-2 rounded-md 
                     bg-[rgba(39,60,110,0.1)] hover:bg-[rgba(39,60,110,0.39)] border-[0.5px] border-[rgb(39,60,110)]  "
                      >

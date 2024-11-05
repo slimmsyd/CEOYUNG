@@ -7,7 +7,7 @@ export default withAuth(
     
     if (!session?.email) {
         console.log("Logging the unauthorized response", session)
-      return NextResponse.redirect(new URL('/unauthorized', req.url))
+      return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
     }
 
     try {
@@ -21,13 +21,13 @@ export default withAuth(
       const hasValidMembership = data?.data?.length > 0
 
       if (!hasValidMembership) {
-        return NextResponse.redirect(new URL('/unauthorized', req.url))
+        return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
       }
 
       return NextResponse.next()
     } catch (error) {
       console.error('Membership verification failed:', error)
-      return NextResponse.redirect(new URL('/unauthorized', req.url))
+      return NextResponse.redirect(new URL('https://whop.com/yungceo/?pass=prod_qBClHu8uCriXn', req.url))
     }
   },
   {
